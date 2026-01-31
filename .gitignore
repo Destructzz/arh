@@ -1,0 +1,36 @@
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Env
+.env
+.env.*.local
+
+# Node
+node_modules/
+dist/
+build/
+coverage/
+*.tsbuildinfo
+
+# NestJS
+*.spec.ts.snap
+
+# IDE
+.idea/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Misc
+.eslintcache
