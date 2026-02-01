@@ -1,35 +1,24 @@
-# AIS Flower Shop - Auth (JWT + Refresh + CSRF)
+# AIS Flower Shop - Auth (JWT Access Only)
 
 Этот файл фиксирует выбранный путь авторизации для внутренней системы (staff-only).
 
 ## Кратко по потоку
 1) `POST /auth/login` (body: username/password)
-   - Ответ JSON: `accessToken` + `csrfToken`
-   - Cookie: `refresh` (httpOnly), опционально `csrf` (обычно не httpOnly)
+   - Ответ JSON: `accessToken`
+   - Cookie: `access` (httpOnly)
 2) Обычные запросы:
-   - `Authorization: Bearer <accessToken>`
-   - Для state-changing (POST/PATCH/DELETE) добавляем `X-CSRF-Token`
-3) `POST /auth/refresh` (body пустой)
-   - Браузер сам отправляет cookie `refresh` (+ `csrf` если используется)
-   - Сервер проверяет refresh + CSRF и выдает новый `accessToken`
-   - Refresh токен ротируется (новый refresh + новый csrf)
-4) `POST /auth/logout`
-   - Отзываем refresh (revoked) и чистим cookie
+   - `Authorization: Bearer <accessToken>` или cookie `access`
+3) `POST /auth/logout`
+   - Чистим cookie
+4) `POST /auth/register`
+   - Создает пользователя с ролью `manager`
+5) `POST /auth/superme` (только development)
+   - Делает пользователя `superme` по логину/паролю
+6) `PATCH /users/:id/role` (только admin)
+   - Назначает любую роль пользователю
 
-## Где хранится access/refresh/csrf
-- Access: в памяти приложения (store/state), не localStorage.
-- Refresh: httpOnly cookie.
-- CSRF: double-submit: `csrf` cookie + `X-CSRF-Token` header.
-
-## Почему нужен CSRF при refresh в cookie
-Cookie отправляются автоматически. Без проверки можно подделать запрос из чужого сайта.
-
-Минимум:
-- проверка `Origin` или `Referer`.
-
-Надежнее (double submit):
-- Сервер отдает `csrfToken` при логине.
-- Клиент отправляет `X-CSRF-Token`, сервер сверяет с cookie `csrf`.
+## Где хранится access
+- Access: httpOnly cookie `access` (живет 3 дня).
 
 ## Роли (MVP)
 - admin
@@ -117,7 +106,5 @@ export class ProductsController {}
 ```
 
 ## Замечания
-- Access TTL: 15-30 мин
-- Refresh TTL: 7-30 дней
-- Refresh хранить только в виде hash в БД
+- Access TTL: 3 дня
 - Пароли: argon2 (или bcrypt)

@@ -5,6 +5,8 @@ import { InventoryItem } from '../entities/inventory-items.entity';
 
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 
+import { Roles } from '../../auth/decorators/roles.decorator';
+import { UserRole } from '../../auth/entities/user.entity';
 import {
   CreateInventoryItemDto,
   InventoryItemsService,
@@ -61,6 +63,7 @@ export class InventoryItemsController {
     schema: { example: createInventoryItemExample },
   })
   @ApiCreatedAuthResponse(InventoryItem, inventoryItemExample)
+  @Roles(UserRole.admin, UserRole.manager)
   @Post()
   create(@Body() body: CreateInventoryItemDto) {
     return this.inventoryService.create(body);
@@ -85,6 +88,7 @@ export class InventoryItemsController {
     required: true,
     description: 'UUID складской позиции.',
   })
+  @Roles(UserRole.admin, UserRole.manager)
   @Patch(':id')
   update(@Param('id') id: string, @Body() body: UpdateInventoryItemDto) {
     return this.inventoryService.update(id, body);
@@ -104,6 +108,7 @@ export class InventoryItemsController {
     required: true,
     description: 'UUID складской позиции.',
   })
+  @Roles(UserRole.admin, UserRole.manager)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.inventoryService.remove(id);

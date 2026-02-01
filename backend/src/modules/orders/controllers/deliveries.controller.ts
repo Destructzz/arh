@@ -5,6 +5,8 @@ import { Delivery } from '../entities/deliveries.entity';
 
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 
+import { Roles } from '../../auth/decorators/roles.decorator';
+import { UserRole } from '../../auth/entities/user.entity';
 import { CreateDeliveryDto, DeliveriesService, UpdateDeliveryDto } from '../services/deliveries.service';
 
 @ApiTags('Orders')
@@ -58,6 +60,7 @@ export class DeliveriesController {
     schema: { example: createDeliveryExample },
   })
   @ApiCreatedAuthResponse(Delivery, deliveryExample)
+  @Roles(UserRole.admin, UserRole.manager, UserRole.courier)
   @Post()
   create(@Body() body: CreateDeliveryDto) {
     return this.deliveriesService.create(body);
@@ -82,6 +85,7 @@ export class DeliveriesController {
     required: true,
     description: 'UUID доставки.',
   })
+  @Roles(UserRole.admin, UserRole.manager, UserRole.courier)
   @Patch(':id')
   update(@Param('id') id: string, @Body() body: UpdateDeliveryDto) {
     return this.deliveriesService.update(id, body);
@@ -101,6 +105,7 @@ export class DeliveriesController {
     required: true,
     description: 'UUID доставки.',
   })
+  @Roles(UserRole.admin, UserRole.manager, UserRole.courier)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.deliveriesService.remove(id);

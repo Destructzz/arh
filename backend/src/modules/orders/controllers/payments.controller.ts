@@ -5,6 +5,8 @@ import { Payment } from '../entities/payments.entity';
 
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 
+import { Roles } from '../../auth/decorators/roles.decorator';
+import { UserRole } from '../../auth/entities/user.entity';
 import { CreatePaymentDto, PaymentsService, UpdatePaymentDto } from '../services/payments.service';
 
 @ApiTags('Orders')
@@ -58,6 +60,7 @@ export class PaymentsController {
     schema: { example: createPaymentExample },
   })
   @ApiCreatedAuthResponse(Payment, paymentExample)
+  @Roles(UserRole.admin, UserRole.manager)
   @Post()
   create(@Body() body: CreatePaymentDto) {
     return this.paymentsService.create(body);
@@ -82,6 +85,7 @@ export class PaymentsController {
     required: true,
     description: 'UUID платежа.',
   })
+  @Roles(UserRole.admin, UserRole.manager)
   @Patch(':id')
   update(@Param('id') id: string, @Body() body: UpdatePaymentDto) {
     return this.paymentsService.update(id, body);
@@ -101,6 +105,7 @@ export class PaymentsController {
     required: true,
     description: 'UUID платежа.',
   })
+  @Roles(UserRole.admin, UserRole.manager)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.paymentsService.remove(id);

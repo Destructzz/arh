@@ -2,6 +2,7 @@ import { ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
 import type { Request } from 'express';
+import { UserRole } from '../entities/user.entity';
 
 @Injectable()
 export class MethodJwtAuthGuard extends AuthGuard('jwt') {
@@ -18,9 +19,20 @@ export class MethodJwtAuthGuard extends AuthGuard('jwt') {
       return true;
     }
 
+    const roles = this.reflector.getAllAndOverride<UserRole[]>('roles', [
+      context.getHandler(),
+      context.getClass(),
+    ]);
+
     const request = context.switchToHttp().getRequest<Request>();
     const method = request.method?.toUpperCase();
-    if (method === 'GET' || method === 'OPTIONS') {
+    if (method === 'OPTIONS') {
+      return true;
+    }
+    if (method === 'GET') {
+      if (roles && roles.length > 0) {
+        return super.canActivate(context);
+      }
       return true;
     }
 

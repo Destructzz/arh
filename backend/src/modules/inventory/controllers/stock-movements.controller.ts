@@ -5,6 +5,8 @@ import { StockMovement } from '../entities/stock-movements.entity';
 
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 
+import { Roles } from '../../auth/decorators/roles.decorator';
+import { UserRole } from '../../auth/entities/user.entity';
 import {
   CreateStockMovementDto,
   StockMovementsService,
@@ -62,6 +64,7 @@ export class StockMovementsController {
     schema: { example: createStockMovementExample },
   })
   @ApiCreatedAuthResponse(StockMovement, stockMovementExample)
+  @Roles(UserRole.admin, UserRole.manager)
   @Post()
   create(@Body() body: CreateStockMovementDto) {
     return this.movementsService.create(body);
@@ -86,6 +89,7 @@ export class StockMovementsController {
     required: true,
     description: 'UUID движения склада.',
   })
+  @Roles(UserRole.admin, UserRole.manager)
   @Patch(':id')
   update(@Param('id') id: string, @Body() body: UpdateStockMovementDto) {
     return this.movementsService.update(id, body);
@@ -105,6 +109,7 @@ export class StockMovementsController {
     required: true,
     description: 'UUID движения склада.',
   })
+  @Roles(UserRole.admin, UserRole.manager)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.movementsService.remove(id);

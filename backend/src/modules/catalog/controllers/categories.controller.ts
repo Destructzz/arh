@@ -5,6 +5,8 @@ import { Category } from '../entities/categories.entity';
 
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 
+import { Roles } from '../../auth/decorators/roles.decorator';
+import { UserRole } from '../../auth/entities/user.entity';
 import {
   CategoriesService,
   CreateCategoryDto,
@@ -61,6 +63,7 @@ export class CategoriesController {
     schema: { example: createCategoryExample },
   })
   @ApiCreatedAuthResponse(Category, categoryExample)
+  @Roles(UserRole.admin, UserRole.manager)
   @Post()
   create(@Body() body: CreateCategoryDto) {
     return this.categoriesService.create(body);
@@ -85,6 +88,7 @@ export class CategoriesController {
     required: true,
     description: 'UUID категории.',
   })
+  @Roles(UserRole.admin, UserRole.manager)
   @Patch(':id')
   update(@Param('id') id: string, @Body() body: UpdateCategoryDto) {
     return this.categoriesService.update(id, body);
@@ -104,6 +108,7 @@ export class CategoriesController {
     required: true,
     description: 'UUID категории.',
   })
+  @Roles(UserRole.admin, UserRole.manager)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.categoriesService.remove(id);

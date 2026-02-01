@@ -5,6 +5,8 @@ import { Product } from '../entities/products.entity';
 
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 
+import { Roles } from '../../auth/decorators/roles.decorator';
+import { UserRole } from '../../auth/entities/user.entity';
 import { CreateProductDto, ProductsService, UpdateProductDto } from '../services/products.service';
 
 @ApiTags('Catalog')
@@ -58,6 +60,7 @@ export class ProductsController {
     schema: { example: createProductExample },
   })
   @ApiCreatedAuthResponse(Product, productExample)
+  @Roles(UserRole.admin, UserRole.manager)
   @Post()
   create(@Body() body: CreateProductDto) {
     return this.productsService.create(body);
@@ -82,6 +85,7 @@ export class ProductsController {
     required: true,
     description: 'UUID товара.',
   })
+  @Roles(UserRole.admin, UserRole.manager)
   @Patch(':id')
   update(@Param('id') id: string, @Body() body: UpdateProductDto) {
     return this.productsService.update(id, body);
@@ -101,6 +105,7 @@ export class ProductsController {
     required: true,
     description: 'UUID товара.',
   })
+  @Roles(UserRole.admin, UserRole.manager)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.productsService.remove(id);

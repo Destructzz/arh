@@ -5,6 +5,8 @@ import { LoyaltyAccount } from '../entities/loyalty-accounts.entity';
 
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 
+import { Roles } from '../../auth/decorators/roles.decorator';
+import { UserRole } from '../../auth/entities/user.entity';
 import {
   CreateLoyaltyAccountDto,
   LoyaltyAccountsService,
@@ -61,6 +63,7 @@ export class LoyaltyAccountsController {
     schema: { example: createLoyaltyAccountExample },
   })
   @ApiCreatedAuthResponse(LoyaltyAccount, loyaltyAccountExample)
+  @Roles(UserRole.admin, UserRole.manager)
   @Post()
   create(@Body() body: CreateLoyaltyAccountDto) {
     return this.loyaltyService.create(body);
@@ -85,6 +88,7 @@ export class LoyaltyAccountsController {
     required: true,
     description: 'UUID лояльного счёта.',
   })
+  @Roles(UserRole.admin, UserRole.manager)
   @Patch(':id')
   update(@Param('id') id: string, @Body() body: UpdateLoyaltyAccountDto) {
     return this.loyaltyService.update(id, body);
@@ -104,6 +108,7 @@ export class LoyaltyAccountsController {
     required: true,
     description: 'UUID лояльного счёта.',
   })
+  @Roles(UserRole.admin, UserRole.manager)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.loyaltyService.remove(id);

@@ -5,6 +5,8 @@ import { OrderItem } from '../entities/order-items.entity';
 
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 
+import { Roles } from '../../auth/decorators/roles.decorator';
+import { UserRole } from '../../auth/entities/user.entity';
 import { CreateOrderItemDto, OrderItemsService, UpdateOrderItemDto } from '../services/order-items.service';
 
 @ApiTags('Orders')
@@ -58,6 +60,7 @@ export class OrderItemsController {
     schema: { example: createOrderItemExample },
   })
   @ApiCreatedAuthResponse(OrderItem, orderItemExample)
+  @Roles(UserRole.admin, UserRole.manager, UserRole.florist)
   @Post()
   create(@Body() body: CreateOrderItemDto) {
     return this.orderItemsService.create(body);
@@ -82,6 +85,7 @@ export class OrderItemsController {
     required: true,
     description: 'UUID позиции заказа.',
   })
+  @Roles(UserRole.admin, UserRole.manager, UserRole.florist)
   @Patch(':id')
   update(@Param('id') id: string, @Body() body: UpdateOrderItemDto) {
     return this.orderItemsService.update(id, body);
@@ -101,6 +105,7 @@ export class OrderItemsController {
     required: true,
     description: 'UUID позиции заказа.',
   })
+  @Roles(UserRole.admin, UserRole.manager, UserRole.florist)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.orderItemsService.remove(id);

@@ -5,6 +5,8 @@ import { Discount } from '../entities/discounts.entity';
 
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 
+import { Roles } from '../../auth/decorators/roles.decorator';
+import { UserRole } from '../../auth/entities/user.entity';
 import { CreateDiscountDto, DiscountsService, UpdateDiscountDto } from '../services/discounts.service';
 
 @ApiTags('Discounts')
@@ -57,6 +59,7 @@ export class DiscountsController {
     schema: { example: createDiscountExample },
   })
   @ApiCreatedAuthResponse(Discount, discountExample)
+  @Roles(UserRole.admin, UserRole.manager)
   @Post()
   create(@Body() body: CreateDiscountDto) {
     return this.discountsService.create(body);
@@ -81,6 +84,7 @@ export class DiscountsController {
     required: true,
     description: 'UUID скидки.',
   })
+  @Roles(UserRole.admin, UserRole.manager)
   @Patch(':id')
   update(@Param('id') id: string, @Body() body: UpdateDiscountDto) {
     return this.discountsService.update(id, body);
@@ -100,6 +104,7 @@ export class DiscountsController {
     required: true,
     description: 'UUID скидки.',
   })
+  @Roles(UserRole.admin, UserRole.manager)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.discountsService.remove(id);

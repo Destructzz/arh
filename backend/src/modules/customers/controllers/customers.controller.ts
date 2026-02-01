@@ -5,6 +5,8 @@ import { Customer } from '../entities/customers.entity';
 
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 
+import { Roles } from '../../auth/decorators/roles.decorator';
+import { UserRole } from '../../auth/entities/user.entity';
 import { CreateCustomerDto, CustomersService, UpdateCustomerDto } from '../services/customers.service';
 
 @ApiTags('Customers')
@@ -57,6 +59,7 @@ export class CustomersController {
     schema: { example: createCustomerExample },
   })
   @ApiCreatedAuthResponse(Customer, customerExample)
+  @Roles(UserRole.admin, UserRole.manager)
   @Post()
   create(@Body() body: CreateCustomerDto) {
     return this.customersService.create(body);
@@ -81,6 +84,7 @@ export class CustomersController {
     required: true,
     description: 'UUID клиента.',
   })
+  @Roles(UserRole.admin, UserRole.manager)
   @Patch(':id')
   update(@Param('id') id: string, @Body() body: UpdateCustomerDto) {
     return this.customersService.update(id, body);
@@ -100,6 +104,7 @@ export class CustomersController {
     required: true,
     description: 'UUID клиента.',
   })
+  @Roles(UserRole.admin, UserRole.manager)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.customersService.remove(id);

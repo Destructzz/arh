@@ -13,7 +13,7 @@ export class Category {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ length: 120 })
+  @Column({ length: 120 , unique: true })
   name: string;
 
   @ManyToOne(() => Category, (category) => category.children, {

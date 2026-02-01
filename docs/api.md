@@ -3,7 +3,7 @@
 ## Base
 - Base URL: http://localhost:3000
 - Swagger: http://localhost:3000/docs
-- Auth: JWT access token (Bearer) + refresh cookie
+- Auth: JWT access token (Bearer or httpOnly cookie)
 - Content-Type: application/json
 
 ## Conventions

@@ -6,10 +6,10 @@ import { PassportModule } from '@nestjs/passport';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthController } from './auth.controller';
+import { UsersController } from './users.controller';
 import { AuthService } from './auth.service';
 import { MethodJwtAuthGuard } from './guards/method-jwt-auth.guard';
 import { RolesGuard } from './guards/roles.guard';
-import { RefreshToken } from './entities/refresh-token.entity';
 import { User } from './entities/user.entity';
 import { JwtStrategy } from './strategies/jwt.strategy';
 
@@ -17,13 +17,13 @@ import { JwtStrategy } from './strategies/jwt.strategy';
   imports: [
     ConfigModule,
     PassportModule,
-    TypeOrmModule.forFeature([User, RefreshToken]),
+    TypeOrmModule.forFeature([User]),
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
         secret: config.get<string>('JWT_SECRET', 'dev_secret'),
         signOptions: {
-          expiresIn: `${config.get<number>('JWT_ACCESS_TTL_MINUTES', 15)}m`,
+          expiresIn: `${config.get<number>('JWT_ACCESS_TTL_DAYS', 3)}d`,
         },
       }),
     }),
@@ -34,7 +34,7 @@ import { JwtStrategy } from './strategies/jwt.strategy';
       },
     ]),
   ],
-  controllers: [AuthController],
+  controllers: [AuthController, UsersController],
   providers: [
     AuthService,
     JwtStrategy,

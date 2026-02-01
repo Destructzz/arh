@@ -8,7 +8,6 @@ import { DiscountsModule } from './modules/discounts/discounts.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { InventoryModule } from './modules/inventory/inventory.module';
 import { OrdersModule } from './modules/orders/orders.module';
-import { ProcurementModule } from './modules/procurement/procurement.module';
 
 @Module({
   imports: [
@@ -17,7 +16,6 @@ import { ProcurementModule } from './modules/procurement/procurement.module';
     CustomersModule,
     OrdersModule,
     InventoryModule,
-    ProcurementModule,
     DiscountsModule,
     AuthModule,
   ],
