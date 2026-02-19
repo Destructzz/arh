@@ -48,15 +48,4 @@ export class AuthController {
     this.authService.clearAuthCookies(res);
     return { loggedOut: true };
   }
-
-  @Public()
-  @ApiBody({
-    schema: {
-      example: { username: 'admin', password: 'secret' },
-    },
-  })
-  @Post('superme')
-  async superme(@Body() body: LoginDto) {
-    return this.authService.promoteToSuperme(body.username, body.password);
-  }
 }

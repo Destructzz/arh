@@ -73,7 +73,7 @@ export class AuthService {
       passwordHash,
       email: payload.email ?? null,
       phone: payload.phone ?? null,
-      role: UserRole.manager,
+      role: UserRole.user,
       isActive: true,
     });
     const saved = await this.usersRepo.save(user);
@@ -86,13 +86,6 @@ export class AuthService {
       throw new BadRequestException('User not found');
     }
     user.role = role;
-    const saved = await this.usersRepo.save(user);
-    return { id: saved.id, login: saved.login, role: saved.role };
-  }
-
-  async promoteToSuperme(username: string, password: string) {
-    const user = await this.validateUser(username, password);
-    user.role = UserRole.admin;
     const saved = await this.usersRepo.save(user);
     return { id: saved.id, login: saved.login, role: saved.role };
   }

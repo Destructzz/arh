@@ -5,6 +5,7 @@ export enum UserRole {
   manager = 'manager',
   florist = 'florist',
   courier = 'courier',
+  user = 'user',
 }
 
 @Entity('users')
@@ -27,7 +28,7 @@ export class User {
   @Column({ name: 'is_active', default: true })
   isActive: boolean;
 
-  @Column({ type: 'enum', enum: UserRole, default: UserRole.manager })
+  @Column({ type: 'enum', enum: UserRole, default: UserRole.user })
   role: UserRole;
 
   @CreateDateColumn({ name: 'created_at' })

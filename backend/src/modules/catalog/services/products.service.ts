@@ -25,7 +25,7 @@ export class ProductsService {
   ) {}
 
   findAll() {
-    this.productsRepo.find({
+    return this.productsRepo.find({
       relations: { category: true, inventoryItem: true },
       order: { name: 'ASC' },
     });

@@ -6,7 +6,7 @@ import { PassportModule } from '@nestjs/passport';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthController } from './auth.controller';
-import { UsersController } from './users.controller';
+import { AdminUsersController } from './admin-users.controller';
 import { AuthService } from './auth.service';
 import { MethodJwtAuthGuard } from './guards/method-jwt-auth.guard';
 import { RolesGuard } from './guards/roles.guard';
@@ -34,7 +34,7 @@ import { JwtStrategy } from './strategies/jwt.strategy';
       },
     ]),
   ],
-  controllers: [AuthController, UsersController],
+  controllers: [AuthController, AdminUsersController],
   providers: [
     AuthService,
     JwtStrategy,

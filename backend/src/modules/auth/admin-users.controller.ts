@@ -5,10 +5,10 @@ import { UserRole } from './entities/user.entity';
 import { AuthService } from './auth.service';
 import { SetRoleDto } from './dto/set-role.dto';
 
-@ApiTags('Users')
+@ApiTags('Admin Users')
 @ApiBearerAuth()
-@Controller('users')
-export class UsersController {
+@Controller('admin/users')
+export class AdminUsersController {
   constructor(private readonly authService: AuthService) {}
 
   @Roles(UserRole.admin)
