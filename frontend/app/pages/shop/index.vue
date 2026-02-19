@@ -5,13 +5,50 @@
       <aside class="w-full md:w-64 space-y-8 flex-shrink-0 hidden md:block">
         <div>
           <h3 class="font-serif text-lg mb-4">Categories</h3>
-          <ul class="space-y-3 text-sm text-gray-600">
-            <li><button class="hover:text-primary transition-colors font-medium text-primary">All Plants ({{ displayProducts.length }})</button></li>
-            <li><button class="hover:text-primary transition-colors">New Arrivals</button></li>
-            <li><button class="hover:text-primary transition-colors">Large Plants</button></li>
-            <li><button class="hover:text-primary transition-colors">Pet Friendly</button></li>
-            <li><button class="hover:text-primary transition-colors">Low Light</button></li>
-            <li><button class="hover:text-primary transition-colors">Pots & Planters</button></li>
+          <ul class="space-y-2 text-sm text-gray-600">
+            <li>
+              <button
+                class="hover:text-primary transition-colors"
+                :class="!selectedCategoryId ? 'font-medium text-primary' : 'text-gray-700'"
+                @click="selectedCategoryId = null"
+              >
+                All Plants ({{ totalProducts }})
+              </button>
+            </li>
+            <template v-if="categoriesPending">
+              <li class="text-xs text-gray-400">Loading categories...</li>
+            </template>
+            <template v-else-if="flatCategories.length === 0">
+              <li class="text-xs text-gray-400">No categories yet</li>
+            </template>
+            <template v-else>
+              <li
+                v-for="category in flatCategories"
+                :key="category.id"
+                class="flex"
+                :class="{ 'border-l border-gray-200': category.depth > 0 }"
+                :style="{ marginLeft: `${category.depth * 8}px` }"
+              >
+                <button
+                  class="hover:text-primary transition-colors text-left py-1 w-full"
+                  :class="[
+                    selectedCategoryId === category.id
+                      ? 'font-medium text-primary'
+                      : category.depth === 0
+                        ? 'font-medium text-gray-700'
+                        : 'text-gray-500'
+                  ]"
+                  :style="{ paddingLeft: `${category.depth > 0 ? 8 : 0}px` }"
+                  @click="selectedCategoryId = category.id"
+                >
+                  <span v-if="category.depth > 0" class="text-gray-300 mr-1">|-</span>
+                  <span>{{ category.name }}</span>
+                  <span v-if="category.hasChildren" class="ml-1 text-[10px] uppercase tracking-widest text-gray-400">
+                    Group
+                  </span>
+                </button>
+              </li>
+            </template>
           </ul>
         </div>
         
@@ -30,11 +67,19 @@
            <h3 class="font-serif text-lg mb-4">Availability</h3>
            <div class="space-y-2">
              <label class="flex items-center gap-2 text-sm text-gray-600 cursor-pointer hover:text-primary">
-               <input type="checkbox" checked class="rounded border-gray-300 text-primary focus:ring-primary">
+               <input
+                 v-model="inStockEnabled"
+                 type="checkbox"
+                 class="rounded border-gray-300 text-primary focus:ring-primary"
+               >
                In Stock
              </label>
              <label class="flex items-center gap-2 text-sm text-gray-600 cursor-pointer hover:text-primary">
-               <input type="checkbox" class="rounded border-gray-300 text-primary focus:ring-primary">
+               <input
+                 v-model="outOfStockEnabled"
+                 type="checkbox"
+                 class="rounded border-gray-300 text-primary focus:ring-primary"
+               >
                Out of Stock
              </label>
            </div>
@@ -44,7 +89,7 @@
       <!-- Product Grid -->
       <div class="flex-grow">
         <div class="flex justify-between items-center mb-8">
-          <h1 class="text-3xl font-serif">All Plants</h1>
+          <h1 class="text-3xl font-serif">{{ selectedCategoryName }}</h1>
           <div class="flex items-center gap-4">
             <span class="text-sm text-gray-500 hidden sm:block">Showing {{ displayProducts.length }} products</span>
             <select class="border-gray-200 rounded-md text-sm focus:ring-primary focus:border-primary cursor-pointer py-2 pl-3 pr-8">
@@ -69,7 +114,7 @@
             <NuxtLink :to="`/shop/${product.id}`">
               <div class="relative overflow-hidden aspect-[3/4] bg-[#f4f7f6] mb-4">
                 <img 
-                  :src="product.imageUrl" 
+                  :src="product.imageUrl ?? undefined" 
                   :alt="product.name"
                   class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
@@ -105,59 +150,190 @@
 </template>
 
 <script setup lang="ts">
+interface Product {
+  id: string | number
+  name: string
+  price: number
+  imageUrl?: string | null
+  isActive?: boolean
+  salePrice?: number
+  isNew?: boolean
+  isSale?: boolean
+  category?: {
+    id: string
+  } | null
+  inventoryItem?: {
+    quantityOnHand: number
+    reserved: number
+  } | null
+}
+
+interface Category {
+  id: string
+  name: string
+  parent?: {
+    id: string
+  } | null
+}
+
+interface CategoryTreeNode extends Category {
+  children: CategoryTreeNode[]
+}
+
+interface FlatCategoryNode {
+  id: string
+  name: string
+  depth: number
+  hasChildren: boolean
+}
+
 const config = useRuntimeConfig()
-const { data: realProducts, pending, error } = await useFetch(`${config.public.apiBase}/products`)
-
-// Mock data to ensure the design looks good immediately
-const mockProducts = [
+const { data: realProducts, pending } = await useFetch<Product[]>(
+  `${config.public.apiBase}/products`,
   {
-    id: 'mock-1',
-    name: 'Monstera Deliciosa',
-    price: 45.00,
-    imageUrl: 'https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    isNew: true
-  },
-  {
-    id: 'mock-2',
-    name: 'Fiddle Leaf Fig',
-    price: 65.00,
-    imageUrl: 'https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    isSale: false
-  },
-  {
-    id: 'mock-3',
-    name: 'Snake Plant Laurentii',
-    price: 35.00,
-    salePrice: 28.00,
-    imageUrl: 'https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    isSale: true
-  },
-  {
-    id: 'mock-4',
-    name: 'Pilea Peperomioides',
-    price: 25.00,
-    imageUrl: 'https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    isNew: true
-  },
-  {
-    id: 'mock-5',
-    name: 'Peace Lily',
-    price: 40.00,
-    imageUrl: 'https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 'mock-6',
-    name: 'Rubber Plant',
-    price: 55.00,
-    imageUrl: 'https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    default: () => []
   }
-]
+)
+const { data: categories, pending: categoriesPending } = await useFetch<Category[]>(
+  `${config.public.apiBase}/categories`,
+  {
+    default: () => []
+  }
+)
 
-// Use real products if available, otherwise fall back to mock data
+const selectedCategoryId = ref<string | null>(null)
+const inStockEnabled = ref(true)
+const outOfStockEnabled = ref(true)
+const totalProducts = computed(() => realProducts.value.length)
+const selectedCategoryName = computed(() => {
+  if (!selectedCategoryId.value) {
+    return 'All Plants'
+  }
+  const selected = categories.value.find((category) => category.id === selectedCategoryId.value)
+  return selected?.name ?? 'All Plants'
+})
+
+const flatCategories = computed<FlatCategoryNode[]>(() => {
+  const nodesById = new Map<string, CategoryTreeNode>()
+  for (const category of categories.value) {
+    nodesById.set(category.id, { ...category, children: [] })
+  }
+
+  const roots: CategoryTreeNode[] = []
+  for (const node of nodesById.values()) {
+    const parentId = node.parent?.id
+    if (parentId && nodesById.has(parentId)) {
+      nodesById.get(parentId)!.children.push(node)
+      continue
+    }
+    roots.push(node)
+  }
+
+  const sortTree = (items: CategoryTreeNode[]) => {
+    items.sort((a, b) => a.name.localeCompare(b.name))
+    for (const item of items) {
+      sortTree(item.children)
+    }
+  }
+  sortTree(roots)
+
+  const flattened: FlatCategoryNode[] = []
+  const walk = (items: CategoryTreeNode[], depth = 0) => {
+    for (const item of items) {
+      flattened.push({
+        id: item.id,
+        name: item.name,
+        depth,
+        hasChildren: item.children.length > 0
+      })
+      walk(item.children, depth + 1)
+    }
+  }
+  walk(roots)
+
+  return flattened
+})
+
+const categoriesById = computed(() => {
+  const map = new Map<string, Category>()
+  for (const category of categories.value) {
+    map.set(category.id, category)
+  }
+  return map
+})
+
+const categoryChildrenMap = computed(() => {
+  const map = new Map<string, string[]>()
+  for (const category of categories.value) {
+    const parentId = category.parent?.id
+    if (!parentId) {
+      continue
+    }
+
+    const children = map.get(parentId) ?? []
+    children.push(category.id)
+    map.set(parentId, children)
+  }
+  return map
+})
+
+const categoryFilterSet = computed<Set<string> | null>(() => {
+  if (!selectedCategoryId.value) {
+    return null
+  }
+  if (!categoriesById.value.has(selectedCategoryId.value)) {
+    return null
+  }
+
+  const includedIds = new Set<string>()
+  const stack = [selectedCategoryId.value]
+  while (stack.length > 0) {
+    const currentId = stack.pop()!
+    if (includedIds.has(currentId)) {
+      continue
+    }
+    includedIds.add(currentId)
+
+    const children = categoryChildrenMap.value.get(currentId) ?? []
+    for (const childId of children) {
+      stack.push(childId)
+    }
+  }
+
+  return includedIds
+})
+
 const displayProducts = computed(() => {
-  if (realProducts.value && realProducts.value.length > 0) {
-    return realProducts.value
-  }
-  return mockProducts
+  const hasAvailabilityFilter = inStockEnabled.value || outOfStockEnabled.value
+
+  return realProducts.value.filter((product) => {
+    if (product.isActive === false) {
+      return false
+    }
+
+    if (categoryFilterSet.value) {
+      const productCategoryId = product.category?.id
+      if (!productCategoryId || !categoryFilterSet.value.has(productCategoryId)) {
+        return false
+      }
+    }
+
+    if (!hasAvailabilityFilter) {
+      return false
+    }
+
+    const quantityOnHand = product.inventoryItem?.quantityOnHand ?? 0
+    const reserved = product.inventoryItem?.reserved ?? 0
+    const isInStock = quantityOnHand - reserved > 0
+
+    if (isInStock && !inStockEnabled.value) {
+      return false
+    }
+    if (!isInStock && !outOfStockEnabled.value) {
+      return false
+    }
+
+    return true
+  })
 })
 </script>
