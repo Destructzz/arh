@@ -57,9 +57,19 @@
            <div class="space-y-4">
              <div class="flex items-center gap-2 text-sm text-gray-500">
                 <span>$0</span>
-                <input type="range" min="0" max="200" class="flex-grow h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary">
+                <input
+                  v-model.number="selectedMaxPrice"
+                  type="range"
+                  :min="priceRangeMin"
+                  :max="priceRangeMax"
+                  step="1"
+                  class="flex-grow h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary"
+                >
                 <span>$200+</span>
              </div>
+             <p class="text-xs text-gray-500">
+               {{ priceFilterLabel }}
+             </p>
            </div>
         </div>
 
@@ -91,13 +101,39 @@
         <div class="flex justify-between items-center mb-8">
           <h1 class="text-3xl font-serif">{{ selectedCategoryName }}</h1>
           <div class="flex items-center gap-4">
-            <span class="text-sm text-gray-500 hidden sm:block">Showing {{ displayProducts.length }} products</span>
-            <select class="border-gray-200 rounded-md text-sm focus:ring-primary focus:border-primary cursor-pointer py-2 pl-3 pr-8">
-              <option>Sort by: Featured</option>
-              <option>Price: Low to High</option>
-              <option>Price: High to Low</option>
-              <option>Newest Arrivals</option>
-            </select>
+            <span class="text-sm text-gray-500 hidden sm:block">Showing {{ delayedProducts.length }} products</span>
+            <Listbox v-model="selectedSort" as="div" class="relative z-20">
+              <ListboxButton class="relative w-full cursor-pointer rounded-md border border-gray-200 bg-white py-2 pl-3 pr-10 text-left text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary min-w-[180px]">
+                <span class="block truncate">{{ sortOptions.find(o => o.value === selectedSort)?.label }}</span>
+                <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                  <Icon name="lucide:chevron-down" class="h-4 w-4 text-gray-400" aria-hidden="true" />
+                </span>
+              </ListboxButton>
+
+              <transition leave-active-class="transition duration-100 ease-in" leave-from-class="opacity-100" leave-to-class="opacity-0">
+                <ListboxOptions class="absolute right-0 z-10 mt-1 max-h-60 w-full min-w-max overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+                  <ListboxOption
+                    v-for="option in sortOptions"
+                    :key="option.value"
+                    :value="option.value"
+                    v-slot="{ active, selected }"
+                    as="template"
+                  >
+                    <li
+                      :class="[
+                        active ? 'bg-primary/5 text-primary' : 'text-gray-900',
+                        'relative cursor-pointer select-none py-2 pl-10 pr-4',
+                      ]"
+                    >
+                      <span :class="[selected ? 'font-medium' : 'font-normal', 'block truncate']">{{ option.label }}</span>
+                      <span v-if="selected" class="absolute inset-y-0 left-0 flex items-center pl-3 text-primary">
+                        <Icon name="lucide:check" class="h-4 w-4" aria-hidden="true" />
+                      </span>
+                    </li>
+                  </ListboxOption>
+                </ListboxOptions>
+              </transition>
+            </Listbox>
           </div>
         </div>
 
@@ -109,8 +145,8 @@
           </div>
         </div>
 
-        <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
-          <div v-for="product in displayProducts" :key="product.id" class="group cursor-pointer">
+        <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 transition-all duration-300" :class="!isUpdating ? 'opacity-100 blur-0 scale-100' : 'opacity-30 blur-[2px] scale-[0.98]'">
+          <div v-for="product in delayedProducts" :key="product.id" class="group cursor-pointer">
             <NuxtLink :to="`/shop/${product.id}`">
               <div class="relative overflow-hidden aspect-[3/4] bg-[#f4f7f6] mb-4">
                 <img 
@@ -150,6 +186,8 @@
 </template>
 
 <script setup lang="ts">
+import { Listbox, ListboxButton, ListboxOptions, ListboxOption } from '@headlessui/vue'
+
 interface Product {
   id: string | number
   name: string
@@ -204,6 +242,14 @@ const { data: categories, pending: categoriesPending } = await useFetch<Category
 const selectedCategoryId = ref<string | null>(null)
 const inStockEnabled = ref(true)
 const outOfStockEnabled = ref(true)
+const priceRangeMin = 0
+const priceRangeMax = 200
+const selectedMaxPrice = ref(priceRangeMax)
+const priceFilterLabel = computed(() => (
+  selectedMaxPrice.value >= priceRangeMax
+    ? `Any price (including $${priceRangeMax}+)`
+    : `Up to $${selectedMaxPrice.value}`
+))
 const totalProducts = computed(() => realProducts.value.length)
 const selectedCategoryName = computed(() => {
   if (!selectedCategoryId.value) {
@@ -305,6 +351,7 @@ const categoryFilterSet = computed<Set<string> | null>(() => {
 
 const displayProducts = computed(() => {
   const hasAvailabilityFilter = inStockEnabled.value || outOfStockEnabled.value
+  const hasPriceCap = selectedMaxPrice.value < priceRangeMax
 
   return realProducts.value.filter((product) => {
     if (product.isActive === false) {
@@ -322,6 +369,11 @@ const displayProducts = computed(() => {
       return false
     }
 
+    const effectivePrice = product.salePrice ?? product.price
+    if (hasPriceCap && effectivePrice > selectedMaxPrice.value) {
+      return false
+    }
+
     const quantityOnHand = product.inventoryItem?.quantityOnHand ?? 0
     const reserved = product.inventoryItem?.reserved ?? 0
     const isInStock = quantityOnHand - reserved > 0
@@ -336,4 +388,55 @@ const displayProducts = computed(() => {
     return true
   })
 })
+
+const selectedSort = ref('featured')
+
+const sortOptions = [
+  { value: 'featured', label: 'Sort by: Featured' },
+  { value: 'price-asc', label: 'Price: Low to High' },
+  { value: 'price-desc', label: 'Price: High to Low' },
+  { value: 'newest', label: 'Newest Arrivals' },
+]
+
+const sortedProducts = computed(() => {
+  const products = [...displayProducts.value]
+  
+  switch (selectedSort.value) {
+    case 'price-asc':
+      products.sort((a, b) => (a.salePrice ?? a.price) - (b.salePrice ?? b.price))
+      break
+    case 'price-desc':
+      products.sort((a, b) => (b.salePrice ?? b.price) - (a.salePrice ?? a.price))
+      break
+    case 'newest':
+      products.sort((a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0))
+      break
+    case 'featured':
+    default:
+      break
+  }
+  
+  return products
+})
+
+const isUpdating = ref(false)
+const delayedProducts = ref<Product[]>([])
+let updateTimeout: ReturnType<typeof setTimeout> | null = null
+
+watch(sortedProducts, (newProducts) => {
+  // If it's the very first load and we haven't rendered yet, skip the animation delay
+  if (delayedProducts.value.length === 0) {
+    delayedProducts.value = newProducts
+    return
+  }
+  
+  isUpdating.value = true
+  if (updateTimeout) {
+    clearTimeout(updateTimeout)
+  }
+  updateTimeout = setTimeout(() => {
+    delayedProducts.value = newProducts
+    isUpdating.value = false
+  }, 250)
+}, { immediate: true })
 </script>
