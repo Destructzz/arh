@@ -10,9 +10,14 @@
           <p class="text-lg text-gray-600 max-w-md">
             Discover our curated collection of easy-care plants that thrive in your home.
           </p>
-          <NuxtLink to="/shop" class="inline-block bg-primary text-white px-8 py-4 text-sm font-medium uppercase tracking-widest hover:bg-opacity-90 transition-all">
-            Shop Plants
-          </NuxtLink>
+          <div class="flex gap-4">
+            <NuxtLink to="/shop" class="inline-block bg-primary text-white px-8 py-4 text-sm font-medium uppercase tracking-widest hover:bg-opacity-90 transition-all">
+              Shop Plants
+            </NuxtLink>
+            <NuxtLink to="/cart" class="inline-block bg-transparent border-2 border-primary text-primary px-8 py-4 text-sm font-medium uppercase tracking-widest hover:bg-primary hover:text-white transition-all">
+              Go to Cart
+            </NuxtLink>
+          </div>
         </div>
         <div class="order-1 md:order-2 h-full relative overflow-hidden">
            <img 

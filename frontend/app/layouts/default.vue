@@ -32,14 +32,13 @@
             <Icon name="lucide:search" size="20" />
           </button>
           
-          <NuxtLink to="/auth/login" class="hover:text-primary transition-colors">
+          <NuxtLink :to="auth.isAuthenticated ? '/profile' : '/auth/login'" class="hover:text-primary transition-colors">
              <Icon name="lucide:user" size="20" />
           </NuxtLink>
-
-          <button class="hover:text-primary transition-colors relative">
+          <NuxtLink to="/cart" class="hover:text-primary transition-colors relative block mt-[6px]">
             <Icon name="lucide:shopping-bag" size="20" />
-            <span class="absolute -top-1 -right-2 bg-primary text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">0</span>
-          </button>
+            <span class="absolute -top-1 -right-2 bg-primary text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">{{ cartStore.totalItems }}</span>
+          </NuxtLink>
         </div>
       </div>
     </header>
@@ -90,5 +89,20 @@
 </template>
 
 <script setup lang="ts">
-// Logic for cart count / user state can go here
+import { onMounted, watch } from 'vue'
+import { useAuthStore } from '~/stores/auth'
+import { useCartStore } from '~/stores/cart'
+
+const auth = useAuthStore()
+const cartStore = useCartStore()
+
+// We need to react to auth state changes to fetch or clear the cart
+watch(() => auth.user, (user) => {
+  if (user) {
+    cartStore.fetchCart()
+  } else {
+    cartStore.clearCart()
+  }
+}, { immediate: true })
+
 </script>

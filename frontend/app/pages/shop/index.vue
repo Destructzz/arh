@@ -163,8 +163,14 @@
                 </div>
 
                 <!-- Quick Add Button -->
-                <button class="absolute bottom-4 right-4 bg-white w-10 h-10 flex items-center justify-center rounded-full shadow-md hover:bg-primary hover:text-white transition-all opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 duration-300">
-                  <Icon name="lucide:shopping-bag" size="18" />
+                <button 
+                  @click.prevent="handleQuickAdd($event, product.id)" 
+                  class="absolute bottom-4 right-4 bg-white w-10 h-10 flex items-center justify-center rounded-full shadow-md hover:bg-primary hover:text-white transition-all duration-300"
+                  :class="{'opacity-100 translate-y-0': addingItems[product.id], 'opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0': !addingItems[product.id]}"
+                  :disabled="addingItems[product.id]"
+                >
+                  <Icon v-if="addingItems[product.id]" name="lucide:loader-2" size="18" class="animate-spin" />
+                  <Icon v-else name="lucide:shopping-bag" size="18" />
                 </button>
               </div>
               
@@ -187,6 +193,7 @@
 
 <script setup lang="ts">
 import { Listbox, ListboxButton, ListboxOptions, ListboxOption } from '@headlessui/vue'
+import { useCartStore } from '~/stores/cart'
 
 interface Product {
   id: string | number
@@ -226,6 +233,8 @@ interface FlatCategoryNode {
 }
 
 const config = useRuntimeConfig()
+const cartStore = useCartStore()
+
 const { data: realProducts, pending } = await useFetch<Product[]>(
   `${config.public.apiBase}/products`,
   {
@@ -439,4 +448,16 @@ watch(sortedProducts, (newProducts) => {
     isUpdating.value = false
   }, 250)
 }, { immediate: true })
+
+const addingItems = ref<Record<string, boolean>>({})
+
+async function handleQuickAdd(event: Event, productId: string | number) {
+  event.preventDefault()
+  addingItems.value[productId] = true
+  try {
+    await cartStore.addToCart(String(productId), 1)
+  } finally {
+    addingItems.value[productId] = false
+  }
+}
 </script>

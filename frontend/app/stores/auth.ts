@@ -15,9 +15,10 @@ export const useAuthStore = defineStore('auth', () => {
 
   async function login(credentials: any) {
     try {
-      const { data, error } = await useFetch(`${config.public.apiBase}/auth/login`, {
+      const { data, error } = await useFetch<any>(`${config.public.apiBase}/auth/login`, {
         method: 'POST',
-        body: credentials
+        body: credentials,
+        credentials: 'include'
       })
 
       if (error.value) throw error.value
@@ -35,11 +36,12 @@ export const useAuthStore = defineStore('auth', () => {
     try {
       const { data, error } = await useFetch(`${config.public.apiBase}/auth/register`, {
         method: 'POST',
-        body: credentials
+        body: credentials,
+        credentials: 'include'
       })
 
       if (error.value) throw error.value
-      
+
       // Auto login after register if desired, or just redirect
       return data.value
     } catch (e) {
@@ -58,11 +60,29 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
+  async function fetchUser() {
+    try {
+      const { data, error } = await useFetch<any>(`${config.public.apiBase}/auth/me`, {
+        method: 'GET',
+        credentials: 'include'
+      })
+
+      if (error.value) {
+        user.value = null
+      } else if (data.value && data.value.user) {
+        user.value = data.value.user
+      }
+    } catch (e) {
+      user.value = null
+    }
+  }
+
   return {
     user,
     isAuthenticated,
     login,
     register,
-    logout
+    logout,
+    fetchUser
   }
 })

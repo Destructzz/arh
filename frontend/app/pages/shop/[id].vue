@@ -37,8 +37,13 @@
               <input type="number" v-model="quantity" class="w-full text-center border-none focus:ring-0 py-3 appearance-none m-0" min="1" />
               <button @click="quantity++" class="px-3 py-3 hover:bg-gray-100 transition-colors">+</button>
            </div>
-           <button class="flex-grow bg-primary text-white py-3 uppercase tracking-widest text-sm font-medium hover:bg-opacity-90 transition-all">
-             Add to Cart
+           <button 
+             @click="handleAddToCart"
+             :disabled="addingToCart"
+             class="flex-grow bg-primary text-white py-3 uppercase tracking-widest text-sm font-medium hover:bg-opacity-90 transition-all flex justify-center items-center gap-2"
+           >
+             <Icon v-if="addingToCart" name="lucide:loader-2" class="animate-spin" />
+             <span>{{ addingToCart ? 'Adding...' : 'Add to Cart' }}</span>
            </button>
         </div>
 
@@ -64,9 +69,32 @@
 </template>
 
 <script setup lang="ts">
+interface Product {
+  id: string | number
+  name: string
+  price: number
+  description?: string | null
+  imageUrl?: string | null
+}
+
 const route = useRoute()
 const config = useRuntimeConfig()
-const quantity = ref(1)
+const cartStore = useCartStore()
 
-const { data: product, pending, error } = await useFetch(`${config.public.apiBase}/products/${route.params.id}`)
+const quantity = ref(1)
+const addingToCart = ref(false)
+
+const { data: product, pending, error } = await useFetch<Product>(`${config.public.apiBase}/products/${route.params.id}`)
+
+async function handleAddToCart() {
+  if (!product.value) return
+  
+  addingToCart.value = true
+  try {
+    await cartStore.addToCart(String(product.value.id), quantity.value)
+    // Optional: show a success toast or notification here
+  } finally {
+    addingToCart.value = false
+  }
+}
 </script>

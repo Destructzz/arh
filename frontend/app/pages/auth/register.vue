@@ -15,7 +15,7 @@
           </div>
           <div>
             <label for="email" class="sr-only">Email</label>
-            <input id="email" v-model="form.email" name="email" type="email" class="appearance-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm" placeholder="Email (Optional)" />
+            <input id="email" v-model="form.email" name="email" type="email" required class="appearance-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm" placeholder="Email (e.g. manager@example.com)" />
           </div>
           <div>
             <label for="password" class="sr-only">Password</label>
