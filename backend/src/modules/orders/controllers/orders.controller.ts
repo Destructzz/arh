@@ -12,7 +12,7 @@ import { CreateOrderDto, OrdersService, UpdateOrderDto } from '../services/order
 @ApiTags('Orders')
 @Controller('orders')
 export class OrdersController {
-  constructor(private readonly ordersService: OrdersService) {}
+  constructor(private readonly ordersService: OrdersService) { }
 
   @ApiOperation({
     summary: 'Список заказов',
@@ -41,6 +41,20 @@ export class OrdersController {
     required: true,
     description: 'UUID заказа.',
   })
+  @ApiOperation({ summary: 'Заказы текущего пользователя' })
+  @Get('me')
+  findMyOrders() {
+    return [
+      {
+        id: "order-1234",
+        status: "DELIVERED",
+        totalAmount: 90.00,
+        itemsCount: 2,
+        createdAt: "2024-10-15T14:30:00Z"
+      }
+    ];
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.ordersService.findOne(id);

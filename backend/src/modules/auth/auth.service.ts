@@ -24,7 +24,7 @@ export class AuthService {
     private readonly usersRepo: Repository<User>,
     private readonly jwtService: JwtService,
     private readonly config: ConfigService,
-  ) {}
+  ) { }
 
   async validateUser(username: string, password: string): Promise<User> {
     const user = await this.usersRepo
@@ -56,12 +56,11 @@ export class AuthService {
   }
 
   async register(payload: { login: string; password: string; email?: string | null; phone?: string | null }) {
-    const existing = await this.usersRepo
-      .createQueryBuilder('user')
-      .where('user.login = :login', { login: payload.login })
-      .orWhere('user.email = :email', { email: payload.email ?? null })
-      .orWhere('user.phone = :phone', { phone: payload.phone ?? null })
-      .getOne();
+    const whereConditions: any[] = [{ login: payload.login }];
+    if (payload.email) whereConditions.push({ email: payload.email });
+    if (payload.phone) whereConditions.push({ phone: payload.phone });
+
+    const existing = await this.usersRepo.findOne({ where: whereConditions });
 
     if (existing) {
       throw new BadRequestException('User already exists');

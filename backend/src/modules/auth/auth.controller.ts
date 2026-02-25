@@ -1,7 +1,15 @@
-import { Body, Controller, Post, Req, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Post, Get, Req, Res, UseGuards } from '@nestjs/common';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { ThrottlerGuard } from '@nestjs/throttler';
 import type { Request, Response } from 'express';
+
+interface RequestWithUser extends Request {
+  user: {
+    id: string;
+    login: string;
+    role: string;
+  };
+}
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
 import { AuthService } from './auth.service';
@@ -10,7 +18,7 @@ import { Public } from './decorators/public.decorator';
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) { }
 
   @Public()
   @UseGuards(ThrottlerGuard)
@@ -40,6 +48,16 @@ export class AuthController {
   @Post('register')
   async register(@Body() body: RegisterDto) {
     return this.authService.register(body);
+  }
+
+  @Post('me')
+  async me(@Req() req: RequestWithUser) {
+    return { user: req.user };
+  }
+
+  @Get('me')
+  async getMe(@Req() req: RequestWithUser) {
+    return { user: req.user };
   }
 
   @Public()

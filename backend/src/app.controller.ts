@@ -5,7 +5,7 @@ import { AppService } from './app.service';
 @ApiTags('System')
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly appService: AppService) { }
 
   @ApiOperation({
     summary: 'Проверка доступности',
@@ -17,5 +17,15 @@ export class AppController {
   @Get()
   getHello(): string {
     return this.appService.getHello();
+  }
+
+  @ApiOperation({ summary: 'Получить статистику текущего пользователя' })
+  @Get('users/me/stats')
+  getMeStats() {
+    return {
+      registeredAt: "2024-03-12T10:00:00Z",
+      totalPurchases: 5,
+      totalSpent: 1350.50
+    };
   }
 }
