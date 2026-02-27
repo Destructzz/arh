@@ -7,6 +7,12 @@
           Or <NuxtLink to="/auth/register" class="font-medium text-primary hover:text-opacity-80">start a new account</NuxtLink>
         </p>
       </div>
+
+      <!-- Success message from registration -->
+      <div v-if="successMessage" class="bg-green-50 text-green-700 p-4 rounded-md text-sm text-center border border-green-200">
+        {{ successMessage }}
+      </div>
+      
       <form class="mt-8 space-y-6" @submit.prevent="handleLogin">
         <div class="space-y-4">
           <div>
@@ -37,6 +43,7 @@
 <script setup lang="ts">
 const auth = useAuthStore()
 const router = useRouter()
+const route = useRoute()
 
 const form = reactive({
   username: '',
@@ -44,6 +51,13 @@ const form = reactive({
 })
 const loading = ref(false)
 const error = ref('')
+const successMessage = ref('')
+
+onMounted(() => {
+  if (route.query.registered) {
+    successMessage.value = 'Регистрация прошла успешно! Теперь вы можете войти в свой аккаунт.'
+  }
+})
 
 async function handleLogin() {
   loading.value = true

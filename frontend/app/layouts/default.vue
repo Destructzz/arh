@@ -24,6 +24,7 @@
           <NuxtLink to="/shop?category=plants" class="hover:text-primary transition-colors">Plants</NuxtLink>
           <NuxtLink to="/shop?category=care" class="hover:text-primary transition-colors">Plant Care</NuxtLink>
           <NuxtLink to="/about" class="hover:text-primary transition-colors">About</NuxtLink>
+          <NuxtLink to="/admin" v-if="auth.isAuthenticated && (auth.user?.role === 'admin' || auth.user?.role === 'manager')" class="text-primary hover:text-opacity-80 transition-colors font-bold">Admin Panel</NuxtLink>
         </nav>
 
         <!-- Icons -->

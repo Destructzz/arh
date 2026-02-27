@@ -62,8 +62,10 @@ export const useAuthStore = defineStore('auth', () => {
 
   async function fetchUser() {
     try {
+      const headers = useRequestHeaders(['cookie']) as Record<string, string>
       const { data, error } = await useFetch<any>(`${config.public.apiBase}/auth/me`, {
         method: 'GET',
+        headers,
         credentials: 'include'
       })
 

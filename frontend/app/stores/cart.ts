@@ -38,7 +38,9 @@ export const useCartStore = defineStore('cart', {
             this.error = null
             try {
                 const config = useRuntimeConfig()
+                const headers = useRequestHeaders(['cookie']) as Record<string, string>
                 const { data, error } = await useFetch<CartItem[]>(`${config.public.apiBase}/cart`, {
+                    headers,
                     credentials: 'include'
                 })
 

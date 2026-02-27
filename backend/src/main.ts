@@ -15,6 +15,18 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   app.use(cookieParser());
+
+  // Custom middleware to log all endpoints
+  app.use((req: any, res: any, next: any) => {
+    const start = Date.now();
+    res.on('finish', () => {
+      const ms = Date.now() - start;
+      const statusCode = res.statusCode;
+      // You can adjust colors if you want, but simple text formatting works fine.
+      console.log(`[HTTP] ${req.method} ${req.url} - ${statusCode} [${ms}ms]`);
+    });
+    next();
+  });
   app.enableCors({
     origin: true,
     credentials: true,

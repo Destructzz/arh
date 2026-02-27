@@ -29,11 +29,13 @@ export class MethodJwtAuthGuard extends AuthGuard('jwt') {
     if (method === 'OPTIONS') {
       return true;
     }
+
     if (method === 'GET') {
-      if (roles && roles.length > 0) {
-        return super.canActivate(context);
+      const requiresUser = request.path.includes('/cart') || request.path.includes('/auth/me') || request.path.includes('/orders');
+      if (!requiresUser && (!roles || roles.length === 0)) {
+        // generic GETs (products, categories, etc.) bypass auth guard
+        return true;
       }
-      return true;
     }
 
     return super.canActivate(context);

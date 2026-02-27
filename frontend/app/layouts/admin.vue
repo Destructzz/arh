@@ -13,6 +13,7 @@ const links = [
   { name: 'Categories', path: '/admin/categories', icon: 'heroicons:tag' },
   { name: 'Discounts', path: '/admin/discounts', icon: 'heroicons:ticket' },
   { name: 'Customers', path: '/admin/customers', icon: 'heroicons:users' },
+  { name: 'API Tests', path: '/admin/test', icon: 'heroicons:beaker' },
 ];
 </script>
 

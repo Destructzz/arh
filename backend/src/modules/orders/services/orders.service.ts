@@ -6,6 +6,7 @@ import { Customer } from '../../customers/entities/customers.entity';
 import { DeliveryType, Order, OrderChannel, OrderStatus } from '../entities/orders.entity';
 
 export interface CreateOrderDto {
+  userId?: string | null;
   customerId?: string | null;
   status?: OrderStatus;
   channel: OrderChannel;
@@ -22,11 +23,19 @@ export class OrdersService {
   constructor(
     @InjectRepository(Order)
     private readonly ordersRepo: Repository<Order>,
-  ) {}
+  ) { }
 
   findAll(): Promise<Order[]> {
     return this.ordersRepo.find({
       relations: { customer: true, items: { product: true }, payments: true, delivery: true },
+      order: { createdAt: 'DESC' },
+    });
+  }
+
+  findMyOrders(userId: string): Promise<Order[]> {
+    return this.ordersRepo.find({
+      where: { userId },
+      relations: { items: { product: true }, payments: true, delivery: true },
       order: { createdAt: 'DESC' },
     });
   }
@@ -46,6 +55,7 @@ export class OrdersService {
 
   create(dto: CreateOrderDto): Promise<Order> {
     const order = this.ordersRepo.create({
+      userId: dto.userId ?? null,
       customer: dto.customerId ? ({ id: dto.customerId } as Customer) : null,
       status: dto.status ?? OrderStatus.New,
       channel: dto.channel,

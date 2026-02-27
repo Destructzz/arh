@@ -4,7 +4,15 @@
         
     <!-- Cart Section -->
     <section>
-      <div v-if="cartPending" class="space-y-4 animate-pulse">
+      <!-- Authentication check message -->
+      <div v-if="!auth.isAuthenticated" class="text-center py-16 bg-gray-50 rounded-lg border border-gray-100">
+          <Icon name="lucide:lock" class="text-gray-300 mx-auto mb-4" size="48" />
+          <h2 class="text-2xl font-serif text-gray-900 mb-2">Авторизация</h2>
+          <p class="text-gray-500 mb-6 text-lg">Чтобы пользоваться корзиной, необходимо войти в аккаунт.</p>
+          <NuxtLink to="/auth/login" class="bg-primary text-white font-medium hover:bg-opacity-90 inline-block px-8 py-3 rounded-md shadow-sm transition-all uppercase tracking-widest text-sm">Войти</NuxtLink>
+      </div>
+
+      <div v-else-if="cartPending" class="space-y-4 animate-pulse">
           <div v-for="i in 2" :key="i" class="h-24 bg-gray-100 rounded-lg"></div>
       </div>
       

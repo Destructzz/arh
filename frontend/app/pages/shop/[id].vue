@@ -1,4 +1,19 @@
 <template>
+  <!-- Toast message for unauthorized cart adds -->
+  <transition
+    enter-active-class="transition duration-300 ease-out"
+    enter-from-class="transform -translate-y-4 opacity-0"
+    enter-to-class="transform translate-y-0 opacity-100"
+    leave-active-class="transition duration-200 ease-in"
+    leave-from-class="transform translate-y-0 opacity-100"
+    leave-to-class="transform -translate-y-4 opacity-0"
+  >
+    <div v-if="authMessage" class="fixed top-24 right-4 bg-red-50 text-red-600 px-6 py-4 rounded-lg shadow-lg z-50 flex items-center gap-3 border border-red-100">
+      <Icon name="lucide:alert-circle" size="20" />
+      <span class="font-medium">{{ authMessage }}</span>
+    </div>
+  </transition>
+
   <div class="container mx-auto px-4 py-12">
     <div v-if="pending" class="animate-pulse grid grid-cols-1 md:grid-cols-2 gap-12">
        <div class="bg-gray-200 aspect-square"></div>
@@ -69,6 +84,7 @@
 </template>
 
 <script setup lang="ts">
+import { useAuthStore } from '~/stores/auth'
 interface Product {
   id: string | number
   name: string
@@ -80,15 +96,23 @@ interface Product {
 const route = useRoute()
 const config = useRuntimeConfig()
 const cartStore = useCartStore()
+const authStore = useAuthStore()
 
 const quantity = ref(1)
 const addingToCart = ref(false)
+const authMessage = ref<string | null>(null)
 
 const { data: product, pending, error } = await useFetch<Product>(`${config.public.apiBase}/products/${route.params.id}`)
 
 async function handleAddToCart() {
   if (!product.value) return
   
+  if (!authStore.isAuthenticated) {
+    authMessage.value = 'Чтобы добавить предмет, надо авторизоваться'
+    setTimeout(() => { authMessage.value = null }, 3000)
+    return
+  }
+
   addingToCart.value = true
   try {
     await cartStore.addToCart(String(product.value.id), quantity.value)

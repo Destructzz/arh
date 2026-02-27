@@ -50,11 +50,6 @@ export class AuthController {
     return this.authService.register(body);
   }
 
-  @Post('me')
-  async me(@Req() req: RequestWithUser) {
-    return { user: req.user };
-  }
-
   @Get('me')
   async getMe(@Req() req: RequestWithUser) {
     return { user: req.user };

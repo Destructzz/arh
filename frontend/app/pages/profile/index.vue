@@ -90,8 +90,12 @@ import { useAuthStore } from '~/stores/auth'
 
 definePageMeta({
   middleware: [
-    function (to, from) {
+    async function (to, from) {
       const auth = useAuthStore()
+      // Wait for auth to initialize if we don't have a user yet
+      if (!auth.isAuthenticated) {
+         await auth.fetchUser()
+      }
       if (!auth.isAuthenticated) {
         return navigateTo('/auth/login')
       }
@@ -117,13 +121,17 @@ interface UserStats {
 }
 
 // Fetch orders
+const headers = useRequestHeaders(['cookie']) as Record<string, string>
+
 const { data: ordersData, pending: ordersPending } = await useFetch<Order[]>(`${config.public.apiBase}/orders/me`, {
+  headers,
   credentials: 'include',
   default: () => []
 })
 
 // Fetch user stats
 const { data: statsData } = await useFetch<UserStats>(`${config.public.apiBase}/users/me/stats`, {
+  headers,
   credentials: 'include'
 })
 

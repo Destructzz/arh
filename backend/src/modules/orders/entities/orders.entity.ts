@@ -44,6 +44,9 @@ export class Order {
   })
   customer?: Customer | null;
 
+  @Column({ name: 'user_id', type: 'uuid', nullable: true })
+  userId?: string | null;
+
   @Column({ type: 'enum', enum: OrderStatus, default: OrderStatus.New })
   status: OrderStatus;
 

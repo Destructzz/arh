@@ -1,4 +1,19 @@
 <template>
+  <!-- Toast message for unauthorized cart adds -->
+  <transition
+    enter-active-class="transition duration-300 ease-out"
+    enter-from-class="transform -translate-y-4 opacity-0"
+    enter-to-class="transform translate-y-0 opacity-100"
+    leave-active-class="transition duration-200 ease-in"
+    leave-from-class="transform translate-y-0 opacity-100"
+    leave-to-class="transform -translate-y-4 opacity-0"
+  >
+    <div v-if="authMessage" class="fixed top-24 right-4 bg-red-50 text-red-600 px-6 py-4 rounded-lg shadow-lg z-50 flex items-center gap-3 border border-red-100">
+      <Icon name="lucide:alert-circle" size="20" />
+      <span class="font-medium">{{ authMessage }}</span>
+    </div>
+  </transition>
+
   <div class="container mx-auto px-4 py-12">
     <div class="flex flex-col md:flex-row gap-12">
       <!-- Sidebar Filters -->
@@ -194,6 +209,7 @@
 <script setup lang="ts">
 import { Listbox, ListboxButton, ListboxOptions, ListboxOption } from '@headlessui/vue'
 import { useCartStore } from '~/stores/cart'
+import { useAuthStore } from '~/stores/auth'
 
 interface Product {
   id: string | number
@@ -234,6 +250,9 @@ interface FlatCategoryNode {
 
 const config = useRuntimeConfig()
 const cartStore = useCartStore()
+const authStore = useAuthStore()
+
+const authMessage = ref<string | null>(null)
 
 const { data: realProducts, pending } = await useFetch<Product[]>(
   `${config.public.apiBase}/products`,
@@ -453,6 +472,13 @@ const addingItems = ref<Record<string, boolean>>({})
 
 async function handleQuickAdd(event: Event, productId: string | number) {
   event.preventDefault()
+  
+  if (!authStore.isAuthenticated) {
+    authMessage.value = 'Чтобы добавить предмет, надо авторизоваться'
+    setTimeout(() => { authMessage.value = null }, 3000)
+    return
+  }
+
   addingItems.value[productId] = true
   try {
     await cartStore.addToCart(String(productId), 1)

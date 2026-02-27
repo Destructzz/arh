@@ -3,7 +3,7 @@ import { orderExample, orderIdExample, createOrderExample, updateOrderExample } 
 import { ApiCreatedAuthResponse, ApiDeleteAuthResponse, ApiAuthResponses, ApiUpdatedAuthResponse } from '../../../common/swagger/api-responses.decorator';
 import { Order } from '../entities/orders.entity';
 
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Req } from '@nestjs/common';
 
 import { Roles } from '../../auth/decorators/roles.decorator';
 import { UserRole } from '../../auth/entities/user.entity';
@@ -22,6 +22,7 @@ export class OrdersController {
       'Обязательные параметры: нет.',
   })
   @ApiAuthResponses(Order, true, orderExample)
+  @Roles(UserRole.admin, UserRole.manager, UserRole.florist)
   @Get()
   findAll() {
     return this.ordersService.findAll();
@@ -43,18 +44,14 @@ export class OrdersController {
   })
   @ApiOperation({ summary: 'Заказы текущего пользователя' })
   @Get('me')
-  findMyOrders() {
-    return [
-      {
-        id: "order-1234",
-        status: "DELIVERED",
-        totalAmount: 90.00,
-        itemsCount: 2,
-        createdAt: "2024-10-15T14:30:00Z"
-      }
-    ];
+  findMyOrders(@Req() req: any) {
+    if (!req.user || !req.user.id) {
+      return [];
+    }
+    return this.ordersService.findMyOrders(req.user.id);
   }
 
+  @Roles(UserRole.admin, UserRole.manager, UserRole.florist)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.ordersService.findOne(id);

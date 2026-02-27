@@ -55,7 +55,7 @@ async function handleRegister() {
   error.value = ''
   try {
     await auth.register(form)
-    router.push('/auth/login')
+    router.push({ path: '/auth/login', query: { registered: 'true' } })
   } catch (e: any) {
     error.value = 'Registration failed. Try a different username.'
   } finally {
