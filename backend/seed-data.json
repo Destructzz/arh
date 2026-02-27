@@ -1,0 +1,989 @@
+[
+  {
+    "name": "Тенелюбивые растения",
+    "products": [
+      {
+        "name": "Tropical ZZ Plant 673",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1395,
+        "costPrice": 837,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 9
+      },
+      {
+        "name": "Desert Orchid 280",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1534,
+        "costPrice": 920,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 5
+      },
+      {
+        "name": "Deep Pothos 10",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 979,
+        "costPrice": 587,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 11
+      },
+      {
+        "name": "Golden Calathea 826",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 978,
+        "costPrice": 586,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 5
+      },
+      {
+        "name": "Midnight Aloe 493",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 719,
+        "costPrice": 431,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 12
+      },
+      {
+        "name": "Midnight Ficus 507",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 777,
+        "costPrice": 466,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 15
+      },
+      {
+        "name": "Royal Pothos 19",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1185,
+        "costPrice": 711,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 6
+      },
+      {
+        "name": "Desert Monstera 983",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1567,
+        "costPrice": 940,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 14
+      }
+    ]
+  },
+  {
+    "name": "Суккуленты и кактусы",
+    "products": [
+      {
+        "name": "Tropical Aloe 868",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 846,
+        "costPrice": 507,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 19
+      },
+      {
+        "name": "Emerald Orchid 532",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1225,
+        "costPrice": 735,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 15
+      },
+      {
+        "name": "Emerald Aloe 141",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 459,
+        "costPrice": 275,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 7
+      },
+      {
+        "name": "Deep Monstera 239",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 438,
+        "costPrice": 262,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 20
+      },
+      {
+        "name": "Emerald Ficus 231",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 692,
+        "costPrice": 415,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 16
+      },
+      {
+        "name": "Midnight Aloe 456",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1046,
+        "costPrice": 627,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 8
+      }
+    ]
+  },
+  {
+    "name": "Коллекция фикусов",
+    "products": [
+      {
+        "name": "Royal Monstera 116",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 276,
+        "costPrice": 165,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 4
+      },
+      {
+        "name": "Wild Monstera 589",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 185,
+        "costPrice": 111,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 4
+      },
+      {
+        "name": "Deep Ficus 348",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1071,
+        "costPrice": 642,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 10
+      },
+      {
+        "name": "Silver Cactus 651",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 982,
+        "costPrice": 589,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 10
+      },
+      {
+        "name": "Royal ZZ Plant 833",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1495,
+        "costPrice": 897,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 17
+      },
+      {
+        "name": "Golden Philodendron 346",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1152,
+        "costPrice": 691,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 7
+      },
+      {
+        "name": "Midnight Fern 746",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1431,
+        "costPrice": 858,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 14
+      },
+      {
+        "name": "Golden Orchid 993",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1045,
+        "costPrice": 627,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 4
+      },
+      {
+        "name": "Deep Calathea 357",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1469,
+        "costPrice": 881,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 12
+      }
+    ]
+  },
+  {
+    "name": "Орхидеи и экзотика",
+    "products": [
+      {
+        "name": "Silver Fern 870",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1468,
+        "costPrice": 880,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 11
+      },
+      {
+        "name": "Silver ZZ Plant 359",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 709,
+        "costPrice": 425,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 17
+      },
+      {
+        "name": "Wild Cactus 439",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 976,
+        "costPrice": 585,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 15
+      },
+      {
+        "name": "Royal Orchid 929",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 997,
+        "costPrice": 598,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 11
+      },
+      {
+        "name": "Deep Fern 51",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1402,
+        "costPrice": 841,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 18
+      },
+      {
+        "name": "Golden Ficus 55",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 651,
+        "costPrice": 390,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 12
+      },
+      {
+        "name": "Deep Cactus 818",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1313,
+        "costPrice": 787,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 16
+      },
+      {
+        "name": "Deep Fern 964",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1287,
+        "costPrice": 772,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 17
+      },
+      {
+        "name": "Deep Aloe 168",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 741,
+        "costPrice": 444,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 5
+      },
+      {
+        "name": "Velvet Ficus 443",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 841,
+        "costPrice": 504,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 13
+      }
+    ]
+  },
+  {
+    "name": "Вьющиеся растения",
+    "products": [
+      {
+        "name": "Tropical Cactus 326",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 696,
+        "costPrice": 417,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 14
+      },
+      {
+        "name": "Wild Monstera 314",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 259,
+        "costPrice": 155,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 12
+      },
+      {
+        "name": "Deep Orchid 529",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1491,
+        "costPrice": 894,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 9
+      },
+      {
+        "name": "Golden Calathea 307",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1541,
+        "costPrice": 924,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 16
+      },
+      {
+        "name": "Golden ZZ Plant 406",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1454,
+        "costPrice": 872,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 13
+      },
+      {
+        "name": "Wild Fern 374",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1314,
+        "costPrice": 788,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 13
+      },
+      {
+        "name": "Desert Orchid 48",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1453,
+        "costPrice": 871,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 10
+      },
+      {
+        "name": "Midnight Aloe 370",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 101,
+        "costPrice": 60,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 12
+      },
+      {
+        "name": "Desert Ficus 521",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1574,
+        "costPrice": 944,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 13
+      },
+      {
+        "name": "Royal Monstera 583",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 673,
+        "costPrice": 403,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 5
+      }
+    ]
+  },
+  {
+    "name": "Очищающие воздух",
+    "products": [
+      {
+        "name": "Velvet Orchid 663",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 935,
+        "costPrice": 561,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 15
+      },
+      {
+        "name": "Deep Pothos 268",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 257,
+        "costPrice": 154,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 10
+      },
+      {
+        "name": "Royal Pothos 46",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 342,
+        "costPrice": 205,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 19
+      },
+      {
+        "name": "Tropical Fern 934",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 515,
+        "costPrice": 309,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 12
+      },
+      {
+        "name": "Midnight Cactus 384",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1077,
+        "costPrice": 646,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 4
+      }
+    ]
+  },
+  {
+    "name": "Цитрусовые деревья",
+    "products": [
+      {
+        "name": "Deep Philodendron 784",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1359,
+        "costPrice": 815,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 13
+      },
+      {
+        "name": "Silver Pothos 414",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 619,
+        "costPrice": 371,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 17
+      },
+      {
+        "name": "Tropical Pothos 322",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 933,
+        "costPrice": 559,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 6
+      },
+      {
+        "name": "Tropical ZZ Plant 444",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1260,
+        "costPrice": 756,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 20
+      },
+      {
+        "name": "Deep Fern 954",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1357,
+        "costPrice": 814,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 7
+      },
+      {
+        "name": "Golden Ficus 332",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 214,
+        "costPrice": 128,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 14
+      },
+      {
+        "name": "Emerald Fern 784",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1378,
+        "costPrice": 826,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 5
+      },
+      {
+        "name": "Golden Orchid 483",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1536,
+        "costPrice": 921,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 15
+      }
+    ]
+  },
+  {
+    "name": "Деревья Бонсай",
+    "products": [
+      {
+        "name": "Silver Philodendron 210",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1146,
+        "costPrice": 687,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 12
+      },
+      {
+        "name": "Desert Orchid 343",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 854,
+        "costPrice": 512,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 16
+      },
+      {
+        "name": "Silver Fern 338",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1522,
+        "costPrice": 913,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 17
+      },
+      {
+        "name": "Royal Pothos 678",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 730,
+        "costPrice": 438,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 6
+      },
+      {
+        "name": "Tropical Cactus 944",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1521,
+        "costPrice": 912,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 3
+      },
+      {
+        "name": "Deep Orchid 194",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1226,
+        "costPrice": 735,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 3
+      },
+      {
+        "name": "Velvet Cactus 763",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 142,
+        "costPrice": 85,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 18
+      },
+      {
+        "name": "Emerald Ficus 460",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 382,
+        "costPrice": 229,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 18
+      },
+      {
+        "name": "Silver Monstera 654",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1536,
+        "costPrice": 921,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 7
+      }
+    ]
+  },
+  {
+    "name": "Папоротники и мхи",
+    "products": [
+      {
+        "name": "Silver Philodendron 427",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 900,
+        "costPrice": 540,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 13
+      },
+      {
+        "name": "Royal Calathea 213",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1393,
+        "costPrice": 835,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 11
+      },
+      {
+        "name": "Royal Orchid 212",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 779,
+        "costPrice": 467,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 3
+      },
+      {
+        "name": "Emerald Fern 94",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 209,
+        "costPrice": 125,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 20
+      },
+      {
+        "name": "Emerald Aloe 448",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1487,
+        "costPrice": 892,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 15
+      },
+      {
+        "name": "Velvet Calathea 425",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1599,
+        "costPrice": 959,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 11
+      },
+      {
+        "name": "Tropical Cactus 523",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1468,
+        "costPrice": 880,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 14
+      }
+    ]
+  },
+  {
+    "name": "Редкие ароидные",
+    "products": [
+      {
+        "name": "Wild Calathea 420",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 404,
+        "costPrice": 242,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 14
+      },
+      {
+        "name": "Royal Calathea 217",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1057,
+        "costPrice": 634,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 13
+      },
+      {
+        "name": "Deep ZZ Plant 15",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 695,
+        "costPrice": 417,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 13
+      },
+      {
+        "name": "Golden Aloe 351",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 464,
+        "costPrice": 278,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 18
+      },
+      {
+        "name": "Desert Aloe 353",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1308,
+        "costPrice": 784,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 3
+      },
+      {
+        "name": "Golden Orchid 561",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1301,
+        "costPrice": 780,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 17
+      }
+    ]
+  },
+  {
+    "name": "Безопасные для животных",
+    "products": [
+      {
+        "name": "Royal Orchid 838",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 415,
+        "costPrice": 249,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 6
+      },
+      {
+        "name": "Tropical Aloe 758",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1547,
+        "costPrice": 928,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 4
+      },
+      {
+        "name": "Deep Ficus 496",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 699,
+        "costPrice": 419,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 6
+      },
+      {
+        "name": "Desert Pothos 254",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 134,
+        "costPrice": 80,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 5
+      },
+      {
+        "name": "Velvet Orchid 405",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 408,
+        "costPrice": 244,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 20
+      },
+      {
+        "name": "Silver Calathea 499",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 270,
+        "costPrice": 162,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 12
+      }
+    ]
+  },
+  {
+    "name": "Гигантские листья",
+    "products": [
+      {
+        "name": "Desert Philodendron 318",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 477,
+        "costPrice": 286,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 7
+      },
+      {
+        "name": "Desert Philodendron 164",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1560,
+        "costPrice": 936,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 7
+      },
+      {
+        "name": "Emerald Pothos 635",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1501,
+        "costPrice": 900,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 4
+      },
+      {
+        "name": "Midnight Calathea 996",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 829,
+        "costPrice": 497,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 14
+      },
+      {
+        "name": "Silver Aloe 102",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 194,
+        "costPrice": 116,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 10
+      },
+      {
+        "name": "Velvet Aloe 44",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1433,
+        "costPrice": 859,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 15
+      },
+      {
+        "name": "Emerald Ficus 448",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1368,
+        "costPrice": 820,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 16
+      },
+      {
+        "name": "Emerald Fern 699",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 310,
+        "costPrice": 186,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 13
+      },
+      {
+        "name": "Royal Fern 330",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1171,
+        "costPrice": 702,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 5
+      }
+    ]
+  },
+  {
+    "name": "Насекомоядные растения",
+    "products": [
+      {
+        "name": "Tropical Pothos 764",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1120,
+        "costPrice": 672,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 15
+      },
+      {
+        "name": "Velvet Calathea 431",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1152,
+        "costPrice": 691,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 17
+      },
+      {
+        "name": "Wild Monstera 544",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1293,
+        "costPrice": 775,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 7
+      },
+      {
+        "name": "Midnight Cactus 202",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 537,
+        "costPrice": 322,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 11
+      },
+      {
+        "name": "Tropical Pothos 805",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1151,
+        "costPrice": 690,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 12
+      }
+    ]
+  },
+  {
+    "name": "Офисные настольные",
+    "products": [
+      {
+        "name": "Golden Philodendron 711",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 744,
+        "costPrice": 446,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 20
+      },
+      {
+        "name": "Desert Monstera 245",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1214,
+        "costPrice": 728,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 9
+      },
+      {
+        "name": "Royal Calathea 56",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 550,
+        "costPrice": 330,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 6
+      },
+      {
+        "name": "Desert Calathea 7",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 474,
+        "costPrice": 284,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 5
+      },
+      {
+        "name": "Golden Cactus 751",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 994,
+        "costPrice": 596,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 6
+      },
+      {
+        "name": "Deep Ficus 35",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1323,
+        "costPrice": 793,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 10
+      }
+    ]
+  },
+  {
+    "name": "Лианы",
+    "products": [
+      {
+        "name": "Wild ZZ Plant 262",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1124,
+        "costPrice": 674,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 5
+      },
+      {
+        "name": "Royal Monstera 726",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 342,
+        "costPrice": 205,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 15
+      },
+      {
+        "name": "Wild Calathea 402",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 808,
+        "costPrice": 484,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 18
+      },
+      {
+        "name": "Silver Cactus 562",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 884,
+        "costPrice": 530,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 8
+      },
+      {
+        "name": "Royal Orchid 554",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1359,
+        "costPrice": 815,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 17
+      },
+      {
+        "name": "Silver Cactus 293",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 424,
+        "costPrice": 254,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 12
+      },
+      {
+        "name": "Midnight ZZ Plant 896",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 175,
+        "costPrice": 105,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 3
+      },
+      {
+        "name": "Tropical Cactus 336",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 697,
+        "costPrice": 418,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 12
+      },
+      {
+        "name": "Silver Philodendron 744",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 651,
+        "costPrice": 390,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 14
+      },
+      {
+        "name": "Wild Monstera 739",
+        "description": "Прекрасный экземпляр для вашей коллекции. Идеально подойдет для любого декора.",
+        "price": 1475,
+        "costPrice": 885,
+        "imageUrl": "https://i.pinimg.com/1200x/e6/b1/8c/e6b18ce24b4252cc50bd0c19d137a671.jpg",
+        "stock": 8
+      }
+    ]
+  }
+]

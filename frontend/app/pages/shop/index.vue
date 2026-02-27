@@ -70,21 +70,30 @@
         <div>
            <h3 class="font-serif text-lg mb-4">Price</h3>
            <div class="space-y-4">
-             <div class="flex items-center gap-2 text-sm text-gray-500">
-                <span>$0</span>
-                <input
-                  v-model.number="selectedMaxPrice"
-                  type="range"
-                  :min="priceRangeMin"
-                  :max="priceRangeMax"
-                  step="1"
-                  class="flex-grow h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary"
-                >
-                <span>$200+</span>
+             <div class="flex items-center gap-3">
+               <div class="relative w-full text-gray-500">
+                 <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-sm">$</span>
+                 <input
+                   v-model.number="selectedPriceRange[0]"
+                   type="number"
+                   :min="0"
+                   :max="selectedPriceRange[1]"
+                   class="w-full pl-7 pr-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary text-gray-900 transition-colors"
+                   placeholder="Min"
+                 />
+               </div>
+               <span class="text-gray-400">—</span>
+               <div class="relative w-full text-gray-500">
+                 <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-sm">$</span>
+                 <input
+                   v-model.number="selectedPriceRange[1]"
+                   type="number"
+                   :min="selectedPriceRange[0]"
+                   class="w-full pl-7 pr-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary text-gray-900 transition-colors"
+                   placeholder="Max"
+                 />
+               </div>
              </div>
-             <p class="text-xs text-gray-500">
-               {{ priceFilterLabel }}
-             </p>
            </div>
         </div>
 
@@ -271,13 +280,9 @@ const selectedCategoryId = ref<string | null>(null)
 const inStockEnabled = ref(true)
 const outOfStockEnabled = ref(true)
 const priceRangeMin = 0
-const priceRangeMax = 200
-const selectedMaxPrice = ref(priceRangeMax)
-const priceFilterLabel = computed(() => (
-  selectedMaxPrice.value >= priceRangeMax
-    ? `Any price (including $${priceRangeMax}+)`
-    : `Up to $${selectedMaxPrice.value}`
-))
+const priceRangeMax = 20000
+const selectedPriceRange = ref([priceRangeMin, priceRangeMax])
+
 const totalProducts = computed(() => realProducts.value.length)
 const selectedCategoryName = computed(() => {
   if (!selectedCategoryId.value) {
@@ -379,7 +384,9 @@ const categoryFilterSet = computed<Set<string> | null>(() => {
 
 const displayProducts = computed(() => {
   const hasAvailabilityFilter = inStockEnabled.value || outOfStockEnabled.value
-  const hasPriceCap = selectedMaxPrice.value < priceRangeMax
+  const range0 = selectedPriceRange.value?.[0] ?? priceRangeMin
+  const range1 = selectedPriceRange.value?.[1] ?? priceRangeMax
+  const hasPriceCap = range1 < priceRangeMax || range0 > priceRangeMin
 
   return realProducts.value.filter((product) => {
     if (product.isActive === false) {
@@ -398,7 +405,14 @@ const displayProducts = computed(() => {
     }
 
     const effectivePrice = product.salePrice ?? product.price
-    if (hasPriceCap && effectivePrice > selectedMaxPrice.value) {
+    const range0 = selectedPriceRange.value?.[0] ?? priceRangeMin
+    const range1 = selectedPriceRange.value?.[1] ?? priceRangeMax
+
+    if (effectivePrice < range0) {
+      return false
+    }
+    // Only filter by max price if it's not the absolute maximum
+    if (range1 < priceRangeMax && effectivePrice > range1) {
       return false
     }
 

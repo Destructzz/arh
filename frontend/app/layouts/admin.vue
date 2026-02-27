@@ -14,6 +14,7 @@ const links = [
   { name: 'Discounts', path: '/admin/discounts', icon: 'heroicons:ticket' },
   { name: 'Customers', path: '/admin/customers', icon: 'heroicons:users' },
   { name: 'API Tests', path: '/admin/test', icon: 'heroicons:beaker' },
+  { name: 'Data Seeder', path: '/admin/seed', icon: 'heroicons:command-line' },
 ];
 </script>
 
