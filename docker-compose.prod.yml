@@ -4,20 +4,19 @@ services:
     restart: unless-stopped
     env_file: .env
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
-    ports:
-      - "${POSTGRES_PORT:-5432}:5432"
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-ais_flower_shop}
     volumes:
       - postgres_data:/var/lib/postgresql
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
-      interval: 5s
-      timeout: 3s
-      retries: 10
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-ais_flower_shop}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     networks:
       - app_net
+
   backend:
     build:
       context: ./backend
@@ -26,24 +25,35 @@ services:
     env_file: .env
     environment:
       POSTGRES_HOST: postgres
-      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
-      PORT: ${PORT:-3000}
+      POSTGRES_PORT: 5432
       NODE_ENV: production
       ADMIN_LOGIN: ${ADMIN_LOGIN}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD}
     depends_on:
       postgres:
         condition: service_healthy
-    ports:
-      - "${PORT:-3000}:3001"
     networks:
       - app_net
+    ports:
+      - "3001:3001"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+    networks:
+      - app_net
+    ports:
+      - "3000:3000"
 
 volumes:
   postgres_data:
+  caddy_data:
+  caddy_config:
 
 networks:
   app_net:
+    driver: bridge

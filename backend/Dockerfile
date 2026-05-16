@@ -1,33 +1,35 @@
-FROM node:20-alpine AS build
+# Build stage
+FROM oven/bun:1-alpine AS build
 
 WORKDIR /app
 
-# Install build tools for native modules
+# Install build tools for native modules (like argon2)
 RUN apk add --no-cache python3 make g++
 
-COPY package*.json ./
-RUN npm ci
+COPY package.json bun.lock ./
+RUN bun install --frozen-lockfile
 
 COPY . .
-RUN npm run build
+RUN bun run build
 
-FROM node:20-alpine AS runtime
+# Runtime stage
+FROM oven/bun:1-alpine AS runtime
 
 WORKDIR /app
 
 ENV NODE_ENV=production
 
-# Install build tools for native modules (needed for npm ci --omit=dev if native modules are present)
+# Bun can often run native modules without extra tools if they were built in the previous stage, 
+# but for argon2 it's safer to keep tools or use the ones from build stage if shared.
+# Here we just install what's needed for runtime.
 RUN apk add --no-cache python3 make g++
 
-COPY package*.json ./
-RUN npm ci --omit=dev
+COPY package.json bun.lock ./
+RUN bun install --production --frozen-lockfile
 
-# Optional: Remove build tools to keep image small (after npm ci)
-# RUN apk del python3 make g++
-
+# Copy build artifacts
 COPY --from=build /app/dist ./dist
 
-EXPOSE 3000
+EXPOSE 3001
 
-CMD ["node", "dist/main.js"]
+CMD ["bun", "dist/main.js"]
