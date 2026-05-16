@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 
 import { Category } from '../entities/categories.entity';
 import { Product } from '../entities/products.entity';
@@ -22,7 +22,25 @@ export class ProductsService {
   constructor(
     @InjectRepository(Product)
     private readonly productsRepo: Repository<Product>,
+    private readonly dataSource: DataSource,
   ) {}
+
+  async getBestSellers(limit = 4): Promise<Product[]> {
+    // Join order_items to count units sold per product
+    const result = await this.dataSource
+      .getRepository(Product)
+      .createQueryBuilder('p')
+      .leftJoin('order_items', 'oi', 'oi."productId" = p.id')
+      .leftJoinAndSelect('p.category', 'cat')
+      .addSelect('COALESCE(SUM(oi.qty), 0)', 'sold')
+      .where('p.is_active = true')
+      .groupBy('p.id')
+      .addGroupBy('cat.id')
+      .orderBy('sold', 'DESC')
+      .limit(limit)
+      .getMany();
+    return result;
+  }
 
   findAll() {
     return this.productsRepo.find({

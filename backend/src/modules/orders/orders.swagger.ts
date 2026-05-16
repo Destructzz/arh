@@ -2,15 +2,12 @@ export const orderIdExample = 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa';
 export const orderItemIdExample = 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb';
 export const paymentIdExample = 'cccccccc-cccc-cccc-cccc-cccccccccccc';
 export const deliveryIdExample = 'dddddddd-dddd-dddd-dddd-dddddddddddd';
-export const orderCustomerIdExample = '44444444-4444-4444-4444-444444444444';
+export const orderUserIdExample = '550e8400-e29b-41d4-a716-446655440000';
 export const orderProductIdExample = '22222222-2222-2222-2222-222222222222';
 
 export const orderExample = {
   id: orderIdExample,
-  customer: {
-    id: orderCustomerIdExample,
-    name: 'Anna Petrova',
-  },
+  userId: orderUserIdExample,
   status: 'paid',
   channel: 'online',
   deliveryType: 'courier',
@@ -51,7 +48,7 @@ export const orderExample = {
 };
 
 export const createOrderExample = {
-  customerId: orderCustomerIdExample,
+  userId: orderUserIdExample,
   status: 'new',
   channel: 'online',
   deliveryType: 'courier',

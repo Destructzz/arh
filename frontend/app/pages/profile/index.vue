@@ -23,12 +23,12 @@
               <span class="font-medium text-gray-900">{{ registrationDate }}</span>
             </div>
             <div class="flex justify-between items-center">
-              <span class="text-sm text-gray-500">Total Purchases</span>
-              <span class="font-medium text-gray-900">{{ stats.totalPurchases }} items</span>
+              <span class="text-sm text-gray-500">Total Orders</span>
+              <span class="font-medium text-gray-900">{{ orders.length }}</span>
             </div>
             <div class="flex justify-between items-center">
               <span class="text-sm text-gray-500">Total Spent</span>
-              <span class="font-medium text-gray-900">${{ stats.totalSpent.toFixed(2) }}</span>
+              <span class="font-medium text-gray-900">${{ totalSpent.toFixed(2) }}</span>
             </div>
           </div>
 
@@ -57,25 +57,78 @@
              <NuxtLink to="/shop" class="text-primary font-medium hover:underline">Start Shopping</NuxtLink>
           </div>
           
-          <div v-else class="space-y-4">
-            <div v-for="order in orders" :key="order.id" class="p-5 border border-gray-100 rounded-xl bg-white flex justify-between items-center group hover:border-primary/30 transition-colors">
-              <div>
-                <div class="flex items-center gap-3 mb-1">
-                  <span class="font-medium text-gray-900">Order #{{ order.id.slice(0, 8) }}...</span>
-                  <span :class="{
-                    'bg-green-100 text-green-700': order.status === 'DELIVERED',
-                    'bg-blue-100 text-blue-700': order.status === 'PROCESSING',
-                    'bg-gray-100 text-gray-700': order.status === 'CANCELLED'
-                  }" class="px-2 py-0.5 rounded text-xs font-medium tracking-wide">
-                    {{ order.status }}
-                  </span>
+          <div v-else class="space-y-3">
+            <div
+              v-for="order in orders"
+              :key="order.id"
+              class="border border-gray-100 rounded-xl bg-white overflow-hidden"
+            >
+              <!-- Order Header (always visible, clickable) -->
+              <button
+                class="w-full p-5 flex justify-between items-center hover:bg-gray-50/60 transition-colors text-left"
+                @click="toggleOrder(order.id)"
+              >
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center gap-3 mb-1">
+                    <span class="font-medium text-gray-900">Order #{{ order.id.slice(0, 8) }}…</span>
+                    <span :class="statusClass(order.status)" class="px-2 py-0.5 rounded text-xs font-medium tracking-wide">
+                      {{ statusLabel(order.status) }}
+                    </span>
+                  </div>
+                  <p class="text-sm text-gray-500">
+                    {{ new Date(order.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) }}
+                    &bull; {{ order.items?.length || 0 }} item{{ (order.items?.length || 0) !== 1 ? 's' : '' }}
+                  </p>
                 </div>
-                <p class="text-sm text-gray-500">{{ new Date(order.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) }} • {{ order.itemsCount }} items</p>
-              </div>
-              <div class="text-right">
-                <p class="font-medium text-lg">${{ Number(order.totalAmount || 0).toFixed(2) }}</p>
-                <NuxtLink :to="`/orders/${order.id}`" class="text-sm text-primary hover:underline opacity-0 group-hover:opacity-100 transition-opacity">View Details</NuxtLink>
-              </div>
+                <div class="flex items-center gap-3 flex-shrink-0 ml-4">
+                  <p class="font-medium text-lg">${{ Number(order.totalPrice).toFixed(2) }}</p>
+                  <Icon
+                    name="lucide:chevron-down"
+                    class="text-gray-400 transition-transform duration-200"
+                    :class="{ 'rotate-180': expandedOrders.has(order.id) }"
+                    size="18"
+                  />
+                </div>
+              </button>
+
+              <!-- Expanded Order Details -->
+              <Transition name="slide">
+                <div v-if="expandedOrders.has(order.id)" class="border-t border-gray-100">
+                  <div v-if="order.items?.length" class="p-5 space-y-3">
+                    <div
+                      v-for="item in order.items"
+                      :key="item.id"
+                      class="flex items-center justify-between py-2"
+                    >
+                      <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-gray-100 rounded-md overflow-hidden flex-shrink-0">
+                          <img
+                            v-if="item.product?.imageUrl"
+                            :src="item.product.imageUrl"
+                            :alt="item.nameSnapshot"
+                            class="w-full h-full object-cover"
+                          />
+                          <div v-else class="w-full h-full flex items-center justify-center">
+                            <Icon name="lucide:flower-2" class="text-gray-300" size="16" />
+                          </div>
+                        </div>
+                        <div>
+                          <p class="text-sm font-medium text-gray-800">{{ item.nameSnapshot }}</p>
+                          <p class="text-xs text-gray-400">× {{ item.qty }} &nbsp;·&nbsp; ${{ item.price }} each</p>
+                        </div>
+                      </div>
+                      <p class="text-sm font-medium text-gray-700">${{ (item.price * item.qty).toFixed(2) }}</p>
+                    </div>
+
+                    <!-- Subtotal row -->
+                    <div class="pt-3 border-t border-gray-100 flex justify-between items-center">
+                      <span class="text-sm text-gray-500">Order Total</span>
+                      <span class="font-semibold text-gray-900">${{ Number(order.totalPrice).toFixed(2) }}</span>
+                    </div>
+                  </div>
+                  <div v-else class="p-5 text-sm text-gray-400">No items data available.</div>
+                </div>
+              </Transition>
             </div>
           </div>
         </section>
@@ -92,7 +145,6 @@ definePageMeta({
   middleware: [
     async function (to, from) {
       const auth = useAuthStore()
-      // Wait for auth to initialize if we don't have a user yet
       if (!auth.isAuthenticated) {
          await auth.fetchUser()
       }
@@ -106,12 +158,20 @@ definePageMeta({
 const auth = useAuthStore()
 const config = useRuntimeConfig()
 
+interface OrderItem {
+  id: string
+  nameSnapshot: string
+  qty: number
+  price: number
+  product?: { imageUrl?: string | null }
+}
+
 interface Order {
   id: string
-  status: 'PROCESSING' | 'SHIPPED' | 'DELIVERED' | 'CANCELLED'
-  totalAmount: number
-  itemsCount: number
+  status: string
+  totalPrice: number
   createdAt: string
+  items?: OrderItem[]
 }
 
 interface UserStats {
@@ -120,7 +180,6 @@ interface UserStats {
   totalSpent: number
 }
 
-// Fetch orders
 const headers = useRequestHeaders(['cookie']) as Record<string, string>
 
 const { data: ordersData, pending: ordersPending } = await useFetch<Order[]>(`${config.public.apiBase}/orders/me`, {
@@ -129,7 +188,6 @@ const { data: ordersData, pending: ordersPending } = await useFetch<Order[]>(`${
   default: () => []
 })
 
-// Fetch user stats
 const { data: statsData } = await useFetch<UserStats>(`${config.public.apiBase}/users/me/stats`, {
   headers,
   credentials: 'include'
@@ -137,20 +195,71 @@ const { data: statsData } = await useFetch<UserStats>(`${config.public.apiBase}/
 
 const orders = computed(() => ordersData.value || [])
 
-// Fallback logic for stats in case backend doesn't implement totalPurchases etc.
-const stats = computed(() => statsData.value || {
-  registeredAt: new Date().toISOString(),
-  totalPurchases: orders.value.reduce((acc, order) => acc + (order.itemsCount || 0), 0),
-  totalSpent: orders.value.reduce((acc, order) => acc + Number(order.totalAmount || 0), 0)
-})
+const totalSpent = computed(() =>
+  orders.value.reduce((acc, o) => acc + Number(o.totalPrice || 0), 0)
+)
 
 const registrationDate = computed(() => {
-  if (!stats.value?.registeredAt) return 'Unknown'
-  return new Date(stats.value.registeredAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short' })
+  const date = statsData.value?.registeredAt
+  if (!date) return 'Unknown'
+  return new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
 })
+
+// Expandable orders
+const expandedOrders = ref<Set<string>>(new Set())
+
+function toggleOrder(orderId: string) {
+  if (expandedOrders.value.has(orderId)) {
+    expandedOrders.value.delete(orderId)
+  } else {
+    expandedOrders.value.add(orderId)
+  }
+}
+
+function statusLabel(status: string) {
+  const map: Record<string, string> = {
+    new: 'New',
+    paid: 'Paid',
+    in_assembly: 'In Assembly',
+    out_for_delivery: 'Out for Delivery',
+    done: 'Delivered',
+    cancelled: 'Cancelled',
+  }
+  return map[status] ?? status
+}
+
+function statusClass(status: string) {
+  const map: Record<string, string> = {
+    new: 'bg-blue-100 text-blue-700',
+    paid: 'bg-green-100 text-green-700',
+    in_assembly: 'bg-yellow-100 text-yellow-700',
+    out_for_delivery: 'bg-orange-100 text-orange-700',
+    done: 'bg-emerald-100 text-emerald-700',
+    cancelled: 'bg-gray-100 text-gray-600',
+  }
+  return map[status] ?? 'bg-gray-100 text-gray-600'
+}
 
 async function handleLogout() {
   await auth.logout()
   navigateTo('/')
 }
 </script>
+
+<style scoped>
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.2s ease;
+  overflow: hidden;
+}
+.slide-enter-from,
+.slide-leave-to {
+  opacity: 0;
+  max-height: 0;
+}
+.slide-enter-to,
+.slide-leave-from {
+  opacity: 1;
+  max-height: 600px;
+}
+</style>

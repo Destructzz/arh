@@ -48,14 +48,56 @@
                  <span class="text-lg font-serif">Total</span>
                  <span class="text-3xl font-serif">${{ cartTotal.toFixed(2) }}</span>
               </div>
-              
-              <button class="w-full bg-primary text-white py-4 px-8 rounded-lg uppercase tracking-widest text-sm font-medium hover:bg-opacity-90 transition-all shadow-md">
-                Proceed to Checkout
+
+              <!-- Error message -->
+              <p v-if="checkoutError" class="text-sm text-red-500 mb-3">{{ checkoutError }}</p>
+
+              <button
+                id="checkout-btn"
+                @click="handleCheckout"
+                :disabled="checkoutLoading"
+                class="w-full bg-primary text-white py-4 px-8 rounded-lg uppercase tracking-widest text-sm font-medium hover:bg-opacity-90 transition-all shadow-md disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              >
+                <svg v-if="checkoutLoading" class="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                </svg>
+                {{ checkoutLoading ? 'Processing...' : 'Proceed to Checkout' }}
               </button>
             </div>
         </div>
       </div>
     </section>
+
+    <!-- Order Confirmation Modal -->
+    <Transition name="fade">
+      <div v-if="confirmedOrder" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm" @click.self="confirmedOrder = null">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 p-8 text-center">
+          <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <Icon name="lucide:check" class="text-green-600" size="32" />
+          </div>
+          <h2 class="text-2xl font-serif text-gray-900 mb-2">Order Placed!</h2>
+          <p class="text-gray-500 mb-1">Order <span class="font-mono text-sm font-medium text-gray-700">#{{ confirmedOrder.id.slice(0, 8) }}</span></p>
+          <p class="text-gray-500 mb-6">Total: <span class="font-medium text-gray-900">${{ Number(confirmedOrder.totalPrice).toFixed(2) }}</span></p>
+
+          <div class="space-y-2 text-left mb-6 max-h-48 overflow-y-auto">
+            <div v-for="item in confirmedOrder.items" :key="item.id" class="flex justify-between text-sm py-2 border-b border-gray-50">
+              <span class="text-gray-700">{{ item.nameSnapshot }} × {{ item.qty }}</span>
+              <span class="font-medium">${{ (item.price * item.qty).toFixed(2) }}</span>
+            </div>
+          </div>
+
+          <div class="flex gap-3">
+            <button @click="confirmedOrder = null" class="flex-1 py-2 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-colors">
+              Continue Shopping
+            </button>
+            <NuxtLink to="/profile" class="flex-1 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-opacity-90 transition-colors text-center">
+              View in Profile
+            </NuxtLink>
+          </div>
+        </div>
+      </div>
+    </Transition>
   </div>
 </template>
 
@@ -65,12 +107,18 @@ import { useCartStore } from '~/stores/cart'
 
 const auth = useAuthStore()
 const cartStore = useCartStore()
+const config = useRuntimeConfig()
 
 // Make cart state reactive to the template
 const cartItems = computed(() => cartStore.items)
 const cartPending = computed(() => cartStore.pending)
 const cartTotal = computed(() => cartStore.cartTotal)
 const cartError = computed(() => cartStore.error)
+
+// Checkout state
+const checkoutLoading = ref(false)
+const checkoutError = ref<string | null>(null)
+const confirmedOrder = ref<any>(null)
 
 // If the API returns 401 Unauthorized, it means the user's session is invalid or missing
 watch(cartError, (err) => {
@@ -88,4 +136,42 @@ async function updateQuantity(cartItemId: string, newQuantity: number) {
 async function removeItem(cartItemId: string) {
   await cartStore.removeItem(cartItemId)
 }
+
+async function handleCheckout() {
+  if (!auth.isAuthenticated) {
+    navigateTo('/auth/login')
+    return
+  }
+
+  checkoutLoading.value = true
+  checkoutError.value = null
+
+  try {
+    const order = await $fetch<any>(`${config.public.apiBase}/cart/checkout`, {
+      method: 'POST',
+      credentials: 'include',
+      body: { deliveryType: 'courier', channel: 'online' }
+    })
+
+    cartStore.clearCart()
+    confirmedOrder.value = order
+  } catch (err: any) {
+    if (err.status === 401) {
+      navigateTo('/auth/login')
+    } else {
+      checkoutError.value = err?.data?.message || 'Something went wrong. Please try again.'
+    }
+  } finally {
+    checkoutLoading.value = false
+  }
+}
 </script>
+
+<style scoped>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.25s ease;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
+</style>

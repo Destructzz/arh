@@ -1,7 +1,7 @@
 import { Controller, Get, Res } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Roles } from '../../auth/decorators/roles.decorator';
-import { UserRole } from '../../auth/entities/user.entity';
+import { UserRole } from '../../users/entities/user.entity';
 import { Response } from 'express';
 import { seedData } from '../seed-data';
 

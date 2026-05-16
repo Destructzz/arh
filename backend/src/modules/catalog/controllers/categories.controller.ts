@@ -6,7 +6,7 @@ import { Category } from '../entities/categories.entity';
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 
 import { Roles } from '../../auth/decorators/roles.decorator';
-import { UserRole } from '../../auth/entities/user.entity';
+import { UserRole } from '../../users/entities/user.entity';
 import {
   CategoriesService,
   CreateCategoryDto,
@@ -17,6 +17,12 @@ import {
 @Controller('categories')
 export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
+
+  @ApiOperation({ summary: '3 случайные категории (меняются раз в час)' })
+  @Get('featured')
+  getFeatured() {
+    return this.categoriesService.getFeatured();
+  }
 
   @ApiOperation({
     summary: 'Список категорий',

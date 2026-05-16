@@ -1,15 +1,26 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CartItem } from './entities/cart-items.entity';
 import { AddToCartDto } from './dto/add-to-cart.dto';
 import { UpdateCartDto } from './dto/update-cart.dto';
+import { Order, OrderChannel, OrderStatus, DeliveryType } from '../orders/entities/orders.entity';
+import { OrderItem } from '../orders/entities/order-items.entity';
+
+export interface CheckoutDto {
+  deliveryType?: DeliveryType;
+  channel?: OrderChannel;
+}
 
 @Injectable()
 export class CartService {
     constructor(
         @InjectRepository(CartItem)
         private cartRepo: Repository<CartItem>,
+        @InjectRepository(Order)
+        private orderRepo: Repository<Order>,
+        @InjectRepository(OrderItem)
+        private orderItemRepo: Repository<OrderItem>,
     ) { }
 
     async findMyCart(userId: string) {
@@ -69,5 +80,52 @@ export class CartService {
         }
         await this.cartRepo.remove(item);
         return { success: true };
+    }
+
+    async checkout(userId: string, dto: CheckoutDto = {}): Promise<Order> {
+        const cartItems = await this.cartRepo.find({
+            where: { user: { id: userId } },
+            relations: ['product'],
+        });
+
+        if (cartItems.length === 0) {
+            throw new BadRequestException('Cart is empty');
+        }
+
+        const totalPrice = cartItems.reduce((sum, item) => {
+            return sum + item.product.price * item.quantity;
+        }, 0);
+
+        // Create the order
+        const order = this.orderRepo.create({
+            userId,
+            status: OrderStatus.New,
+            channel: dto.channel ?? OrderChannel.Online,
+            deliveryType: dto.deliveryType ?? DeliveryType.Courier,
+            totalPrice,
+            totalCost: 0,
+            discountAmount: 0,
+        });
+        const savedOrder = await this.orderRepo.save(order);
+
+        // Create order items from cart
+        const orderItems = cartItems.map(ci => this.orderItemRepo.create({
+            order: { id: savedOrder.id } as Order,
+            product: { id: ci.product.id } as any,
+            qty: ci.quantity,
+            price: ci.product.price,
+            costPrice: 0,
+            nameSnapshot: ci.product.name,
+        }));
+        await this.orderItemRepo.save(orderItems);
+
+        // Clear the cart
+        await this.cartRepo.remove(cartItems);
+
+        // Return order with items
+        return this.orderRepo.findOne({
+            where: { id: savedOrder.id },
+            relations: { items: { product: true } },
+        }) as Promise<Order>;
     }
 }

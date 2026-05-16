@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { resolve } from 'node:path';
+import { resolve } from 'path';
 
 @Module({
   imports: [

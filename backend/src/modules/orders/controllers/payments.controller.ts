@@ -6,7 +6,7 @@ import { Payment } from '../entities/payments.entity';
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 
 import { Roles } from '../../auth/decorators/roles.decorator';
-import { UserRole } from '../../auth/entities/user.entity';
+import { UserRole } from '../../users/entities/user.entity';
 import { CreatePaymentDto, PaymentsService, UpdatePaymentDto } from '../services/payments.service';
 
 @ApiTags('Orders')

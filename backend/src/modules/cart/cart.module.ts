@@ -3,9 +3,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CartController } from './cart.controller';
 import { CartService } from './cart.service';
 import { CartItem } from './entities/cart-items.entity';
+import { Order } from '../orders/entities/orders.entity';
+import { OrderItem } from '../orders/entities/order-items.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([CartItem])],
+  imports: [TypeOrmModule.forFeature([CartItem, Order, OrderItem])],
   controllers: [CartController],
   providers: [CartService],
   exports: [CartService],

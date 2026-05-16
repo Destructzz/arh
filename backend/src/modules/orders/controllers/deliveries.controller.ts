@@ -6,7 +6,7 @@ import { Delivery } from '../entities/deliveries.entity';
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 
 import { Roles } from '../../auth/decorators/roles.decorator';
-import { UserRole } from '../../auth/entities/user.entity';
+import { UserRole } from '../../users/entities/user.entity';
 import { CreateDeliveryDto, DeliveriesService, UpdateDeliveryDto } from '../services/deliveries.service';
 
 @ApiTags('Orders')

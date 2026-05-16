@@ -14,7 +14,8 @@
         </button>
 
         <!-- Logo -->
-        <NuxtLink to="/" class="text-2xl font-serif font-bold tracking-tight">
+        <NuxtLink to="/" class="flex items-center gap-2 text-2xl font-serif font-bold tracking-tight">
+          <img src="/flower.logo.png" alt="Logo" class="w-8 h-8 object-contain" />
           The Green House
         </NuxtLink>
 
@@ -22,7 +23,6 @@
         <nav class="hidden lg:flex items-center space-x-8 text-sm font-medium tracking-wide">
           <NuxtLink to="/shop" class="hover:text-primary transition-colors">Shop All</NuxtLink>
           <NuxtLink to="/shop?category=plants" class="hover:text-primary transition-colors">Plants</NuxtLink>
-          <NuxtLink to="/shop?category=care" class="hover:text-primary transition-colors">Plant Care</NuxtLink>
           <NuxtLink to="/about" class="hover:text-primary transition-colors">About</NuxtLink>
           <NuxtLink to="/admin" v-if="auth.isAuthenticated && (auth.user?.role === 'admin' || auth.user?.role === 'manager')" class="text-primary hover:text-opacity-80 transition-colors font-bold">Admin Panel</NuxtLink>
         </nav>
@@ -53,7 +53,10 @@
     <footer class="bg-gray-50 pt-16 pb-8 border-t border-gray-100">
       <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
         <div>
-          <h3 class="font-serif text-lg mb-4">The Green House</h3>
+          <h3 class="flex items-center gap-2 font-serif text-lg mb-4">
+            <img src="/flower.logo.png" alt="Logo" class="w-6 h-6 object-contain" />
+            The Green House
+          </h3>
           <p class="text-sm text-gray-500 leading-relaxed">
             Bringing life to your space with carefully curated plants and goods.
           </p>
@@ -73,13 +76,6 @@
             <li><a href="#" class="hover:text-primary">Shipping & Returns</a></li>
             <li><a href="#" class="hover:text-primary">Contact Us</a></li>
           </ul>
-        </div>
-        <div>
-          <h4 class="font-medium text-sm uppercase tracking-widest mb-4">Stay in the loop</h4>
-          <div class="flex">
-            <input type="email" placeholder="Email Address" class="bg-white border border-gray-300 px-4 py-2 w-full focus:outline-none focus:border-primary text-sm" />
-            <button class="bg-primary text-white px-4 py-2 text-sm uppercase tracking-wider">Join</button>
-          </div>
         </div>
       </div>
       <div class="container mx-auto px-4 pt-8 border-t border-gray-200 text-center text-xs text-gray-400">

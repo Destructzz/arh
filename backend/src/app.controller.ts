@@ -18,14 +18,4 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
-
-  @ApiOperation({ summary: 'Получить статистику текущего пользователя' })
-  @Get('users/me/stats')
-  getMeStats() {
-    return {
-      registeredAt: "2024-03-12T10:00:00Z",
-      totalPurchases: 5,
-      totalSpent: 1350.50
-    };
-  }
 }

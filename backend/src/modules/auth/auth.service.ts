@@ -4,9 +4,9 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as argon2 from 'argon2';
 import { Repository } from 'typeorm';
-import { User } from './entities/user.entity';
+import { User } from '../users/entities/user.entity';
 import type { Response } from 'express';
-import { UserRole } from './entities/user.entity';
+import { UserRole } from '../users/entities/user.entity';
 
 export interface TokenMeta {
   ip?: string;
@@ -46,9 +46,9 @@ export class AuthService {
     return user;
   }
 
-  async login(username: string, password: string, meta: TokenMeta) {
+  async login(username: string, password: string) {
     const user = await this.validateUser(username, password);
-    const token = await this.issueToken(user, meta);
+    const token = await this.issueToken(user);
     return {
       user: { id: user.id, login: user.login, role: user.role },
       ...token,
@@ -111,7 +111,7 @@ export class AuthService {
     res.clearCookie('access', { httpOnly: true, secure, sameSite, path });
   }
 
-  private async issueToken(user: User, _meta: TokenMeta): Promise<IssuedToken> {
+  private async issueToken(user: User): Promise<IssuedToken> {
     const accessToken = await this.jwtService.signAsync({
       sub: user.id,
       login: user.login,

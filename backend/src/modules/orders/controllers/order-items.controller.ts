@@ -6,7 +6,7 @@ import { OrderItem } from '../entities/order-items.entity';
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 
 import { Roles } from '../../auth/decorators/roles.decorator';
-import { UserRole } from '../../auth/entities/user.entity';
+import { UserRole } from '../../users/entities/user.entity';
 import { CreateOrderItemDto, OrderItemsService, UpdateOrderItemDto } from '../services/order-items.service';
 
 @ApiTags('Orders')

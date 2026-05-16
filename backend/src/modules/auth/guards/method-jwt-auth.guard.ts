@@ -2,7 +2,7 @@ import { ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
 import type { Request } from 'express';
-import { UserRole } from '../entities/user.entity';
+import { UserRole } from '../../users/entities/user.entity';
 
 @Injectable()
 export class MethodJwtAuthGuard extends AuthGuard('jwt') {
@@ -31,7 +31,11 @@ export class MethodJwtAuthGuard extends AuthGuard('jwt') {
     }
 
     if (method === 'GET') {
-      const requiresUser = request.path.includes('/cart') || request.path.includes('/auth/me') || request.path.includes('/orders');
+      const requiresUser =
+        request.path.includes('/cart') ||
+        request.path.includes('/auth/me') ||
+        request.path.includes('/users/me') ||
+        request.path.includes('/orders');
       if (!requiresUser && (!roles || roles.length === 0)) {
         // generic GETs (products, categories, etc.) bypass auth guard
         return true;

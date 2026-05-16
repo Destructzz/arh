@@ -10,7 +10,7 @@ import { AdminUsersController } from './admin-users.controller';
 import { AuthService } from './auth.service';
 import { MethodJwtAuthGuard } from './guards/method-jwt-auth.guard';
 import { RolesGuard } from './guards/roles.guard';
-import { User } from './entities/user.entity';
+import { User } from '../users/entities/user.entity';
 import { JwtStrategy } from './strategies/jwt.strategy';
 
 @Module({

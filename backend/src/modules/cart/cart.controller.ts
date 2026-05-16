@@ -1,18 +1,10 @@
-import { Controller, Get, Post, Patch, Delete, Body, Param, Req, UseGuards } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
-import { CartService } from './cart.service';
+import { Controller, Get, Post, Patch, Delete, Body, Param, Req, UseGuards, HttpCode, HttpStatus } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiBearerAuth, ApiBody } from '@nestjs/swagger';
+import { CartService, CheckoutDto } from './cart.service';
 import { AddToCartDto } from './dto/add-to-cart.dto';
 import { UpdateCartDto } from './dto/update-cart.dto';
-import type { Request } from 'express';
 import { MethodJwtAuthGuard } from '../auth/guards/method-jwt-auth.guard';
-
-interface RequestWithUser extends Request {
-    user: {
-        id: string;
-        login: string;
-        role: string;
-    };
-}
+import { RequestWithUser } from '../auth/interfaces/request-with-user.interface';
 
 @ApiTags('Cart')
 @ApiBearerAuth()
@@ -31,6 +23,14 @@ export class CartController {
     @Post()
     addToCart(@Body() body: AddToCartDto, @Req() req: RequestWithUser) {
         return this.cartService.add(req.user.id, body);
+    }
+
+    @ApiOperation({ summary: 'Оформить заказ из корзины (checkout)' })
+    @ApiBody({ schema: { example: { deliveryType: 'courier', channel: 'online' } } })
+    @HttpCode(HttpStatus.CREATED)
+    @Post('checkout')
+    checkout(@Req() req: RequestWithUser, @Body() body: CheckoutDto) {
+        return this.cartService.checkout(req.user.id, body);
     }
 
     @ApiOperation({ summary: 'Изменить количество товара' })

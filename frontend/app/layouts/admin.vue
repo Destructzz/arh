@@ -9,10 +9,10 @@ const handleLogout = async () => {
 
 const links = [
   { name: 'Dashboard', path: '/admin', icon: 'heroicons:home' },
+  { name: 'Orders', path: '/admin/orders', icon: 'heroicons:shopping-cart' },
   { name: 'Products', path: '/admin/products', icon: 'heroicons:shopping-bag' },
   { name: 'Categories', path: '/admin/categories', icon: 'heroicons:tag' },
   { name: 'Discounts', path: '/admin/discounts', icon: 'heroicons:ticket' },
-  { name: 'Customers', path: '/admin/customers', icon: 'heroicons:users' },
   { name: 'API Tests', path: '/admin/test', icon: 'heroicons:beaker' },
   { name: 'Data Seeder', path: '/admin/seed', icon: 'heroicons:command-line' },
 ];
@@ -23,7 +23,10 @@ const links = [
     <!-- Sidebar -->
     <aside class="w-64 bg-primary text-secondary flex flex-col shadow-xl">
       <div class="p-6 border-b border-white/10">
-        <h1 class="font-serif text-2xl font-bold tracking-wide">The Sill Admin</h1>
+        <h1 class="flex items-center gap-2 font-serif text-2xl font-bold tracking-wide">
+          <img src="/flower.logo.png" alt="Logo" class="w-8 h-8 object-contain" />
+          The Sill Admin
+        </h1>
       </div>
 
       <nav class="flex-1 p-4 space-y-2">

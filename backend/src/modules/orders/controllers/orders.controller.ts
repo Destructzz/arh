@@ -6,8 +6,9 @@ import { Order } from '../entities/orders.entity';
 import { Body, Controller, Delete, Get, Param, Patch, Post, Req } from '@nestjs/common';
 
 import { Roles } from '../../auth/decorators/roles.decorator';
-import { UserRole } from '../../auth/entities/user.entity';
+import { UserRole } from '../../users/entities/user.entity';
 import { CreateOrderDto, OrdersService, UpdateOrderDto } from '../services/orders.service';
+import { RequestWithUser } from '../../auth/interfaces/request-with-user.interface';
 
 @ApiTags('Orders')
 @Controller('orders')
@@ -17,7 +18,7 @@ export class OrdersController {
   @ApiOperation({
     summary: 'Список заказов',
     description:
-      'Возвращает список заказов с клиентом, позициями, оплатами и доставкой.\n' +
+      'Возвращает список заказов с позициями, оплатами и доставкой.\n' +
       'Используется для операционной панели и обработки заказов.\n' +
       'Обязательные параметры: нет.',
   })
@@ -32,7 +33,7 @@ export class OrdersController {
     summary: 'Детали заказа',
     description:
       'Возвращает детали заказа с позициями, оплатами и доставкой.\n' +
-      'Подходит для карточки заказа и поддержки клиентов.\n' +
+      'Подходит для карточки заказа.\n' +
       'Обязательные параметры: id (UUID) в пути.',
   })
   @ApiAuthResponses(Order, false, orderExample)
@@ -42,12 +43,8 @@ export class OrdersController {
     required: true,
     description: 'UUID заказа.',
   })
-  @ApiOperation({ summary: 'Заказы текущего пользователя' })
   @Get('me')
-  findMyOrders(@Req() req: any) {
-    if (!req.user || !req.user.id) {
-      return [];
-    }
+  findMyOrders(@Req() req: RequestWithUser) {
     return this.ordersService.findMyOrders(req.user.id);
   }
 
@@ -67,7 +64,7 @@ export class OrdersController {
   @ApiBody({
     required: true,
     description:
-      'Обязательные поля: channel, deliveryType. Опционально: customerId, status, totalPrice, totalCost, discountAmount.',
+      'Обязательные поля: channel, deliveryType. Опционально: userId, status, totalPrice, totalCost, discountAmount.',
     schema: { example: createOrderExample },
   })
   @ApiCreatedAuthResponse(Order, orderExample)
@@ -80,7 +77,7 @@ export class OrdersController {
   @ApiOperation({
     summary: 'Обновить заказ',
     description:
-      'Частично обновляет заказ (статус, суммы, клиент) по id.\n' +
+      'Частично обновляет заказ (статус, суммы) по id.\n' +
       'Передайте изменяемые поля; минимум одно.\n' +
       'Обязательные параметры: id (UUID) в пути.',
   })

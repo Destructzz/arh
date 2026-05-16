@@ -6,7 +6,7 @@ import { Discount } from '../entities/discounts.entity';
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 
 import { Roles } from '../../auth/decorators/roles.decorator';
-import { UserRole } from '../../auth/entities/user.entity';
+import { UserRole } from '../../users/entities/user.entity';
 import { CreateDiscountDto, DiscountsService, UpdateDiscountDto } from '../services/discounts.service';
 
 @ApiTags('Discounts')

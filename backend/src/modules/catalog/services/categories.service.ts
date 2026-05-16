@@ -25,6 +25,20 @@ export class CategoriesService {
     });
   }
 
+  async getFeatured(): Promise<Category[]> {
+    const all = await this.categoriesRepo.find({ order: { name: 'ASC' } });
+    if (all.length <= 3) return all;
+
+    // Deterministic random: changes every hour
+    const seed = Math.floor(Date.now() / 3_600_000);
+    const shuffled = [...all].sort((a, b) => {
+      const ha = Math.sin(seed + a.id.charCodeAt(0)) * 10000;
+      const hb = Math.sin(seed + b.id.charCodeAt(0)) * 10000;
+      return (ha - Math.floor(ha)) - (hb - Math.floor(hb));
+    });
+    return shuffled.slice(0, 3);
+  }
+
   async findOne(id: string): Promise<Category> {
     const category = await this.categoriesRepo.findOne({
       where: { id },

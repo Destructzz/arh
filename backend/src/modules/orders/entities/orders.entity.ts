@@ -2,13 +2,14 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-import { Customer } from '../../customers/entities/customers.entity';
+import { User } from '../../users/entities/user.entity';
 import { Delivery } from './deliveries.entity';
 import { OrderItem } from './order-items.entity';
 import { Payment } from './payments.entity';
@@ -38,11 +39,12 @@ export class Order {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => Customer, (customer) => customer.orders, {
+  @ManyToOne(() => User, (user) => user.orders, {
     nullable: true,
     onDelete: 'SET NULL',
   })
-  customer?: Customer | null;
+  @JoinColumn({ name: 'user_id' })
+  user?: User | null;
 
   @Column({ name: 'user_id', type: 'uuid', nullable: true })
   userId?: string | null;

@@ -6,13 +6,19 @@ import { Product } from '../entities/products.entity';
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 
 import { Roles } from '../../auth/decorators/roles.decorator';
-import { UserRole } from '../../auth/entities/user.entity';
+import { UserRole } from '../../users/entities/user.entity';
 import { CreateProductDto, ProductsService, UpdateProductDto } from '../services/products.service';
 
 @ApiTags('Catalog')
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
+
+  @ApiOperation({ summary: 'Топ-4 бестселлера по количеству продаж' })
+  @Get('best-sellers')
+  getBestSellers() {
+    return this.productsService.getBestSellers();
+  }
 
   @ApiOperation({
     summary: 'Список товаров',
