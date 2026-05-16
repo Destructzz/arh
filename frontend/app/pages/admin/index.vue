@@ -5,17 +5,17 @@ definePageMeta({
 });
 
 const stats = [
-  { label: 'Total Revenue', value: '$45,231', change: '+20.1%', trend: 'up' },
-  { label: 'Active Users', value: '2,338', change: '-1.2%', trend: 'down' },
-  { label: 'New Orders', value: '1,200', change: '+10.5%', trend: 'up' },
-  { label: 'Pending Issues', value: '4', change: '0%', trend: 'neutral' },
+  { label: 'Общая выручка', value: '45,231 ₽', change: '+20.1%', trend: 'up' },
+  { label: 'Активные пользователи', value: '2,338', change: '-1.2%', trend: 'down' },
+  { label: 'Новые заказы', value: '1,200', change: '+10.5%', trend: 'up' },
+  { label: 'Ожидают решения', value: '4', change: '0%', trend: 'neutral' },
 ];
 </script>
 
 <template>
   <div>
-    <h1 class="font-serif text-4xl text-primary font-bold mb-2">Dashboard</h1>
-    <p class="text-gray-600 mb-8">Welcome back to the store management overview.</p>
+    <h1 class="font-serif text-4xl text-primary font-bold mb-2">Обзор</h1>
+    <p class="text-gray-600 mb-8">Добро пожаловать в панель управления магазином.</p>
 
     <!-- Stats Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -40,12 +40,12 @@ const stats = [
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
       <!-- Placeholder for recent orders -->
       <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 h-64 flex items-center justify-center">
-        <p class="text-gray-400">Recent Orders Chart (Placeholder)</p>
+        <p class="text-gray-400">График последних заказов (Заглушка)</p>
       </div>
       
       <!-- Placeholder for popular products -->
       <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 h-64 flex items-center justify-center">
-        <p class="text-gray-400">Popular Products (Placeholder)</p>
+        <p class="text-gray-400">Популярные товары (Заглушка)</p>
       </div>
     </div>
   </div>

@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto px-4 py-12 max-w-4xl">
-    <h1 class="text-4xl font-serif text-gray-900 mb-8">Your Profile</h1>
+    <h1 class="text-4xl font-serif text-gray-900 mb-8">Ваш профиль</h1>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       
@@ -12,29 +12,29 @@
               {{ auth.user?.login?.[0]?.toUpperCase() || 'U' }}
             </div>
             <div>
-              <h3 class="font-serif text-xl">{{ auth.user?.login || 'Gardener' }}</h3>
-              <p class="text-sm text-gray-500">{{ auth.user?.email || 'No email provided' }}</p>
+              <h3 class="font-serif text-xl">{{ auth.user?.login || 'Садовод' }}</h3>
+              <p class="text-sm text-gray-500">{{ auth.user?.email || 'Email не указан' }}</p>
             </div>
           </div>
           
           <div class="space-y-4">
             <div class="flex justify-between items-center">
-              <span class="text-sm text-gray-500">Member Since</span>
+              <span class="text-sm text-gray-500">В клубе с</span>
               <span class="font-medium text-gray-900">{{ registrationDate }}</span>
             </div>
             <div class="flex justify-between items-center">
-              <span class="text-sm text-gray-500">Total Orders</span>
+              <span class="text-sm text-gray-500">Всего заказов</span>
               <span class="font-medium text-gray-900">{{ orders.length }}</span>
             </div>
             <div class="flex justify-between items-center">
-              <span class="text-sm text-gray-500">Total Spent</span>
-              <span class="font-medium text-gray-900">${{ totalSpent.toFixed(2) }}</span>
+              <span class="text-sm text-gray-500">Всего потрачено</span>
+              <span class="font-medium text-gray-900">{{ totalSpent.toFixed(2) }} ₽</span>
             </div>
           </div>
 
           <div class="mt-8 pt-6 border-t border-gray-200">
              <button @click="handleLogout" class="w-full py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
-               Sign Out
+               Выйти
              </button>
           </div>
         </div>
@@ -45,7 +45,7 @@
         <section>
           <h2 class="text-2xl font-serif text-gray-900 mb-6 flex items-center gap-2">
             <Icon name="lucide:history" class="text-gray-400" />
-            Order History
+            История заказов
           </h2>
           
           <div v-if="ordersPending" class="space-y-4 animate-pulse">
@@ -53,8 +53,8 @@
           </div>
           
           <div v-else-if="orders.length === 0" class="text-center py-12 bg-gray-50 rounded-lg border border-gray-100">
-             <p class="text-gray-500 mb-4">You haven't placed any orders yet.</p>
-             <NuxtLink to="/shop" class="text-primary font-medium hover:underline">Start Shopping</NuxtLink>
+             <p class="text-gray-500 mb-4">Вы еще не сделали ни одного заказа.</p>
+             <NuxtLink to="/shop" class="text-primary font-medium hover:underline">Начать покупки</NuxtLink>
           </div>
           
           <div v-else class="space-y-3">
@@ -70,18 +70,18 @@
               >
                 <div class="flex-1 min-w-0">
                   <div class="flex items-center gap-3 mb-1">
-                    <span class="font-medium text-gray-900">Order #{{ order.id.slice(0, 8) }}…</span>
+                    <span class="font-medium text-gray-900">Заказ №{{ order.id.slice(0, 8) }}…</span>
                     <span :class="statusClass(order.status)" class="px-2 py-0.5 rounded text-xs font-medium tracking-wide">
                       {{ statusLabel(order.status) }}
                     </span>
                   </div>
                   <p class="text-sm text-gray-500">
-                    {{ new Date(order.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) }}
-                    &bull; {{ order.items?.length || 0 }} item{{ (order.items?.length || 0) !== 1 ? 's' : '' }}
+                    {{ new Date(order.createdAt).toLocaleDateString('ru-RU', { year: 'numeric', month: 'long', day: 'numeric' }) }}
+                    &bull; {{ order.items?.length || 0 }} товар(ов)
                   </p>
                 </div>
                 <div class="flex items-center gap-3 flex-shrink-0 ml-4">
-                  <p class="font-medium text-lg">${{ Number(order.totalPrice).toFixed(2) }}</p>
+                  <p class="font-medium text-lg">{{ Number(order.totalPrice).toFixed(2) }} ₽</p>
                   <Icon
                     name="lucide:chevron-down"
                     class="text-gray-400 transition-transform duration-200"
@@ -114,19 +114,19 @@
                         </div>
                         <div>
                           <p class="text-sm font-medium text-gray-800">{{ item.nameSnapshot }}</p>
-                          <p class="text-xs text-gray-400">× {{ item.qty }} &nbsp;·&nbsp; ${{ item.price }} each</p>
+                          <p class="text-xs text-gray-400">× {{ item.qty }} &nbsp;·&nbsp; {{ item.price }} ₽ за шт.</p>
                         </div>
                       </div>
-                      <p class="text-sm font-medium text-gray-700">${{ (item.price * item.qty).toFixed(2) }}</p>
+                      <p class="text-sm font-medium text-gray-700">{{ (item.price * item.qty).toFixed(2) }} ₽</p>
                     </div>
 
                     <!-- Subtotal row -->
                     <div class="pt-3 border-t border-gray-100 flex justify-between items-center">
-                      <span class="text-sm text-gray-500">Order Total</span>
-                      <span class="font-semibold text-gray-900">${{ Number(order.totalPrice).toFixed(2) }}</span>
+                      <span class="text-sm text-gray-500">Итого по заказу</span>
+                      <span class="font-semibold text-gray-900">{{ Number(order.totalPrice).toFixed(2) }} ₽</span>
                     </div>
                   </div>
-                  <div v-else class="p-5 text-sm text-gray-400">No items data available.</div>
+                  <div v-else class="p-5 text-sm text-gray-400">Данные о товарах отсутствуют.</div>
                 </div>
               </Transition>
             </div>
@@ -201,8 +201,8 @@ const totalSpent = computed(() =>
 
 const registrationDate = computed(() => {
   const date = statsData.value?.registeredAt
-  if (!date) return 'Unknown'
-  return new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+  if (!date) return 'Неизвестно'
+  return new Date(date).toLocaleDateString('ru-RU', { year: 'numeric', month: 'long', day: 'numeric' })
 })
 
 // Expandable orders
@@ -218,12 +218,12 @@ function toggleOrder(orderId: string) {
 
 function statusLabel(status: string) {
   const map: Record<string, string> = {
-    new: 'New',
-    paid: 'Paid',
-    in_assembly: 'In Assembly',
-    out_for_delivery: 'Out for Delivery',
-    done: 'Delivered',
-    cancelled: 'Cancelled',
+    new: 'Новый',
+    paid: 'Оплачен',
+    in_assembly: 'В сборке',
+    out_for_delivery: 'Доставляется',
+    done: 'Доставлен',
+    cancelled: 'Отменен',
   }
   return map[status] ?? status
 }

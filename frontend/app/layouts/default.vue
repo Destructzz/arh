@@ -1,10 +1,5 @@
 <template>
   <div class="flex flex-col min-h-screen text-gray-900 font-sans">
-    <!-- Announcement Bar -->
-    <div class="bg-primary text-white text-center py-2 text-xs uppercase tracking-widest font-medium">
-      Free Shipping on Orders Over $75
-    </div>
-
     <!-- Header -->
     <header class="sticky top-0 z-50 bg-white border-b border-gray-100">
       <div class="container mx-auto px-4 h-20 flex items-center justify-between">
@@ -21,10 +16,10 @@
 
         <!-- Desktop Nav -->
         <nav class="hidden lg:flex items-center space-x-8 text-sm font-medium tracking-wide">
-          <NuxtLink to="/shop" class="hover:text-primary transition-colors">Shop All</NuxtLink>
-          <NuxtLink to="/shop?category=plants" class="hover:text-primary transition-colors">Plants</NuxtLink>
-          <NuxtLink to="/about" class="hover:text-primary transition-colors">About</NuxtLink>
-          <NuxtLink to="/admin" v-if="auth.isAuthenticated && (auth.user?.role === 'admin' || auth.user?.role === 'manager')" class="text-primary hover:text-opacity-80 transition-colors font-bold">Admin Panel</NuxtLink>
+          <NuxtLink to="/shop" class="hover:text-primary transition-colors">Весь каталог</NuxtLink>
+          <NuxtLink to="/shop?category=plants" class="hover:text-primary transition-colors">Растения</NuxtLink>
+          <NuxtLink to="/about" class="hover:text-primary transition-colors">О нас</NuxtLink>
+          <NuxtLink to="/admin" v-if="auth.isAuthenticated && (auth.user?.role === 'admin' || auth.user?.role === 'manager')" class="text-primary hover:text-opacity-80 transition-colors font-bold">Админ-панель</NuxtLink>
         </nav>
 
         <!-- Icons -->
@@ -58,28 +53,28 @@
             The Green House
           </h3>
           <p class="text-sm text-gray-500 leading-relaxed">
-            Bringing life to your space with carefully curated plants and goods.
+            Приносим жизнь в ваше пространство с помощью тщательно отобранных растений и товаров.
           </p>
         </div>
         <div>
-          <h4 class="font-medium text-sm uppercase tracking-widest mb-4">Shop</h4>
+          <h4 class="font-medium text-sm uppercase tracking-widest mb-4">Магазин</h4>
           <ul class="space-y-2 text-sm text-gray-500">
-            <li><NuxtLink to="/shop" class="hover:text-primary">All Plants</NuxtLink></li>
-            <li><NuxtLink to="/shop" class="hover:text-primary">New Arrivals</NuxtLink></li>
-            <li><NuxtLink to="/shop" class="hover:text-primary">Sale</NuxtLink></li>
+            <li><NuxtLink to="/shop" class="hover:text-primary">Все растения</NuxtLink></li>
+            <li><NuxtLink to="/shop" class="hover:text-primary">Новинки</NuxtLink></li>
+            <li><NuxtLink to="/shop" class="hover:text-primary">Распродажа</NuxtLink></li>
           </ul>
         </div>
         <div>
-          <h4 class="font-medium text-sm uppercase tracking-widest mb-4">Support</h4>
+          <h4 class="font-medium text-sm uppercase tracking-widest mb-4">Поддержка</h4>
           <ul class="space-y-2 text-sm text-gray-500">
             <li><a href="#" class="hover:text-primary">FAQ</a></li>
-            <li><a href="#" class="hover:text-primary">Shipping & Returns</a></li>
-            <li><a href="#" class="hover:text-primary">Contact Us</a></li>
+            <li><a href="#" class="hover:text-primary">Доставка и возврат</a></li>
+            <li><a href="#" class="hover:text-primary">Контакты</a></li>
           </ul>
         </div>
       </div>
       <div class="container mx-auto px-4 pt-8 border-t border-gray-200 text-center text-xs text-gray-400">
-        &copy; 2026 The Green House. All rights reserved.
+        &copy; 2026 The Green House. Все права защищены.
       </div>
     </footer>
   </div>

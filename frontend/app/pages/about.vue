@@ -9,9 +9,9 @@
         class="absolute inset-0 w-full h-full object-cover"
       />
       <div class="relative z-20 container mx-auto px-4">
-        <h1 class="text-5xl md:text-6xl font-serif mb-4">Rooted in Passion</h1>
+        <h1 class="text-5xl md:text-6xl font-serif mb-4">Вдохновленные природой</h1>
         <p class="text-xl font-light max-w-2xl mx-auto">
-          We believe that everyone deserves a little bit of nature in their daily lives.
+          Мы верим, что каждый заслуживает частичку природы в своей повседневной жизни.
         </p>
       </div>
     </section>
@@ -19,13 +19,13 @@
     <!-- Our Story -->
     <section class="py-20 bg-white">
       <div class="container mx-auto px-4 max-w-4xl text-center">
-        <h2 class="text-3xl font-serif mb-8 text-primary">Our Story</h2>
+        <h2 class="text-3xl font-serif mb-8 text-primary">Наша история</h2>
         <div class="prose prose-lg mx-auto text-gray-600 leading-relaxed">
           <p class="mb-6">
-            It started with a single succulent on a windowsill. What began as a small hobby quickly blossomed into an obsession with the calming, restorative power of plants. We realized that in our busy, digital-first world, we were losing touch with the natural rhythms that ground us.
+            Все началось с одного суккулента на подоконнике. То, что начиналось как небольшое хобби, быстро переросло в страсть к успокаивающей и восстанавливающей силе растений. Мы поняли, что в нашем занятом цифровом мире мы теряем связь с природными ритмами, которые дают нам опору.
           </p>
           <p>
-            "The Green House" was born out of a desire to bridge that gap. We aren't just a plant shop; we are curators of living art. We scour local nurseries and sustainable farms to find plants that are not only beautiful but healthy and ready to thrive in your home. We believe that caring for a plant is an act of self-care, a moment of mindfulness in a chaotic day.
+            «The Green House» родился из желания преодолеть этот разрыв. Мы не просто магазин растений; мы — кураторы живого искусства. Мы ищем в местных питомниках и на экологических фермах растения, которые не только красивы, но и здоровы, и готовы процветать в вашем доме. Мы верим, что уход за растением — это акт заботы о себе, момент осознанности в хаотичном дне.
           </p>
         </div>
       </div>
@@ -39,27 +39,27 @@
             <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto shadow-sm text-primary">
               <Icon name="lucide:leaf" size="32" />
             </div>
-            <h3 class="text-xl font-serif font-bold">Sustainably Grown</h3>
+            <h3 class="text-xl font-serif font-bold">Экологичное выращивание</h3>
             <p class="text-gray-600 text-sm">
-              We partner with growers who prioritize eco-friendly practices, minimizing water usage and avoiding harmful pesticides.
+              Мы сотрудничаем с фермерами, которые заботятся об экологии, минимизируя потребление воды и избегая вредных пестицидов.
             </p>
           </div>
           <div class="space-y-4">
             <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto shadow-sm text-primary">
               <Icon name="lucide:heart-handshake" size="32" />
             </div>
-            <h3 class="text-xl font-serif font-bold">Guidance for Life</h3>
+            <h3 class="text-xl font-serif font-bold">Поддержка навсегда</h3>
             <p class="text-gray-600 text-sm">
-              We don't just sell you a plant and wish you luck. Our team provides ongoing support to ensure your green friends flourish.
+              Мы не просто продаем вам растение. Наша команда всегда готова помочь вашим зеленым друзьям процветать.
             </p>
           </div>
           <div class="space-y-4">
             <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto shadow-sm text-primary">
               <Icon name="lucide:truck" size="32" />
             </div>
-            <h3 class="text-xl font-serif font-bold">Safe Delivery</h3>
+            <h3 class="text-xl font-serif font-bold">Безопасная доставка</h3>
             <p class="text-gray-600 text-sm">
-              Our specialized packaging ensures your plants arrive safe, sound, and ready to brighten your space, no matter the season.
+              Наша специальная упаковка гарантирует, что растения приедут в целости и сохранности в любое время года.
             </p>
           </div>
         </div>
@@ -72,19 +72,19 @@
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-white/20">
           <div>
             <div class="text-4xl font-serif font-bold mb-2">5k+</div>
-            <div class="text-sm uppercase tracking-widest opacity-80">Plants Homed</div>
+            <div class="text-sm uppercase tracking-widest opacity-80">Растений нашли дом</div>
           </div>
           <div>
             <div class="text-4xl font-serif font-bold mb-2">150+</div>
-            <div class="text-sm uppercase tracking-widest opacity-80">Varieties</div>
+            <div class="text-sm uppercase tracking-widest opacity-80">Разных сортов</div>
           </div>
           <div>
             <div class="text-4xl font-serif font-bold mb-2">99%</div>
-            <div class="text-sm uppercase tracking-widest opacity-80">Happy Customers</div>
+            <div class="text-sm uppercase tracking-widest opacity-80">Довольных клиентов</div>
           </div>
           <div>
             <div class="text-4xl font-serif font-bold mb-2">24/7</div>
-            <div class="text-sm uppercase tracking-widest opacity-80">Expert Support</div>
+            <div class="text-sm uppercase tracking-widest opacity-80">Экспертная помощь</div>
           </div>
         </div>
       </div>
@@ -92,12 +92,12 @@
 
     <!-- Team / CTA -->
     <section class="py-20 container mx-auto px-4 text-center">
-      <h2 class="text-3xl font-serif mb-8">Ready to grow your collection?</h2>
+      <h2 class="text-3xl font-serif mb-8">Готовы пополнить свою коллекцию?</h2>
       <p class="text-gray-600 mb-8 max-w-xl mx-auto">
-        Whether you are a seasoned botanist or a complete beginner, we have the perfect plant waiting for you.
+        Будь вы опытным ботаником или полным новичком, у нас есть идеальное растение, которое ждет именно вас.
       </p>
       <NuxtLink to="/shop" class="inline-block bg-primary text-white px-8 py-4 text-sm font-medium uppercase tracking-widest hover:bg-opacity-90 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
-        Start Exploring
+        Начать покупки
       </NuxtLink>
     </section>
   </div>

@@ -8,13 +8,13 @@ const handleLogout = async () => {
 };
 
 const links = [
-  { name: 'Dashboard', path: '/admin', icon: 'heroicons:home' },
-  { name: 'Orders', path: '/admin/orders', icon: 'heroicons:shopping-cart' },
-  { name: 'Products', path: '/admin/products', icon: 'heroicons:shopping-bag' },
-  { name: 'Categories', path: '/admin/categories', icon: 'heroicons:tag' },
-  { name: 'Discounts', path: '/admin/discounts', icon: 'heroicons:ticket' },
-  { name: 'API Tests', path: '/admin/test', icon: 'heroicons:beaker' },
-  { name: 'Data Seeder', path: '/admin/seed', icon: 'heroicons:command-line' },
+  { name: 'Обзор', path: '/admin', icon: 'heroicons:home' },
+  { name: 'Заказы', path: '/admin/orders', icon: 'heroicons:shopping-cart' },
+  { name: 'Товары', path: '/admin/products', icon: 'heroicons:shopping-bag' },
+  { name: 'Категории', path: '/admin/categories', icon: 'heroicons:tag' },
+  { name: 'Скидки', path: '/admin/discounts', icon: 'heroicons:ticket' },
+  { name: 'Тесты API', path: '/admin/test', icon: 'heroicons:beaker' },
+  { name: 'Сиддер данных', path: '/admin/seed', icon: 'heroicons:command-line' },
 ];
 </script>
 
@@ -25,7 +25,7 @@ const links = [
       <div class="p-6 border-b border-white/10">
         <h1 class="flex items-center gap-2 font-serif text-2xl font-bold tracking-wide">
           <img src="/flower.logo.png" alt="Logo" class="w-8 h-8 object-contain" />
-          The Sill Admin
+          Админ-панель
         </h1>
       </div>
 
@@ -48,7 +48,7 @@ const links = [
           class="flex items-center gap-3 px-4 py-3 w-full rounded-lg text-red-200 hover:bg-red-900/20 transition-colors"
         >
           <Icon name="heroicons:arrow-left-on-rectangle" size="20" />
-          <span>Logout</span>
+          <span>Выйти</span>
         </button>
       </div>
     </aside>

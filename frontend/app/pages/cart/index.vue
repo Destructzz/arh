@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto px-4 py-12 max-w-4xl">
-    <h1 class="text-4xl font-serif text-gray-900 mb-8">Your Cart</h1>
+    <h1 class="text-4xl font-serif text-gray-900 mb-8">Ваша корзина</h1>
         
     <!-- Cart Section -->
     <section>
@@ -10,8 +10,8 @@
       
       <div v-else-if="cartItems.length === 0" class="text-center py-16 bg-gray-50 rounded-lg border border-gray-100">
           <Icon name="lucide:shopping-bag" class="text-gray-300 mx-auto mb-4" size="48" />
-          <p class="text-gray-500 mb-4 text-lg">Your cart is empty.</p>
-          <NuxtLink to="/shop" class="text-primary font-medium hover:underline inline-block px-6 py-2 border border-primary text-sm uppercase tracking-widest rounded transition-colors hover:bg-primary hover:text-white">Continue Shopping</NuxtLink>
+          <p class="text-gray-500 mb-4 text-lg">Ваша корзина пуста.</p>
+          <NuxtLink to="/shop" class="text-primary font-medium hover:underline inline-block px-6 py-2 border border-primary text-sm uppercase tracking-widest rounded transition-colors hover:bg-primary hover:text-white">Продолжить покупки</NuxtLink>
       </div>
       
       <div v-else class="space-y-6">
@@ -21,7 +21,7 @@
           </div>
           <div class="flex-grow">
             <h3 class="font-serif text-lg">{{ item.product.name }}</h3>
-            <p class="text-gray-500 text-sm">${{ item.product.price }} each</p>
+            <p class="text-gray-500 text-sm">{{ item.product.price }} ₽ за шт.</p>
           </div>
           <div class="flex items-center border border-gray-200 rounded-md">
             <button @click="updateQuantity(item.id, item.quantity - 1)" class="px-3 py-1 hover:bg-gray-50 text-gray-600">-</button>
@@ -29,24 +29,24 @@
             <button @click="updateQuantity(item.id, item.quantity + 1)" class="px-3 py-1 hover:bg-gray-50 text-gray-600">+</button>
           </div>
           <div class="text-right w-24">
-            <p class="font-medium text-lg">${{ (item.product.price * item.quantity).toFixed(2) }}</p>
-            <button @click="removeItem(item.id)" class="text-xs text-red-400 hover:text-red-600 mt-1 uppercase tracking-wider">Remove</button>
+            <p class="font-medium text-lg">{{ (item.product.price * item.quantity).toFixed(2) }} ₽</p>
+            <button @click="removeItem(item.id)" class="text-xs text-red-400 hover:text-red-600 mt-1 uppercase tracking-wider">Удалить</button>
           </div>
         </div>
         
         <div class="flex justify-end pt-8 border-t border-gray-200 mt-8">
             <div class="text-right w-full sm:w-auto min-w-[300px]">
               <div class="flex justify-between mb-2">
-                <span class="text-sm text-gray-500">Subtotal</span>
-                <span class="font-medium">${{ cartTotal.toFixed(2) }}</span>
+                <span class="text-sm text-gray-500">Промежуточный итог</span>
+                <span class="font-medium">{{ cartTotal.toFixed(2) }} ₽</span>
               </div>
               <div class="flex justify-between mb-4 pb-4 border-b border-gray-100">
-                <span class="text-sm text-gray-500">Shipping</span>
-                <span class="font-medium text-green-600">Free</span>
+                <span class="text-sm text-gray-500">Доставка</span>
+                <span class="font-medium text-green-600">Бесплатно</span>
               </div>
               <div class="flex justify-between mb-6">
-                 <span class="text-lg font-serif">Total</span>
-                 <span class="text-3xl font-serif">${{ cartTotal.toFixed(2) }}</span>
+                 <span class="text-lg font-serif">Итого</span>
+                 <span class="text-3xl font-serif">{{ cartTotal.toFixed(2) }} ₽</span>
               </div>
 
               <!-- Error message -->
@@ -62,7 +62,7 @@
                   <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                   <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
                 </svg>
-                {{ checkoutLoading ? 'Processing...' : 'Proceed to Checkout' }}
+                {{ checkoutLoading ? 'Обработка...' : 'Оформить заказ' }}
               </button>
             </div>
         </div>
@@ -76,23 +76,23 @@
           <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <Icon name="lucide:check" class="text-green-600" size="32" />
           </div>
-          <h2 class="text-2xl font-serif text-gray-900 mb-2">Order Placed!</h2>
-          <p class="text-gray-500 mb-1">Order <span class="font-mono text-sm font-medium text-gray-700">#{{ confirmedOrder.id.slice(0, 8) }}</span></p>
-          <p class="text-gray-500 mb-6">Total: <span class="font-medium text-gray-900">${{ Number(confirmedOrder.totalPrice).toFixed(2) }}</span></p>
+          <h2 class="text-2xl font-serif text-gray-900 mb-2">Заказ оформлен!</h2>
+          <p class="text-gray-500 mb-1">Заказ <span class="font-mono text-sm font-medium text-gray-700">№{{ confirmedOrder.id.slice(0, 8) }}</span></p>
+          <p class="text-gray-500 mb-6">Итого: <span class="font-medium text-gray-900">{{ Number(confirmedOrder.totalPrice).toFixed(2) }} ₽</span></p>
 
           <div class="space-y-2 text-left mb-6 max-h-48 overflow-y-auto">
             <div v-for="item in confirmedOrder.items" :key="item.id" class="flex justify-between text-sm py-2 border-b border-gray-50">
               <span class="text-gray-700">{{ item.nameSnapshot }} × {{ item.qty }}</span>
-              <span class="font-medium">${{ (item.price * item.qty).toFixed(2) }}</span>
+              <span class="font-medium">{{ (item.price * item.qty).toFixed(2) }} ₽</span>
             </div>
           </div>
 
           <div class="flex gap-3">
             <button @click="confirmedOrder = null" class="flex-1 py-2 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-colors">
-              Continue Shopping
+              Продолжить покупки
             </button>
             <NuxtLink to="/profile" class="flex-1 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-opacity-90 transition-colors text-center">
-              View in Profile
+              Посмотреть в профиле
             </NuxtLink>
           </div>
         </div>
@@ -159,7 +159,7 @@ async function handleCheckout() {
     if (err.status === 401) {
       navigateTo('/auth/login')
     } else {
-      checkoutError.value = err?.data?.message || 'Something went wrong. Please try again.'
+      checkoutError.value = err?.data?.message || 'Что-то пошло не так. Попробуйте еще раз.'
     }
   } finally {
     checkoutLoading.value = false

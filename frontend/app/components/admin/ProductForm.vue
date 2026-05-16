@@ -53,33 +53,33 @@ const handleSubmit = () => {
       <!-- Left Column: Main Info -->
       <div class="space-y-6">
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Product Name</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Название товара</label>
           <input 
             v-model="form.name"
             type="text" 
             required
             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
-            placeholder="e.g. Monstera Deliciosa"
+            placeholder="например, Монстера Делициоза"
           />
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Описание</label>
           <textarea 
             v-model="form.description"
             rows="4"
             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all resize-none"
-            placeholder="Product details..."
+            placeholder="Детали товара..."
           ></textarea>
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Категория</label>
           <select 
             v-model="form.categoryId"
             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all bg-white"
           >
-            <option value="">Select Category</option>
+            <option value="">Выберите категорию</option>
             <option v-for="cat in categories" :key="cat.id" :value="cat.id">
               {{ cat.name }}
             </option>
@@ -91,7 +91,7 @@ const handleSubmit = () => {
       <div class="space-y-6">
         <div class="grid grid-cols-2 gap-4">
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Price ($)</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Цена (₽)</label>
             <input 
               v-model="form.price"
               type="number" 
@@ -101,7 +101,7 @@ const handleSubmit = () => {
             />
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Cost Price ($)</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Себестоимость (₽)</label>
             <input 
               v-model="form.costPrice"
               type="number" 
@@ -112,7 +112,7 @@ const handleSubmit = () => {
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Image URL</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Ссылка на изображение</label>
           <input 
             v-model="form.imageUrl"
             type="url" 
@@ -131,7 +131,7 @@ const handleSubmit = () => {
             id="isActive"
             class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary"
           />
-          <label for="isActive" class="text-sm font-medium text-gray-700 select-none">Active (Visible in store)</label>
+          <label for="isActive" class="text-sm font-medium text-gray-700 select-none">Активен (Виден в магазине)</label>
         </div>
       </div>
     </div>
@@ -142,8 +142,8 @@ const handleSubmit = () => {
         :disabled="isLoading"
         class="bg-primary text-white px-8 py-3 rounded-lg hover:bg-primary/90 transition-colors font-medium disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center min-w-[120px]"
       >
-        <span v-if="isLoading">Saving...</span>
-        <span v-else>Save Product</span>
+        <span v-if="isLoading">Сохранение...</span>
+        <span v-else>Сохранить товар</span>
       </button>
     </div>
   </form>

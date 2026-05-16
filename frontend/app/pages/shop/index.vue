@@ -19,7 +19,7 @@
       <!-- Sidebar Filters -->
       <aside class="w-full md:w-64 space-y-8 flex-shrink-0 hidden md:block">
         <div>
-          <h3 class="font-serif text-lg mb-4">Categories</h3>
+          <h3 class="font-serif text-lg mb-4">Категории</h3>
           <ul class="space-y-2 text-sm text-gray-600">
             <li>
               <button
@@ -27,14 +27,14 @@
                 :class="!selectedCategoryId ? 'font-medium text-primary' : 'text-gray-700'"
                 @click="selectedCategoryId = null"
               >
-                All Plants ({{ totalProducts }})
+                Все растения ({{ totalProducts }})
               </button>
             </li>
             <template v-if="categoriesPending">
-              <li class="text-xs text-gray-400">Loading categories...</li>
+              <li class="text-xs text-gray-400">Загрузка категорий...</li>
             </template>
             <template v-else-if="flatCategories.length === 0">
-              <li class="text-xs text-gray-400">No categories yet</li>
+              <li class="text-xs text-gray-400">Категорий пока нет</li>
             </template>
             <template v-else>
               <li
@@ -59,7 +59,7 @@
                   <span v-if="category.depth > 0" class="text-gray-300 mr-1">|-</span>
                   <span>{{ category.name }}</span>
                   <span v-if="category.hasChildren" class="ml-1 text-[10px] uppercase tracking-widest text-gray-400">
-                    Group
+                    Группа
                   </span>
                 </button>
               </li>
@@ -68,29 +68,29 @@
         </div>
         
         <div>
-           <h3 class="font-serif text-lg mb-4">Price</h3>
+           <h3 class="font-serif text-lg mb-4">Цена</h3>
            <div class="space-y-4">
              <div class="flex items-center gap-3">
                <div class="relative w-full text-gray-500">
-                 <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-sm">$</span>
+                 <span class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm text-gray-400">₽</span>
                  <input
                    v-model.number="selectedPriceRange[0]"
                    type="number"
                    :min="0"
                    :max="selectedPriceRange[1]"
-                   class="w-full pl-7 pr-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary text-gray-900 transition-colors"
-                   placeholder="Min"
+                   class="w-full pl-3 pr-7 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary text-gray-900 transition-colors"
+                   placeholder="От"
                  />
                </div>
                <span class="text-gray-400">—</span>
                <div class="relative w-full text-gray-500">
-                 <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-sm">$</span>
+                 <span class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm text-gray-400">₽</span>
                  <input
                    v-model.number="selectedPriceRange[1]"
                    type="number"
                    :min="selectedPriceRange[0]"
-                   class="w-full pl-7 pr-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary text-gray-900 transition-colors"
-                   placeholder="Max"
+                   class="w-full pl-3 pr-7 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary text-gray-900 transition-colors"
+                   placeholder="До"
                  />
                </div>
              </div>
@@ -98,7 +98,7 @@
         </div>
 
         <div>
-           <h3 class="font-serif text-lg mb-4">Availability</h3>
+           <h3 class="font-serif text-lg mb-4">Наличие</h3>
            <div class="space-y-2">
              <label class="flex items-center gap-2 text-sm text-gray-600 cursor-pointer hover:text-primary">
                <input
@@ -106,7 +106,7 @@
                  type="checkbox"
                  class="rounded border-gray-300 text-primary focus:ring-primary"
                >
-               In Stock
+               В наличии
              </label>
              <label class="flex items-center gap-2 text-sm text-gray-600 cursor-pointer hover:text-primary">
                <input
@@ -114,7 +114,7 @@
                  type="checkbox"
                  class="rounded border-gray-300 text-primary focus:ring-primary"
                >
-               Out of Stock
+               Нет в наличии
              </label>
            </div>
         </div>
@@ -125,7 +125,7 @@
         <div class="flex justify-between items-center mb-8">
           <h1 class="text-3xl font-serif">{{ selectedCategoryName }}</h1>
           <div class="flex items-center gap-4">
-            <span class="text-sm text-gray-500 hidden sm:block">Showing {{ delayedProducts.length }} products</span>
+            <span class="text-sm text-gray-500 hidden sm:block">Показано {{ delayedProducts.length }} товаров</span>
             <Listbox v-model="selectedSort" as="div" class="relative z-20">
               <ListboxButton class="relative w-full cursor-pointer rounded-md border border-gray-200 bg-white py-2 pl-3 pr-10 text-left text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary min-w-[180px]">
                 <span class="block truncate">{{ sortOptions.find(o => o.value === selectedSort)?.label }}</span>
@@ -172,17 +172,17 @@
         <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 transition-all duration-300" :class="!isUpdating ? 'opacity-100 blur-0 scale-100' : 'opacity-30 blur-[2px] scale-[0.98]'">
           <div v-for="product in delayedProducts" :key="product.id" class="group cursor-pointer">
             <NuxtLink :to="`/shop/${product.id}`">
-              <div class="relative overflow-hidden aspect-[3/4] bg-[#f4f7f6] mb-4">
+              <div class="relative overflow-hidden aspect-[3/4] bg-[#f4f7f6] mb-4 rounded-lg">
                 <img 
                   :src="product.imageUrl ?? undefined" 
                   :alt="product.name"
                   class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <!-- Badges -->
-                <div v-if="product.isNew" class="absolute top-3 left-3 bg-white px-2 py-1 text-[10px] uppercase tracking-widest font-medium">
-                  New
+                <div v-if="product.isNew" class="absolute top-3 left-3 bg-white px-2 py-1 text-[10px] uppercase tracking-widest font-medium rounded-sm">
+                  Новинка
                 </div>
-                <div v-if="product.isSale" class="absolute top-3 left-3 bg-accent text-white px-2 py-1 text-[10px] uppercase tracking-widest font-medium">
+                <div v-if="product.isSale" class="absolute top-3 left-3 bg-accent text-white px-2 py-1 text-[10px] uppercase tracking-widest font-medium rounded-sm">
                   Sale
                 </div>
 
@@ -202,9 +202,9 @@
                 <h3 class="font-serif text-lg leading-tight group-hover:text-primary transition-colors">{{ product.name }}</h3>
                 <div class="flex items-center gap-2 text-sm">
                   <span :class="{'text-accent font-medium': product.salePrice, 'text-gray-500': !product.salePrice}">
-                    ${{ product.salePrice || product.price }}
+                    {{ product.salePrice || product.price }} ₽
                   </span>
-                  <span v-if="product.salePrice" class="text-gray-400 line-through text-xs">${{ product.price }}</span>
+                  <span v-if="product.salePrice" class="text-gray-400 line-through text-xs">{{ product.price }} ₽</span>
                 </div>
               </div>
             </NuxtLink>
@@ -286,10 +286,10 @@ const selectedPriceRange = ref([priceRangeMin, priceRangeMax])
 const totalProducts = computed(() => realProducts.value.length)
 const selectedCategoryName = computed(() => {
   if (!selectedCategoryId.value) {
-    return 'All Plants'
+    return 'Все растения'
   }
   const selected = categories.value.find((category) => category.id === selectedCategoryId.value)
-  return selected?.name ?? 'All Plants'
+  return selected?.name ?? 'Все растения'
 })
 
 const flatCategories = computed<FlatCategoryNode[]>(() => {
@@ -434,10 +434,10 @@ const displayProducts = computed(() => {
 const selectedSort = ref('featured')
 
 const sortOptions = [
-  { value: 'featured', label: 'Sort by: Featured' },
-  { value: 'price-asc', label: 'Price: Low to High' },
-  { value: 'price-desc', label: 'Price: High to Low' },
-  { value: 'newest', label: 'Newest Arrivals' },
+  { value: 'featured', label: 'Сортировка: По умолчанию' },
+  { value: 'price-asc', label: 'Цена: По возрастанию' },
+  { value: 'price-desc', label: 'Цена: По убыванию' },
+  { value: 'newest', label: 'Новинки' },
 ]
 
 const sortedProducts = computed(() => {
@@ -488,7 +488,7 @@ async function handleQuickAdd(event: Event, productId: string | number) {
   event.preventDefault()
   
   if (!authStore.isAuthenticated) {
-    authMessage.value = 'Чтобы добавить предмет, надо авторизоваться'
+    authMessage.value = 'Чтобы добавить товар, нужно авторизоваться'
     setTimeout(() => { authMessage.value = null }, 3000)
     return
   }

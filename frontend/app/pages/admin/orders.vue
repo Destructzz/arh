@@ -46,12 +46,12 @@ const newOrdersCount = computed(() =>
 
 function statusLabel(status: string) {
   const map: Record<string, string> = {
-    new: 'New',
-    paid: 'Paid',
-    in_assembly: 'In Assembly',
-    out_for_delivery: 'Out for Delivery',
-    done: 'Delivered',
-    cancelled: 'Cancelled',
+    new: 'Новый',
+    paid: 'Оплачен',
+    in_assembly: 'В сборке',
+    out_for_delivery: 'Доставка',
+    done: 'Доставлен',
+    cancelled: 'Отменен',
   }
   return map[status] ?? status
 }
@@ -86,28 +86,28 @@ async function updateStatus(orderId: string, newStatus: string) {
   <div>
     <div class="flex items-center justify-between mb-8">
       <div>
-        <h1 class="font-serif text-4xl text-primary font-bold mb-1">Orders</h1>
-        <p class="text-gray-500">All customer orders, real-time.</p>
+        <h1 class="font-serif text-4xl text-primary font-bold mb-1">Заказы</h1>
+        <p class="text-gray-500">Все заказы клиентов в реальном времени.</p>
       </div>
       <button @click="refresh()" class="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-lg text-sm hover:bg-gray-50 transition-colors">
         <Icon name="lucide:refresh-cw" size="14" />
-        Refresh
+        Обновить
       </button>
     </div>
 
     <!-- Stats Row -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
       <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-        <h3 class="text-gray-500 text-sm font-medium uppercase tracking-wider mb-2">Total Orders</h3>
+        <h3 class="text-gray-500 text-sm font-medium uppercase tracking-wider mb-2">Всего заказов</h3>
         <p class="text-3xl font-bold text-gray-900">{{ orders.length }}</p>
       </div>
       <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-        <h3 class="text-gray-500 text-sm font-medium uppercase tracking-wider mb-2">New Orders</h3>
+        <h3 class="text-gray-500 text-sm font-medium uppercase tracking-wider mb-2">Новые заказы</h3>
         <p class="text-3xl font-bold text-blue-600">{{ newOrdersCount }}</p>
       </div>
       <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-        <h3 class="text-gray-500 text-sm font-medium uppercase tracking-wider mb-2">Total Revenue</h3>
-        <p class="text-3xl font-bold text-green-600">${{ totalRevenue.toFixed(2) }}</p>
+        <h3 class="text-gray-500 text-sm font-medium uppercase tracking-wider mb-2">Общая выручка</h3>
+        <p class="text-3xl font-bold text-green-600">{{ totalRevenue.toFixed(2) }} ₽</p>
       </div>
     </div>
 
@@ -119,18 +119,18 @@ async function updateStatus(orderId: string, newStatus: string) {
 
       <div v-else-if="orders.length === 0" class="text-center py-16">
         <Icon name="lucide:inbox" class="text-gray-300 mx-auto mb-3" size="48" />
-        <p class="text-gray-500">No orders yet.</p>
+        <p class="text-gray-500">Заказов пока нет.</p>
       </div>
 
       <table v-else class="w-full">
         <thead class="bg-gray-50 border-b border-gray-100">
           <tr>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Items</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Channel</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID заказа</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Товары</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Итого</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Канал</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Дата</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Статус</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-50">
@@ -151,14 +151,14 @@ async function updateStatus(orderId: string, newStatus: string) {
               </div>
             </td>
             <td class="px-6 py-4">
-              <span class="font-medium text-gray-900">${{ Number(order.totalPrice).toFixed(2) }}</span>
+              <span class="font-medium text-gray-900">{{ Number(order.totalPrice).toFixed(2) }} ₽</span>
             </td>
             <td class="px-6 py-4">
               <span class="text-sm capitalize text-gray-600">{{ order.channel }}</span>
             </td>
             <td class="px-6 py-4">
               <span class="text-sm text-gray-500">
-                {{ new Date(order.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) }}
+                {{ new Date(order.createdAt).toLocaleDateString('ru-RU', { month: 'short', day: 'numeric', year: 'numeric' }) }}
               </span>
             </td>
             <td class="px-6 py-4">
@@ -168,12 +168,12 @@ async function updateStatus(orderId: string, newStatus: string) {
                 :class="statusClass(order.status)"
                 class="text-xs font-medium rounded px-2 py-1 border-0 cursor-pointer focus:ring-2 focus:ring-primary/30 outline-none"
               >
-                <option value="new">New</option>
-                <option value="paid">Paid</option>
-                <option value="in_assembly">In Assembly</option>
-                <option value="out_for_delivery">Out for Delivery</option>
-                <option value="done">Delivered</option>
-                <option value="cancelled">Cancelled</option>
+                <option value="new">Новый</option>
+                <option value="paid">Оплачен</option>
+                <option value="in_assembly">В сборке</option>
+                <option value="out_for_delivery">Доставка</option>
+                <option value="done">Доставлен</option>
+                <option value="cancelled">Отменен</option>
               </select>
             </td>
           </tr>

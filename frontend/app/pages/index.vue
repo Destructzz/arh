@@ -5,17 +5,17 @@
       <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8 items-center h-full">
         <div class="order-2 md:order-1 space-y-6">
           <h1 class="text-5xl md:text-7xl font-serif leading-tight text-gray-900">
-            Bring Nature <br/> <span class="text-primary">Indoors.</span>
+            Природа в <br/> <span class="text-primary">вашем доме.</span>
           </h1>
           <p class="text-lg text-gray-600 max-w-md">
-            Discover our curated collection of easy-care plants that thrive in your home.
+            Откройте для себя нашу коллекцию неприхотливых растений, которые украсят ваш дом.
           </p>
           <div class="flex gap-4">
             <NuxtLink to="/shop" class="inline-block bg-primary text-white px-8 py-4 text-sm font-medium uppercase tracking-widest hover:bg-opacity-90 transition-all">
-              Shop Plants
+              Выбрать растения
             </NuxtLink>
             <NuxtLink to="/cart" class="inline-block bg-transparent border-2 border-primary text-primary px-8 py-4 text-sm font-medium uppercase tracking-widest hover:bg-primary hover:text-white transition-all">
-              Go to Cart
+              В корзину
             </NuxtLink>
           </div>
         </div>
@@ -32,7 +32,7 @@
     <!-- Categories -->
     <section class="py-20 bg-white">
       <div class="container mx-auto px-4">
-        <h2 class="text-3xl font-serif text-center mb-12">Shop by Category</h2>
+        <h2 class="text-3xl font-serif text-center mb-12">Категории товаров</h2>
 
         <!-- Loading skeleton -->
         <div v-if="categoriesPending" class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -60,7 +60,7 @@
             </div>
             <h3 class="text-xl font-serif mb-1">{{ cat.name }}</h3>
             <span class="text-sm text-gray-500 group-hover:text-primary transition-colors flex items-center gap-1">
-              Shop Now <Icon name="lucide:arrow-right" size="14" />
+              Перейти <Icon name="lucide:arrow-right" size="14" />
             </span>
           </NuxtLink>
         </div>
@@ -71,8 +71,8 @@
     <section class="py-20 bg-[#f9f9f9]">
       <div class="container mx-auto px-4">
          <div class="flex justify-between items-end mb-12">
-            <h2 class="text-3xl font-serif">Best Sellers</h2>
-            <NuxtLink to="/shop" class="text-sm border-b border-gray-900 pb-1 hover:text-primary hover:border-primary transition-colors">View All</NuxtLink>
+            <h2 class="text-3xl font-serif">Хиты продаж</h2>
+            <NuxtLink to="/shop" class="text-sm border-b border-gray-900 pb-1 hover:text-primary hover:border-primary transition-colors">Смотреть все</NuxtLink>
          </div>
          
          <!-- Loading skeleton -->
@@ -105,7 +105,7 @@
                 </button>
              </div>
              <h3 class="font-medium text-lg mb-1">{{ product.name }}</h3>
-             <p class="text-gray-500 text-sm">${{ Number(product.price).toFixed(2) }}</p>
+             <p class="text-gray-500 text-sm">{{ Number(product.price).toFixed(2) }} ₽</p>
            </NuxtLink>
          </div>
       </div>
