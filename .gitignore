@@ -39,3 +39,7 @@ checkbox.md
 # Database backups
 /backup/*
 !/backup/.gitkeep
+
+# Uploads
+/backend/uploads/*
+!/backend/uploads/.gitkeep
