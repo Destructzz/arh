@@ -19,7 +19,7 @@ const handleCreate = async (formData: any) => {
     });
     router.push('/admin/products');
   } catch (e) {
-    alert('Failed to create product: ' + e);
+    alert('Не удалось создать товар: ' + e);
   } finally {
     isSaving.value = false;
   }
@@ -30,9 +30,9 @@ const handleCreate = async (formData: any) => {
   <div>
     <div class="mb-8">
       <NuxtLink to="/admin/products" class="text-gray-500 hover:text-gray-900 mb-4 inline-block flex items-center gap-1">
-        <Icon name="heroicons:arrow-left" /> Back to Products
+        <Icon name="heroicons:arrow-left" /> Назад к товарам
       </NuxtLink>
-      <h1 class="font-serif text-3xl text-primary font-bold">Add New Product</h1>
+      <h1 class="font-serif text-3xl text-primary font-bold">Добавить новый товар</h1>
     </div>
 
     <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100">

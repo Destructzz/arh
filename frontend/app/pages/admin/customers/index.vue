@@ -13,8 +13,8 @@ const { data: customers, error } = await useFetch<any[]>(`${config.public.apiBas
   <div>
     <div class="flex items-center justify-between mb-8">
       <div>
-        <h1 class="font-serif text-3xl text-primary font-bold">Customers</h1>
-        <p class="text-gray-600 mt-1">View customer database</p>
+        <h1 class="font-serif text-3xl text-primary font-bold">Клиенты</h1>
+        <p class="text-gray-600 mt-1">Просмотр базы данных клиентов</p>
       </div>
       <!-- 
       <NuxtLink 
@@ -28,22 +28,22 @@ const { data: customers, error } = await useFetch<any[]>(`${config.public.apiBas
     </div>
 
     <div v-if="error" class="bg-red-50 text-red-600 p-4 rounded-lg mb-6 border border-red-100">
-      Failed to load customers: {{ error.message }}
+      Не удалось загрузить клиентов: {{ error.message }}
     </div>
 
     <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
       <table class="w-full text-left border-collapse">
         <thead class="bg-gray-50 border-b border-gray-100 text-xs uppercase text-gray-500 font-semibold tracking-wider">
           <tr>
-            <th class="px-6 py-4">Name</th>
-            <th class="px-6 py-4">Contact</th>
-            <th class="px-6 py-4">Notes</th>
-            <th class="px-6 py-4">Registered</th>
+            <th class="px-6 py-4">Имя</th>
+            <th class="px-6 py-4">Контакты</th>
+            <th class="px-6 py-4">Заметки</th>
+            <th class="px-6 py-4">Зарегистрирован</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-100">
           <tr v-if="!customers?.length" class="text-center text-gray-500">
-            <td colspan="4" class="px-6 py-8">No customers found.</td>
+            <td colspan="4" class="px-6 py-8">Клиенты не найдены.</td>
           </tr>
           
           <tr v-for="customer in customers" :key="customer.id" class="hover:bg-gray-50/50 transition-colors">

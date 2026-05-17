@@ -12,7 +12,6 @@ const links = [
   { name: 'Заказы', path: '/admin/orders', icon: 'heroicons:shopping-cart' },
   { name: 'Товары', path: '/admin/products', icon: 'heroicons:shopping-bag' },
   { name: 'Категории', path: '/admin/categories', icon: 'heroicons:tag' },
-  { name: 'Скидки', path: '/admin/discounts', icon: 'heroicons:ticket' },
   { name: 'Тесты API', path: '/admin/test', icon: 'heroicons:beaker' },
   { name: 'Сиддер данных', path: '/admin/seed', icon: 'heroicons:command-line' },
 ];

@@ -42,28 +42,28 @@ const handleSubmit = () => {
 <template>
   <form @submit.prevent="handleSubmit" class="space-y-6 max-w-2xl">
     <div>
-      <label class="block text-sm font-medium text-gray-700 mb-1">Category Name</label>
+      <label class="block text-sm font-medium text-gray-700 mb-1">Название категории</label>
       <input 
         v-model="form.name"
         type="text" 
         required
         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
-        placeholder="e.g. Indoor Plants"
+        placeholder="например, Комнатные растения"
       />
     </div>
 
     <div>
-      <label class="block text-sm font-medium text-gray-700 mb-1">Parent Category (Optional)</label>
+      <label class="block text-sm font-medium text-gray-700 mb-1">Родительская категория (необязательно)</label>
       <select 
         v-model="form.parentId"
         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all bg-white"
       >
-        <option value="">None (Top Level)</option>
+        <option value="">Нет (Верхний уровень)</option>
         <option v-for="cat in availableParents" :key="cat.id" :value="cat.id">
           {{ cat.name }}
         </option>
       </select>
-      <p class="text-xs text-gray-500 mt-1">Select a parent to make this a sub-category.</p>
+      <p class="text-xs text-gray-500 mt-1">Выберите родительскую категорию, чтобы сделать эту категорию подкатегорией.</p>
     </div>
 
     <div class="pt-4">
@@ -72,8 +72,8 @@ const handleSubmit = () => {
         :disabled="isLoading"
         class="bg-primary text-white px-8 py-3 rounded-lg hover:bg-primary/90 transition-colors font-medium disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center min-w-[120px]"
       >
-        <span v-if="isLoading">Saving...</span>
-        <span v-else>Save Category</span>
+        <span v-if="isLoading">Сохранение...</span>
+        <span v-else>Сохранить категорию</span>
       </button>
     </div>
   </form>

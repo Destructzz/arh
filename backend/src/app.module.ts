@@ -4,7 +4,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DatabaseModule } from './database/database.module';
 import { CatalogModule } from './modules/catalog/catalog.module';
-import { DiscountsModule } from './modules/discounts/discounts.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { InventoryModule } from './modules/inventory/inventory.module';
 import { OrdersModule } from './modules/orders/orders.module';
@@ -20,7 +19,6 @@ import { UsersModule } from './modules/users/users.module';
     CatalogModule,
     OrdersModule,
     InventoryModule,
-    DiscountsModule,
     AuthModule,
     CartModule,
     UsersModule,

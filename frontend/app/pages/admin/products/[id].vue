@@ -24,7 +24,7 @@ const handleUpdate = async (formData: any) => {
     });
     router.push('/admin/products');
   } catch (e) {
-    alert('Failed to update product: ' + e);
+    alert('Не удалось обновить товар: ' + e);
   } finally {
     isSaving.value = false;
   }
@@ -35,13 +35,13 @@ const handleUpdate = async (formData: any) => {
   <div>
     <div class="mb-8">
       <NuxtLink to="/admin/products" class="text-gray-500 hover:text-gray-900 mb-4 inline-block flex items-center gap-1">
-        <Icon name="heroicons:arrow-left" /> Back to Products
+        <Icon name="heroicons:arrow-left" /> Назад к товарам
       </NuxtLink>
-      <h1 class="font-serif text-3xl text-primary font-bold">Edit Product</h1>
+      <h1 class="font-serif text-3xl text-primary font-bold">Редактировать товар</h1>
     </div>
 
-    <div v-if="pending" class="text-gray-500">Loading...</div>
-    <div v-else-if="error" class="text-red-500">Error loading product</div>
+    <div v-if="pending" class="text-gray-500">Загрузка...</div>
+    <div v-else-if="error" class="text-red-500">Ошибка при загрузке товара</div>
     
     <div v-else class="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
       <ProductForm 

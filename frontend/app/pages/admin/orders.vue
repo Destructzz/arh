@@ -56,6 +56,15 @@ function statusLabel(status: string) {
   return map[status] ?? status
 }
 
+function channelLabel(channel: string) {
+  const map: Record<string, string> = {
+    online: 'Онлайн',
+    offline: 'Офлайн',
+    phone: 'Телефон',
+  }
+  return map[channel] ?? channel
+}
+
 function statusClass(status: string) {
   const map: Record<string, string> = {
     new: 'bg-blue-100 text-blue-700',
@@ -154,7 +163,7 @@ async function updateStatus(orderId: string, newStatus: string) {
               <span class="font-medium text-gray-900">{{ Number(order.totalPrice).toFixed(2) }} ₽</span>
             </td>
             <td class="px-6 py-4">
-              <span class="text-sm capitalize text-gray-600">{{ order.channel }}</span>
+              <span class="text-sm text-gray-600">{{ channelLabel(order.channel) }}</span>
             </td>
             <td class="px-6 py-4">
               <span class="text-sm text-gray-500">

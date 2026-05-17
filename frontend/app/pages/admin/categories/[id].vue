@@ -24,7 +24,7 @@ const handleUpdate = async (formData: { name: string; parentId?: string | null }
     });
     router.push('/admin/categories');
   } catch (e) {
-    alert('Failed to update category: ' + e);
+    alert('Не удалось обновить категорию: ' + e);
   } finally {
     isSaving.value = false;
   }
@@ -35,13 +35,13 @@ const handleUpdate = async (formData: { name: string; parentId?: string | null }
   <div>
     <div class="mb-8">
       <NuxtLink to="/admin/categories" class="text-gray-500 hover:text-gray-900 mb-4 inline-block flex items-center gap-1">
-        <Icon name="heroicons:arrow-left" /> Back to Categories
+        <Icon name="heroicons:arrow-left" /> Назад к категориям
       </NuxtLink>
-      <h1 class="font-serif text-3xl text-primary font-bold">Edit Category</h1>
+      <h1 class="font-serif text-3xl text-primary font-bold">Редактировать категорию</h1>
     </div>
 
-    <div v-if="pending" class="text-gray-500">Loading...</div>
-    <div v-else-if="error" class="text-red-500">Error loading category</div>
+    <div v-if="pending" class="text-gray-500">Загрузка...</div>
+    <div v-else-if="error" class="text-red-500">Ошибка при загрузке категории</div>
     
     <div v-else class="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
       <CategoryForm 

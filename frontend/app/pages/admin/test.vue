@@ -34,7 +34,7 @@ async function testEndpoint(endpoint: string) {
 <template>
   <div class="max-w-4xl">
     <div class="mb-8">
-      <h1 class="text-3xl font-serif text-gray-900 mb-2">API Test Sandbox</h1>
+      <h1 class="text-3xl font-serif text-gray-900 mb-2">Песочница тестирования API</h1>
       <p class="text-gray-600">Нажимайте на кнопки, чтобы отправить тестовые запросы к бекенду и проверить, возвращаются ли данные от текущего пользователя.</p>
     </div>
 
