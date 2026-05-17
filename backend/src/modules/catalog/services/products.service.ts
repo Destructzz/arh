@@ -4,6 +4,7 @@ import { DataSource, Repository } from 'typeorm';
 
 import { Category } from '../entities/categories.entity';
 import { Product } from '../entities/products.entity';
+import { InventoryItem } from '../../inventory/entities/inventory-items.entity';
 
 export interface CreateProductDto {
   name: string;
@@ -13,6 +14,7 @@ export interface CreateProductDto {
   costPrice?: number;
   isActive?: boolean;
   imageUrl?: string | null;
+  quantityOnHand?: number;
 }
 
 export type UpdateProductDto = Partial<CreateProductDto>;
@@ -22,6 +24,8 @@ export class ProductsService {
   constructor(
     @InjectRepository(Product)
     private readonly productsRepo: Repository<Product>,
+    @InjectRepository(InventoryItem)
+    private readonly inventoryRepo: Repository<InventoryItem>,
     private readonly dataSource: DataSource,
   ) {}
 
@@ -62,7 +66,7 @@ export class ProductsService {
     return product;
   }
 
-  create(dto: CreateProductDto): Promise<Product> {
+  async create(dto: CreateProductDto): Promise<Product> {
     const product = this.productsRepo.create({
       name: dto.name,
       description: dto.description ?? null,
@@ -73,7 +77,19 @@ export class ProductsService {
       imageUrl: dto.imageUrl ?? null,
     });
 
-    return this.productsRepo.save(product);
+    const savedProduct = await this.productsRepo.save(product);
+
+    const inventoryItem = this.inventoryRepo.create({
+      product: savedProduct,
+      quantityOnHand: dto.quantityOnHand ?? 0,
+      reserved: 0,
+    });
+    await this.inventoryRepo.save(inventoryItem);
+
+    return this.productsRepo.findOne({
+      where: { id: savedProduct.id },
+      relations: { category: true, inventoryItem: true },
+    }) as Promise<Product>;
   }
 
   async update(id: string, dto: UpdateProductDto): Promise<Product> {

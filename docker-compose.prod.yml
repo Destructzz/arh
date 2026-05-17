@@ -36,6 +36,8 @@ services:
       - app_net
     ports:
       - "3001:3001"
+    volumes:
+      - ./backend/uploads:/app/uploads
 
   frontend:
     build:

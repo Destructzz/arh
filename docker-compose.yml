@@ -39,6 +39,8 @@ services:
         condition: service_healthy
     ports:
       - "${PORT:-3000}:3001"
+    volumes:
+      - ./backend/uploads:/app/uploads
     networks:
       - app_net
 

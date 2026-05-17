@@ -36,7 +36,7 @@ const handleCreate = async (formData: any) => {
     </div>
 
     <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
-      <ProductForm :is-loading="isSaving" @submit="handleCreate" />
+      <ProductForm :is-loading="isSaving" :is-create="true" @submit="handleCreate" />
     </div>
   </div>
 </template>

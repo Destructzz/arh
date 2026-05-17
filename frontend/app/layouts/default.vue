@@ -24,9 +24,17 @@
 
         <!-- Icons -->
         <div class="flex items-center space-x-6">
-          <button class="hover:text-primary transition-colors">
-            <Icon name="lucide:search" size="20" />
-          </button>
+          <!-- Sleek Search Input -->
+          <div class="relative flex items-center">
+            <input
+              v-model="headerSearchQuery"
+              type="text"
+              placeholder="Поиск..."
+              class="w-28 sm:w-40 md:w-48 pl-8 pr-3 py-1 bg-gray-50 border border-gray-200 rounded-full text-xs focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all"
+              @keyup.enter="triggerSearch"
+            />
+            <Icon name="lucide:search" size="14" class="absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400" />
+          </div>
           
           <NuxtLink :to="auth.isAuthenticated ? '/profile' : '/auth/login'" class="hover:text-primary transition-colors">
              <Icon name="lucide:user" size="20" />
@@ -81,12 +89,22 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, watch } from 'vue'
+import { ref, watch } from 'vue'
 import { useAuthStore } from '~/stores/auth'
 import { useCartStore } from '~/stores/cart'
 
 const auth = useAuthStore()
 const cartStore = useCartStore()
+
+const router = useRouter()
+const headerSearchQuery = ref('')
+
+const triggerSearch = () => {
+  if (headerSearchQuery.value.trim()) {
+    router.push({ path: '/shop', query: { q: headerSearchQuery.value.trim() } })
+    headerSearchQuery.value = ''
+  }
+}
 
 // We need to react to auth state changes to fetch or clear the cart
 watch(() => auth.user, (user) => {

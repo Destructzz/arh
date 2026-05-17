@@ -122,10 +122,25 @@
 
       <!-- Product Grid -->
       <div class="flex-grow">
-        <div class="flex justify-between items-center mb-8">
-          <h1 class="text-3xl font-serif">{{ selectedCategoryName }}</h1>
-          <div class="flex items-center gap-4">
-            <span class="text-sm text-gray-500 hidden sm:block">Показано {{ delayedProducts.length }} товаров</span>
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+          <div>
+            <h1 class="text-3xl font-serif mb-1">{{ selectedCategoryName }}</h1>
+            <span class="text-xs text-gray-400">Показано {{ delayedProducts.length }} товаров</span>
+          </div>
+          
+          <div class="flex flex-wrap items-center gap-3">
+            <!-- Sleek Search Input -->
+            <div class="relative min-w-[200px] flex-grow sm:flex-grow-0">
+              <input
+                v-model="searchQuery"
+                type="text"
+                placeholder="Поиск по каталогу..."
+                class="w-full pl-9 pr-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-colors"
+                @input="handleSearchInput"
+              />
+              <Icon name="lucide:search" size="16" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            </div>
+
             <Listbox v-model="selectedSort" as="div" class="relative z-20">
               <ListboxButton class="relative w-full cursor-pointer rounded-md border border-gray-200 bg-white py-2 pl-3 pr-10 text-left text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary min-w-[180px]">
                 <span class="block truncate">{{ sortOptions.find(o => o.value === selectedSort)?.label }}</span>
@@ -233,6 +248,7 @@ interface Product {
   salePrice?: number
   isNew?: boolean
   isSale?: boolean
+  description?: string | null
   category?: {
     id: string
   } | null
@@ -286,6 +302,18 @@ const outOfStockEnabled = ref(true)
 const priceRangeMin = 0
 const priceRangeMax = 20000
 const selectedPriceRange = ref([priceRangeMin, priceRangeMax])
+
+const route = useRoute()
+const router = useRouter()
+const searchQuery = ref((route.query.q as string) || '')
+
+watch(() => route.query.q, (newQ) => {
+  searchQuery.value = (newQ as string) || ''
+})
+
+const handleSearchInput = () => {
+  router.replace({ query: { ...route.query, q: searchQuery.value || undefined } })
+}
 
 const totalProducts = computed(() => realProducts.value.length)
 const selectedCategoryName = computed(() => {
@@ -395,6 +423,15 @@ const displayProducts = computed(() => {
   return realProducts.value.filter((product) => {
     if (product.isActive === false) {
       return false
+    }
+
+    if (searchQuery.value) {
+      const q = searchQuery.value.toLowerCase().trim()
+      const matchesName = product.name.toLowerCase().includes(q)
+      const matchesDesc = product.description?.toLowerCase().includes(q) || false
+      if (!matchesName && !matchesDesc) {
+        return false
+      }
     }
 
     if (categoryFilterSet.value) {
