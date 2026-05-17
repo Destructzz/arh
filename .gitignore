@@ -35,3 +35,7 @@ coverage/
 # Misc
 .eslintcache
 checkbox.md
+
+# Database backups
+/backup/*
+!/backup/.gitkeep
