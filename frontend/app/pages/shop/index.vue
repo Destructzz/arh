@@ -185,11 +185,15 @@
                 <div v-if="product.isSale" class="absolute top-3 left-3 bg-accent text-white px-2 py-1 text-[10px] uppercase tracking-widest font-medium rounded-sm">
                   Sale
                 </div>
+                <div v-if="((product.inventoryItem?.quantityOnHand ?? 0) - (product.inventoryItem?.reserved ?? 0)) <= 0" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-900/80 text-white px-4 py-2 text-xs uppercase tracking-widest font-medium rounded-sm whitespace-nowrap shadow-sm">
+                  Нет в наличии
+                </div>
 
                 <!-- Quick Add Button -->
                 <button 
+                  v-if="((product.inventoryItem?.quantityOnHand ?? 0) - (product.inventoryItem?.reserved ?? 0)) > 0"
                   @click.prevent="handleQuickAdd($event, product.id)" 
-                  class="absolute bottom-4 right-4 bg-white w-10 h-10 flex items-center justify-center rounded-full shadow-md hover:bg-primary hover:text-white transition-all duration-300"
+                  class="absolute bottom-4 right-4 bg-white w-10 h-10 flex items-center justify-center rounded-full shadow-md hover:bg-primary hover:text-white transition-all duration-300 z-10"
                   :class="{'opacity-100 translate-y-0': addingItems[product.id], 'opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0': !addingItems[product.id]}"
                   :disabled="addingItems[product.id]"
                 >

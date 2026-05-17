@@ -13,9 +13,10 @@ import { OrdersService } from './services/orders.service';
 import { PaymentsController } from './controllers/payments.controller';
 import { Payment } from './entities/payments.entity';
 import { PaymentsService } from './services/payments.service';
+import { InventoryItem } from '../inventory/entities/inventory-items.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Order, OrderItem, Payment, Delivery])],
+  imports: [TypeOrmModule.forFeature([Order, OrderItem, Payment, Delivery, InventoryItem])],
   controllers: [OrdersController, OrderItemsController, PaymentsController, DeliveriesController],
   providers: [OrdersService, OrderItemsService, PaymentsService, DeliveriesService],
 })

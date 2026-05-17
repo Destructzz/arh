@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { DeliveryType, Order, OrderChannel, OrderStatus } from '../entities/orders.entity';
+import { InventoryItem } from '../../inventory/entities/inventory-items.entity';
 
 export interface CreateOrderDto {
   userId?: string | null;
@@ -21,6 +22,8 @@ export class OrdersService {
   constructor(
     @InjectRepository(Order)
     private readonly ordersRepo: Repository<Order>,
+    @InjectRepository(InventoryItem)
+    private readonly inventoryItemRepo: Repository<InventoryItem>,
   ) { }
 
   findAll(): Promise<Order[]> {
@@ -66,7 +69,50 @@ export class OrdersService {
   }
 
   async update(id: string, dto: UpdateOrderDto): Promise<Order> {
-    const order = await this.ordersRepo.preload({
+    const existingOrder = await this.ordersRepo.findOne({
+      where: { id },
+      relations: { items: { product: true } },
+    });
+
+    if (!existingOrder) {
+      throw new NotFoundException('Order not found');
+    }
+
+    const activeStatuses = [OrderStatus.New, OrderStatus.Paid, OrderStatus.InAssembly, OrderStatus.OutForDelivery];
+    const isPreviousActive = activeStatuses.includes(existingOrder.status);
+
+    if (isPreviousActive && dto.status) {
+      if (dto.status === OrderStatus.Cancelled) {
+        // Release reservation
+        for (const item of existingOrder.items || []) {
+          if (item.product) {
+            const invItem = await this.inventoryItemRepo.findOne({
+              where: { product: { id: item.product.id } },
+            });
+            if (invItem) {
+              invItem.reserved = Math.max(0, invItem.reserved - item.qty);
+              await this.inventoryItemRepo.save(invItem);
+            }
+          }
+        }
+      } else if (dto.status === OrderStatus.Done) {
+        // Deduct from stock and release reservation
+        for (const item of existingOrder.items || []) {
+          if (item.product) {
+            const invItem = await this.inventoryItemRepo.findOne({
+              where: { product: { id: item.product.id } },
+            });
+            if (invItem) {
+              invItem.quantityOnHand = Math.max(0, invItem.quantityOnHand - item.qty);
+              invItem.reserved = Math.max(0, invItem.reserved - item.qty);
+              await this.inventoryItemRepo.save(invItem);
+            }
+          }
+        }
+      }
+    }
+
+    const preloadedOrder = await this.ordersRepo.preload({
       id,
       userId: dto.userId,
       status: dto.status,
@@ -77,14 +123,35 @@ export class OrdersService {
       discountAmount: dto.discountAmount,
     });
 
-    if (!order) {
+    if (!preloadedOrder) {
       throw new NotFoundException('Order not found');
     }
 
-    return this.ordersRepo.save(order);
+    return this.ordersRepo.save(preloadedOrder);
   }
 
   async remove(id: string): Promise<{ deleted: true }> {
+    const existingOrder = await this.ordersRepo.findOne({
+      where: { id },
+      relations: { items: { product: true } },
+    });
+    if (existingOrder) {
+      const activeStatuses = [OrderStatus.New, OrderStatus.Paid, OrderStatus.InAssembly, OrderStatus.OutForDelivery];
+      if (activeStatuses.includes(existingOrder.status)) {
+        // Release reservation
+        for (const item of existingOrder.items || []) {
+          if (item.product) {
+            const invItem = await this.inventoryItemRepo.findOne({
+              where: { product: { id: item.product.id } },
+            });
+            if (invItem) {
+              invItem.reserved = Math.max(0, invItem.reserved - item.qty);
+              await this.inventoryItemRepo.save(invItem);
+            }
+          }
+        }
+      }
+    }
     await this.ordersRepo.delete(id);
     return { deleted: true };
   }

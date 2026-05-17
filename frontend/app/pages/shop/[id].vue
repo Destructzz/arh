@@ -47,18 +47,34 @@
         <div class="prose text-gray-600 mb-8 text-sm leading-relaxed" v-html="product.description || 'Описание отсутствует.'"></div>
 
         <div class="flex items-center gap-4 mb-8">
-           <div class="flex border border-gray-300 w-32">
-              <button @click="quantity > 1 && quantity--" class="px-3 py-3 hover:bg-gray-100 transition-colors">-</button>
-              <input type="number" v-model="quantity" class="w-full text-center border-none focus:ring-0 py-3 appearance-none m-0" min="1" />
-              <button @click="quantity++" class="px-3 py-3 hover:bg-gray-100 transition-colors">+</button>
+           <div class="flex border border-gray-300 w-32" :class="{'opacity-50 cursor-not-allowed': !inStock}">
+              <button 
+                @click="quantity > 1 && quantity--" 
+                class="px-3 py-3 hover:bg-gray-100 transition-colors disabled:hover:bg-transparent"
+                :disabled="!inStock"
+              >-</button>
+              <input 
+                type="number" 
+                v-model="quantity" 
+                class="w-full text-center border-none focus:ring-0 py-3 appearance-none m-0" 
+                min="1" 
+                :max="availableQuantity"
+                :disabled="!inStock"
+              />
+              <button 
+                @click="quantity < availableQuantity && quantity++" 
+                class="px-3 py-3 hover:bg-gray-100 transition-colors disabled:hover:bg-transparent"
+                :disabled="!inStock || quantity >= availableQuantity"
+              >+</button>
            </div>
            <button 
              @click="handleAddToCart"
-             :disabled="addingToCart"
-             class="flex-grow bg-primary text-white py-3 uppercase tracking-widest text-sm font-medium hover:bg-opacity-90 transition-all flex justify-center items-center gap-2"
+             :disabled="addingToCart || !inStock"
+             class="flex-grow text-white py-3 uppercase tracking-widest text-sm font-medium transition-all flex justify-center items-center gap-2"
+             :class="inStock ? 'bg-primary hover:bg-opacity-90' : 'bg-gray-400 cursor-not-allowed'"
            >
              <Icon v-if="addingToCart" name="lucide:loader-2" class="animate-spin" />
-             <span>{{ addingToCart ? 'Добавление...' : 'Добавить в корзину' }}</span>
+             <span>{{ !inStock ? 'Нет в наличии' : (addingToCart ? 'Добавление...' : 'Добавить в корзину') }}</span>
            </button>
         </div>
 
@@ -91,6 +107,10 @@ interface Product {
   price: number
   description?: string | null
   imageUrl?: string | null
+  inventoryItem?: {
+    quantityOnHand: number
+    reserved: number
+  } | null
 }
 
 const route = useRoute()
@@ -103,6 +123,19 @@ const addingToCart = ref(false)
 const authMessage = ref<string | null>(null)
 
 const { data: product, pending, error } = await useFetch<Product>(`${config.public.apiBase}/products/${route.params.id}`)
+
+const availableQuantity = computed(() => {
+  if (!product.value?.inventoryItem) return 0
+  return product.value.inventoryItem.quantityOnHand - product.value.inventoryItem.reserved
+})
+
+const inStock = computed(() => availableQuantity.value > 0)
+
+watch(availableQuantity, (newMax) => {
+  if (quantity.value > newMax && newMax > 0) {
+    quantity.value = newMax
+  }
+})
 
 async function handleAddToCart() {
   if (!product.value) return

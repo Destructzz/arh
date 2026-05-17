@@ -6,6 +6,7 @@ import { AddToCartDto } from './dto/add-to-cart.dto';
 import { UpdateCartDto } from './dto/update-cart.dto';
 import { Order, OrderChannel, OrderStatus, DeliveryType } from '../orders/entities/orders.entity';
 import { OrderItem } from '../orders/entities/order-items.entity';
+import { InventoryItem } from '../inventory/entities/inventory-items.entity';
 
 export interface CheckoutDto {
   deliveryType?: DeliveryType;
@@ -21,6 +22,8 @@ export class CartService {
         private orderRepo: Repository<Order>,
         @InjectRepository(OrderItem)
         private orderItemRepo: Repository<OrderItem>,
+        @InjectRepository(InventoryItem)
+        private inventoryItemRepo: Repository<InventoryItem>,
     ) { }
 
     async findMyCart(userId: string) {
@@ -90,6 +93,29 @@ export class CartService {
 
         if (cartItems.length === 0) {
             throw new BadRequestException('Cart is empty');
+        }
+
+        // Validate stock availability and pre-load inventory items
+        const inventoryUpdates: { invItem: InventoryItem; qty: number }[] = [];
+        for (const ci of cartItems) {
+            const invItem = await this.inventoryItemRepo.findOne({
+                where: { product: { id: ci.product.id } },
+            });
+            const available = invItem ? (invItem.quantityOnHand - invItem.reserved) : 0;
+            if (available < ci.quantity) {
+                throw new BadRequestException(
+                    `Цветов "${ci.product.name}" недостаточно на складе (доступно: ${available}, требуется: ${ci.quantity})`
+                );
+            }
+            if (invItem) {
+                inventoryUpdates.push({ invItem, qty: ci.quantity });
+            }
+        }
+
+        // Increment reserve for verified items
+        for (const update of inventoryUpdates) {
+            update.invItem.reserved += update.qty;
+            await this.inventoryItemRepo.save(update.invItem);
         }
 
         const totalPrice = cartItems.reduce((sum, item) => {

@@ -4,8 +4,17 @@ definePageMeta({
 });
 
 const config = useRuntimeConfig();
-const { data: products, refresh, error } = await useFetch<any[]>(`${config.public.apiBase}/products`, {
+const { data: products, refresh, error, pending } = await useFetch<any[]>(`${config.public.apiBase}/products`, {
   credentials: 'include'
+});
+
+const searchQuery = ref('');
+
+const filteredProducts = computed(() => {
+  if (!products.value) return [];
+  if (!searchQuery.value) return products.value;
+  const q = searchQuery.value.toLowerCase();
+  return products.value.filter(p => p.name?.toLowerCase().includes(q));
 });
 
 const handleDelete = async (id: string) => {
@@ -29,18 +38,29 @@ const formatPrice = (price: number) => {
 
 <template>
   <div>
-    <div class="flex items-center justify-between mb-8">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
       <div>
         <h1 class="font-serif text-3xl text-primary font-bold">Товары</h1>
         <p class="text-gray-600 mt-1">Управление вашим каталогом</p>
       </div>
-      <NuxtLink 
-        to="/admin/products/create"
-        class="bg-primary text-white px-6 py-2.5 rounded-lg hover:bg-primary/90 transition-colors font-medium flex items-center gap-2"
-      >
-        <Icon name="heroicons:plus" size="20" />
-        Добавить товар
-      </NuxtLink>
+      <div class="flex items-center gap-4">
+        <div class="relative">
+          <Icon name="heroicons:magnifying-glass" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size="20" />
+          <input 
+            v-model="searchQuery" 
+            type="text" 
+            placeholder="Поиск по названию..." 
+            class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none w-64"
+          >
+        </div>
+        <NuxtLink 
+          to="/admin/products/create"
+          class="bg-primary text-white px-6 py-2.5 rounded-lg hover:bg-primary/90 transition-colors font-medium flex items-center gap-2 whitespace-nowrap"
+        >
+          <Icon name="heroicons:plus" size="20" />
+          Добавить товар
+        </NuxtLink>
+      </div>
     </div>
 
     <div v-if="error" class="bg-red-50 text-red-600 p-4 rounded-lg mb-6 border border-red-100">
@@ -59,11 +79,14 @@ const formatPrice = (price: number) => {
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-100">
-          <tr v-if="!products?.length" class="text-center text-gray-500">
+          <tr v-if="pending" class="text-center">
+            <td colspan="5" class="px-6 py-8 text-gray-500 animate-pulse">Загрузка...</td>
+          </tr>
+          <tr v-else-if="!filteredProducts.length" class="text-center text-gray-500">
             <td colspan="5" class="px-6 py-8">Товары не найдены.</td>
           </tr>
           
-          <tr v-for="product in products" :key="product.id" class="hover:bg-gray-50/50 transition-colors group">
+          <tr v-for="product in filteredProducts" :key="product.id" class="hover:bg-gray-50/50 transition-colors group">
             <td class="px-6 py-4">
               <div class="flex items-center gap-4">
                 <div class="w-12 h-12 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0 border border-gray-200">
