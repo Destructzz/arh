@@ -90,3 +90,9 @@ export const createPaymentExample = {
   status: 'paid',
   paidAt: '2026-01-30T12:05:00.000Z',
 };
+
+export const updatePaymentExample = {
+  status: 'paid',
+  paidAt: '2026-01-30T12:05:00.000Z',
+};
+
