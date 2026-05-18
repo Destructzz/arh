@@ -99,7 +99,6 @@ Body (POST/PATCH):
   "customerId": "uuid",
   "status": "new",
   "channel": "online",
-  "deliveryType": "courier",
   "totalPrice": 120.0,
   "totalCost": 70.0,
   "discountAmount": 10.0
@@ -140,25 +139,6 @@ Body (POST/PATCH):
   "amount": 120.0,
   "status": "paid",
   "paidAt": "2026-01-30T12:00:00Z"
-}
-```
-
-### Deliveries
-- GET /deliveries
-- GET /deliveries/:id
-- POST /deliveries
-- PATCH /deliveries/:id
-- DELETE /deliveries/:id
-
-Body (POST/PATCH):
-```
-{
-  "orderId": "uuid",
-  "address": "Main st 1",
-  "deliveryTimeFrom": "2026-01-30T14:00:00Z",
-  "deliveryTimeTo": "2026-01-30T15:00:00Z",
-  "courierId": "uuid",
-  "status": "pending"
 }
 ```
 

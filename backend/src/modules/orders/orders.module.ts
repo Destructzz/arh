@@ -1,9 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { DeliveriesController } from './controllers/deliveries.controller';
-import { Delivery } from './entities/deliveries.entity';
-import { DeliveriesService } from './services/deliveries.service';
+
 import { OrderItemsController } from './controllers/order-items.controller';
 import { OrderItem } from './entities/order-items.entity';
 import { OrderItemsService } from './services/order-items.service';
@@ -16,9 +14,9 @@ import { PaymentsService } from './services/payments.service';
 import { InventoryItem } from '../inventory/entities/inventory-items.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Order, OrderItem, Payment, Delivery, InventoryItem])],
-  controllers: [OrdersController, OrderItemsController, PaymentsController, DeliveriesController],
-  providers: [OrdersService, OrderItemsService, PaymentsService, DeliveriesService],
+  imports: [TypeOrmModule.forFeature([Order, OrderItem, Payment, InventoryItem])],
+  controllers: [OrdersController, OrderItemsController, PaymentsController],
+  providers: [OrdersService, OrderItemsService, PaymentsService],
 })
 export class OrdersModule {}
 

@@ -76,7 +76,6 @@
           <h4 class="font-medium text-sm uppercase tracking-widest mb-4">Поддержка</h4>
           <ul class="space-y-2 text-sm text-gray-500">
             <li><a href="#" class="hover:text-primary">FAQ</a></li>
-            <li><a href="#" class="hover:text-primary">Доставка и возврат</a></li>
             <li><a href="#" class="hover:text-primary">Контакты</a></li>
           </ul>
         </div>

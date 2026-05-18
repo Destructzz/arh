@@ -21,7 +21,7 @@ This system is an MVP for a flower shop that covers the full sales cycle: catalo
 - Admin: manages catalog, discounts, users (future), and configuration
 - Manager/Cashier: creates orders, payments, deliveries
 - Florist: assembles orders, updates statuses
-- Courier: receives delivery assignments (no auth yet)
+
 - Customer: order target entity (no self-service yet)
 
 ## Key Concepts

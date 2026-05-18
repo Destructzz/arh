@@ -40,7 +40,7 @@ const stats = computed(() => {
     { label: 'Общая выручка', value: `${revenue.toLocaleString('ru-RU')} ₽`, change: 'В реальном времени', trend: 'up' },
     { label: 'База клиентов', value: activeCust.toLocaleString('ru-RU'), change: 'Активных пользователей', trend: 'neutral' },
     { label: 'Всего заказов', value: totalOrds.toLocaleString('ru-RU'), change: 'Оформлено на сайте', trend: 'up' },
-    { label: 'Ожидают сборки/доставки', value: pendingOrds.toLocaleString('ru-RU'), change: 'Требуют внимания', trend: 'neutral' },
+    { label: 'Ожидают сборки', value: pendingOrds.toLocaleString('ru-RU'), change: 'Требуют внимания', trend: 'neutral' },
   ];
 });
 
@@ -79,8 +79,7 @@ function statusLabel(status: string) {
     new: 'Новый',
     paid: 'Оплачен',
     in_assembly: 'В сборке',
-    out_for_delivery: 'Доставка',
-    done: 'Доставлен',
+    done: 'Выполнен',
     cancelled: 'Отменен',
   };
   return map[status] ?? status;
@@ -100,7 +99,6 @@ function statusClass(status: string) {
     new: 'bg-blue-100 text-blue-700',
     paid: 'bg-green-100 text-green-700',
     in_assembly: 'bg-yellow-100 text-yellow-700',
-    out_for_delivery: 'bg-orange-100 text-orange-700',
     done: 'bg-emerald-100 text-emerald-700',
     cancelled: 'bg-red-100 text-red-600',
   };

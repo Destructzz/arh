@@ -221,8 +221,7 @@ function statusLabel(status: string) {
     new: 'Новый',
     paid: 'Оплачен',
     in_assembly: 'В сборке',
-    out_for_delivery: 'Доставляется',
-    done: 'Доставлен',
+    done: 'Выполнен',
     cancelled: 'Отменен',
   }
   return map[status] ?? status
@@ -233,7 +232,6 @@ function statusClass(status: string) {
     new: 'bg-blue-100 text-blue-700',
     paid: 'bg-green-100 text-green-700',
     in_assembly: 'bg-yellow-100 text-yellow-700',
-    out_for_delivery: 'bg-orange-100 text-orange-700',
     done: 'bg-emerald-100 text-emerald-700',
     cancelled: 'bg-gray-100 text-gray-600',
   }

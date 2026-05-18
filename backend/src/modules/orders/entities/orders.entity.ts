@@ -10,7 +10,6 @@ import {
 } from 'typeorm';
 
 import { User } from '../../users/entities/user.entity';
-import { Delivery } from './deliveries.entity';
 import { OrderItem } from './order-items.entity';
 import { Payment } from './payments.entity';
 
@@ -18,7 +17,6 @@ export enum OrderStatus {
   New = 'new',
   Paid = 'paid',
   InAssembly = 'in_assembly',
-  OutForDelivery = 'out_for_delivery',
   Done = 'done',
   Cancelled = 'cancelled',
 }
@@ -27,11 +25,6 @@ export enum OrderChannel {
   Online = 'online',
   Offline = 'offline',
   Phone = 'phone',
-}
-
-export enum DeliveryType {
-  Courier = 'courier',
-  Pickup = 'pickup',
 }
 
 @Entity('orders')
@@ -55,9 +48,6 @@ export class Order {
   @Column({ type: 'enum', enum: OrderChannel })
   channel: OrderChannel;
 
-  @Column({ name: 'delivery_type', type: 'enum', enum: DeliveryType })
-  deliveryType: DeliveryType;
-
   @Column({ name: 'total_price', type: 'float', default: 0 })
   totalPrice: number;
 
@@ -75,8 +65,5 @@ export class Order {
 
   @OneToMany(() => Payment, (payment) => payment.order)
   payments?: Payment[];
-
-  @OneToOne(() => Delivery, (delivery) => delivery.order)
-  delivery?: Delivery | null;
 }
 

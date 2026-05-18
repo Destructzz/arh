@@ -18,7 +18,7 @@ export class OrdersController {
   @ApiOperation({
     summary: 'Список заказов',
     description:
-      'Возвращает список заказов с позициями, оплатами и доставкой.\n' +
+      'Возвращает список заказов с позициями и оплатами.\n' +
       'Используется для операционной панели и обработки заказов.\n' +
       'Обязательные параметры: нет.',
   })
@@ -32,7 +32,7 @@ export class OrdersController {
   @ApiOperation({
     summary: 'Детали заказа',
     description:
-      'Возвращает детали заказа с позициями, оплатами и доставкой.\n' +
+      'Возвращает детали заказа с позициями и оплатами.\n' +
       'Подходит для карточки заказа.\n' +
       'Обязательные параметры: id (UUID) в пути.',
   })
@@ -59,12 +59,12 @@ export class OrdersController {
     description:
       'Создаёт заказ и базовые финансовые поля.\n' +
       'Используйте при оформлении заказа в любом канале.\n' +
-      'Обязательные параметры тела: channel, deliveryType.',
+      'Обязательные параметры тела: channel.',
   })
   @ApiBody({
     required: true,
     description:
-      'Обязательные поля: channel, deliveryType. Опционально: userId, status, totalPrice, totalCost, discountAmount.',
+      'Обязательные поля: channel. Опционально: userId, status, totalPrice, totalCost, discountAmount.',
     schema: { example: createOrderExample },
   })
   @ApiCreatedAuthResponse(Order, orderExample)

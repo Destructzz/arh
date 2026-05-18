@@ -40,10 +40,6 @@
                 <span class="text-sm text-gray-500">Промежуточный итог</span>
                 <span class="font-medium">{{ cartTotal.toFixed(2) }} ₽</span>
               </div>
-              <div class="flex justify-between mb-4 pb-4 border-b border-gray-100">
-                <span class="text-sm text-gray-500">Доставка</span>
-                <span class="font-medium text-green-600">Бесплатно</span>
-              </div>
               <div class="flex justify-between mb-6">
                  <span class="text-lg font-serif">Итого</span>
                  <span class="text-3xl font-serif">{{ cartTotal.toFixed(2) }} ₽</span>
@@ -150,7 +146,7 @@ async function handleCheckout() {
     const order = await $fetch<any>(`${config.public.apiBase}/cart/checkout`, {
       method: 'POST',
       credentials: 'include',
-      body: { deliveryType: 'courier', channel: 'online' }
+      body: { channel: 'online' }
     })
 
     cartStore.clearCart()

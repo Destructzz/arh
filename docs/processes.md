@@ -5,20 +5,17 @@
 2) Create order items (snapshot name and price)
 3) Optional: attach customer
 4) Payment (cash/card/online)
-5) Delivery or pickup
-6) Completion or cancellation
+5) Completion or cancellation
 
 ### Order Statuses
-- new -> paid -> in_assembly -> out_for_delivery -> done
+- new -> paid -> in_assembly -> done
 - cancelled can occur from any state
 
 ## Payment Flow
 - Create payment with method and amount
 - Update status: pending -> paid -> refunded
 
-## Delivery Flow
-- Create delivery record for courier orders
-- Update status: pending -> in_transit -> delivered
+
 
 ## Inventory Flow
 - Inventory item holds quantity_on_hand and reserved

@@ -4,12 +4,11 @@ import { Repository } from 'typeorm';
 import { CartItem } from './entities/cart-items.entity';
 import { AddToCartDto } from './dto/add-to-cart.dto';
 import { UpdateCartDto } from './dto/update-cart.dto';
-import { Order, OrderChannel, OrderStatus, DeliveryType } from '../orders/entities/orders.entity';
+import { Order, OrderChannel, OrderStatus } from '../orders/entities/orders.entity';
 import { OrderItem } from '../orders/entities/order-items.entity';
 import { InventoryItem } from '../inventory/entities/inventory-items.entity';
 
 export interface CheckoutDto {
-  deliveryType?: DeliveryType;
   channel?: OrderChannel;
 }
 
@@ -127,7 +126,6 @@ export class CartService {
             userId,
             status: OrderStatus.New,
             channel: dto.channel ?? OrderChannel.Online,
-            deliveryType: dto.deliveryType ?? DeliveryType.Courier,
             totalPrice,
             totalCost: 0,
             discountAmount: 0,

@@ -26,7 +26,7 @@ export class CartController {
     }
 
     @ApiOperation({ summary: 'Оформить заказ из корзины (checkout)' })
-    @ApiBody({ schema: { example: { deliveryType: 'courier', channel: 'online' } } })
+    @ApiBody({ schema: { example: { channel: 'online' } } })
     @HttpCode(HttpStatus.CREATED)
     @Post('checkout')
     checkout(@Req() req: RequestWithUser, @Body() body: CheckoutDto) {

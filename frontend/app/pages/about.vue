@@ -34,7 +34,7 @@
     <!-- Values Grid -->
     <section class="py-20 bg-[#f4f7f6]">
       <div class="container mx-auto px-4">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 text-center">
           <div class="space-y-4">
             <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto shadow-sm text-primary">
               <Icon name="lucide:leaf" size="32" />
@@ -51,15 +51,6 @@
             <h3 class="text-xl font-serif font-bold">Поддержка навсегда</h3>
             <p class="text-gray-600 text-sm">
               Мы не просто продаем вам растение. Наша команда всегда готова помочь вашим зеленым друзьям процветать.
-            </p>
-          </div>
-          <div class="space-y-4">
-            <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto shadow-sm text-primary">
-              <Icon name="lucide:truck" size="32" />
-            </div>
-            <h3 class="text-xl font-serif font-bold">Безопасная доставка</h3>
-            <p class="text-gray-600 text-sm">
-              Наша специальная упаковка гарантирует, что растения приедут в целости и сохранности в любое время года.
             </p>
           </div>
         </div>
