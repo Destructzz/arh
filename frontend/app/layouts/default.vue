@@ -54,7 +54,7 @@
 
     <!-- Footer -->
     <footer class="bg-gray-50 pt-16 pb-8 border-t border-gray-100">
-      <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+      <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
         <div>
           <h3 class="flex items-center gap-2 font-serif text-lg mb-4">
             <img src="/flower.logo.png" alt="Logo" class="w-6 h-6 object-contain" />
@@ -70,13 +70,6 @@
             <li><NuxtLink to="/shop" class="hover:text-primary">Все растения</NuxtLink></li>
             <li><NuxtLink to="/shop" class="hover:text-primary">Новинки</NuxtLink></li>
             <li><NuxtLink to="/shop" class="hover:text-primary">Распродажа</NuxtLink></li>
-          </ul>
-        </div>
-        <div>
-          <h4 class="font-medium text-sm uppercase tracking-widest mb-4">Поддержка</h4>
-          <ul class="space-y-2 text-sm text-gray-500">
-            <li><a href="#" class="hover:text-primary">FAQ</a></li>
-            <li><a href="#" class="hover:text-primary">Контакты</a></li>
           </ul>
         </div>
       </div>

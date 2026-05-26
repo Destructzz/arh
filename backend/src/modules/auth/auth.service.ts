@@ -50,7 +50,7 @@ export class AuthService {
     const user = await this.validateUser(username, password);
     const token = await this.issueToken(user);
     return {
-      user: { id: user.id, login: user.login, role: user.role },
+      user: { id: user.id, login: user.login, role: user.role, email: user.email, phone: user.phone },
       ...token,
     };
   }

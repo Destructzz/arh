@@ -46,4 +46,20 @@ export class UsersService {
       totalSpent: Number(stats.totalSpent) || 0,
     };
   }
+
+  async updateProfile(id: string, updateData: { phone?: string | null; email?: string | null }): Promise<User> {
+    const user = await this.userRepository.findOne({ where: { id } });
+    if (!user) {
+      throw new UnauthorizedException('Пользователь не найден');
+    }
+
+    if (updateData.phone !== undefined) {
+      user.phone = updateData.phone;
+    }
+    if (updateData.email !== undefined) {
+      user.email = updateData.email;
+    }
+
+    return this.userRepository.save(user);
+  }
 }

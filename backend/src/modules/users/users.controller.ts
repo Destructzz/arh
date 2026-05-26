@@ -1,4 +1,4 @@
-import { Controller, Get, Req } from '@nestjs/common';
+import { Controller, Get, Put, Body, Req } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { RequestWithUser } from '../auth/interfaces/request-with-user.interface';
 import { ApiOkAuthResponse } from '../../common/swagger/api-responses.decorator';
@@ -20,5 +20,26 @@ export class UsersController {
   getMeStats(@Req() req: RequestWithUser) {
     console.log(req.user);
     return this.usersService.getUserStats(req.user.id);
+  }
+
+  @ApiOperation({
+    summary: 'Обновить профиль текущего пользователя',
+    description: 'Позволяет обновить email и номер телефона.',
+  })
+  @Put('me')
+  async updateProfile(
+    @Req() req: RequestWithUser,
+    @Body() body: { phone?: string | null; email?: string | null },
+  ) {
+    const updated = await this.usersService.updateProfile(req.user.id, body);
+    return {
+      user: {
+        id: updated.id,
+        login: updated.login,
+        role: updated.role,
+        email: updated.email,
+        phone: updated.phone,
+      },
+    };
   }
 }

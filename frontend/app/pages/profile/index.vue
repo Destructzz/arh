@@ -14,6 +14,10 @@
             <div>
               <h3 class="font-serif text-xl">{{ auth.user?.login || 'Садовод' }}</h3>
               <p class="text-sm text-gray-500">{{ auth.user?.email || 'Email не указан' }}</p>
+              <p v-if="auth.user?.phone" class="text-xs text-gray-400 mt-1 flex items-center gap-1">
+                <Icon name="lucide:phone" size="12" />
+                {{ auth.user.phone }}
+              </p>
             </div>
           </div>
           
@@ -36,6 +40,52 @@
              <button @click="handleLogout" class="w-full py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
                Выйти
              </button>
+          </div>
+        </div>
+
+        <!-- Personal details edit form -->
+        <div class="bg-[#f8faf9] p-6 rounded-2xl border border-gray-100 space-y-4">
+          <h4 class="font-serif text-lg text-gray-900 border-b border-gray-200 pb-2 flex items-center gap-2">
+            <Icon name="lucide:user-cog" class="text-gray-400" size="18" />
+            Личные данные
+          </h4>
+          
+          <div class="space-y-3">
+            <div>
+              <label class="block text-[11px] font-medium text-gray-400 uppercase tracking-wider mb-1">Email</label>
+              <input 
+                v-model="profileForm.email"
+                type="email"
+                placeholder="Email не указан"
+                class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all bg-white"
+              />
+            </div>
+            
+            <div>
+              <label class="block text-[11px] font-medium text-gray-400 uppercase tracking-wider mb-1">Телефон</label>
+              <input 
+                v-model="profileForm.phone"
+                type="text"
+                placeholder="+7 (___) ___-__-__"
+                class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all bg-white"
+                @input="onPhoneInput"
+              />
+            </div>
+            
+            <p v-if="profileUpdateError" class="text-xs text-red-500 font-medium">{{ profileUpdateError }}</p>
+            <p v-if="profileUpdateSuccess" class="text-xs text-green-600 font-medium">{{ profileUpdateSuccess }}</p>
+
+            <button 
+              @click="saveProfile"
+              :disabled="savingProfile"
+              class="w-full mt-2 py-2.5 bg-primary text-white rounded-lg text-sm font-medium hover:bg-opacity-90 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+            >
+              <svg v-if="savingProfile" class="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+              </svg>
+              <span>{{ savingProfile ? 'Сохранение...' : 'Сохранить изменения' }}</span>
+            </button>
           </div>
         </div>
       </aside>
@@ -157,6 +207,94 @@ definePageMeta({
 
 const auth = useAuthStore()
 const config = useRuntimeConfig()
+
+const profileForm = reactive({
+  email: auth.user?.email || '',
+  phone: auth.user?.phone || ''
+})
+
+// Keep form in sync with store when auth state loads
+watch(() => auth.user, (user) => {
+  if (user) {
+    profileForm.email = user.email || ''
+    profileForm.phone = user.phone || ''
+  }
+}, { immediate: true })
+
+const savingProfile = ref(false)
+const profileUpdateError = ref<string | null>(null)
+const profileUpdateSuccess = ref<string | null>(null)
+
+function onPhoneInput(event: Event) {
+  const input = event.target as HTMLInputElement
+  let value = input.value
+  
+  // Clean all non-digit characters
+  let digits = value.replace(/\D/g, '')
+  
+  // If first digit is 7 or 8, remove it to normalize
+  if (digits.startsWith('7') || digits.startsWith('8')) {
+    digits = digits.substring(1)
+  }
+  
+  // Limit to 10 digits
+  digits = digits.substring(0, 10)
+  
+  // Format as +7 (999) 123-45-67
+  let formatted = ''
+  if (digits.length > 0) {
+    formatted = '+7 (' + digits.substring(0, 3)
+  } else {
+    formatted = ''
+  }
+  
+  if (digits.length > 3) {
+    formatted += ') ' + digits.substring(3, 6)
+  }
+  if (digits.length > 6) {
+    formatted += '-' + digits.substring(6, 8)
+  }
+  if (digits.length > 8) {
+    formatted += '-' + digits.substring(8, 10)
+  }
+  
+  profileForm.phone = formatted
+  input.value = formatted
+}
+
+async function saveProfile() {
+  savingProfile.value = true
+  profileUpdateError.value = null
+  profileUpdateSuccess.value = null
+  
+  try {
+    const res = await $fetch<{ user: any }>(`${config.public.apiBase}/users/me`, {
+      method: 'PUT',
+      credentials: 'include',
+      body: {
+        email: profileForm.email || null,
+        phone: profileForm.phone || null
+      }
+    })
+    
+    // Update store
+    if (res.user) {
+      auth.user = {
+        ...auth.user,
+        ...res.user
+      }
+    }
+    
+    profileUpdateSuccess.value = 'Профиль успешно обновлен!'
+    setTimeout(() => {
+      profileUpdateSuccess.value = null
+    }, 4000)
+  } catch (err: any) {
+    profileUpdateError.value = err?.data?.message || 'Не удалось обновить профиль'
+  } finally {
+    savingProfile.value = false
+  }
+}
 
 interface OrderItem {
   id: string
