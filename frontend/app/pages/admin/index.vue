@@ -119,8 +119,8 @@ function statusClass(status: string) {
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
       <div v-for="stat in stats" :key="stat.label" class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
         <h3 class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-2">{{ stat.label }}</h3>
-        <div class="flex items-end justify-between">
-          <span class="text-2xl font-bold text-gray-900">{{ stat.value }}</span>
+        <div class="flex items-end justify-between gap-2 flex-wrap">
+          <span class="text-2xl font-bold text-gray-900 whitespace-nowrap">{{ stat.value }}</span>
           <span 
             :class="{
               'text-green-600': stat.trend === 'up',
@@ -167,7 +167,7 @@ function statusClass(status: string) {
                 <td class="py-3 text-gray-500">
                   {{ new Date(order.createdAt).toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' }) }}
                 </td>
-                <td class="py-3 font-semibold text-gray-900">
+                <td class="py-3 font-semibold text-gray-900 whitespace-nowrap">
                   {{ order.totalPrice.toLocaleString('ru-RU') }} ₽
                 </td>
                 <td class="py-3 text-right">
@@ -217,7 +217,7 @@ function statusClass(status: string) {
                 <td class="py-3 text-center text-gray-600 font-semibold">
                   {{ prod.qty }} шт.
                 </td>
-                <td class="py-3 text-right font-semibold text-gray-900">
+                <td class="py-3 text-right font-semibold text-gray-900 whitespace-nowrap">
                   {{ prod.price.toLocaleString('ru-RU') }} ₽
                 </td>
               </tr>

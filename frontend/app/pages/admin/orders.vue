@@ -113,7 +113,7 @@ async function updateStatus(orderId: string, newStatus: string) {
       </div>
       <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
         <h3 class="text-gray-500 text-sm font-medium uppercase tracking-wider mb-2">Общая выручка</h3>
-        <p class="text-3xl font-bold text-green-600">{{ totalRevenue.toFixed(2) }} ₽</p>
+        <p class="text-3xl font-bold text-green-600 whitespace-nowrap">{{ totalRevenue.toLocaleString('ru-RU') }} ₽</p>
       </div>
     </div>
 
@@ -157,7 +157,7 @@ async function updateStatus(orderId: string, newStatus: string) {
               </div>
             </td>
             <td class="px-6 py-4">
-              <span class="font-medium text-gray-900">{{ Number(order.totalPrice).toFixed(2) }} ₽</span>
+              <span class="font-medium text-gray-900 whitespace-nowrap">{{ Number(order.totalPrice).toLocaleString('ru-RU') }} ₽</span>
             </td>
             <td class="px-6 py-4">
               <span class="text-sm text-gray-600">{{ channelLabel(order.channel) }}</span>
