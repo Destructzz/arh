@@ -11,11 +11,11 @@
             <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center text-primary text-2xl font-serif">
               {{ auth.user?.login?.[0]?.toUpperCase() || 'U' }}
             </div>
-            <div>
-              <h3 class="font-serif text-xl">{{ auth.user?.login || 'Садовод' }}</h3>
-              <p class="text-sm text-gray-500">{{ auth.user?.email || 'Email не указан' }}</p>
-              <p v-if="auth.user?.phone" class="text-xs text-gray-400 mt-1 flex items-center gap-1">
-                <Icon name="lucide:phone" size="12" />
+            <div class="flex-1 min-w-0">
+              <h3 class="font-serif text-xl truncate" :title="auth.user?.login || 'Садовод'">{{ auth.user?.login || 'Садовод' }}</h3>
+              <p class="text-sm text-gray-500 truncate" :title="auth.user?.email || ''">{{ auth.user?.email || 'Email не указан' }}</p>
+              <p v-if="auth.user?.phone" class="text-xs text-gray-400 mt-1 flex items-center gap-1 truncate">
+                <Icon name="lucide:phone" size="12" class="flex-shrink-0" />
                 {{ auth.user.phone }}
               </p>
             </div>

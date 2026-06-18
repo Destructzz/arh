@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, BadRequestException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
@@ -60,6 +60,13 @@ export class UsersService {
       user.email = updateData.email;
     }
 
-    return this.userRepository.save(user);
+    try {
+      return await this.userRepository.save(user);
+    } catch (error: any) {
+      if (error.code === '23505') {
+         throw new BadRequestException('Пользователь с таким email или телефоном уже существует');
+      }
+      throw error;
+    }
   }
 }

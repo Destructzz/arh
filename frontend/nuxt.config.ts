@@ -10,8 +10,11 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
   runtimeConfig: {
     public: {
-      apiBase: 'http://localhost:3001'
+      apiBase: '/api'
     }
+  },
+  routeRules: {
+    '/api/**': { proxy: process.env.NODE_ENV === 'production' ? 'http://backend:3001/**' : 'http://localhost:3001/**' }
   },
   app: {
     head: {

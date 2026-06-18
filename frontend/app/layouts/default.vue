@@ -17,7 +17,6 @@
         <!-- Desktop Nav -->
         <nav class="hidden lg:flex items-center space-x-8 text-sm font-medium tracking-wide">
           <NuxtLink to="/shop" class="hover:text-primary transition-colors">Весь каталог</NuxtLink>
-          <NuxtLink to="/shop?category=plants" class="hover:text-primary transition-colors">Растения</NuxtLink>
           <NuxtLink to="/about" class="hover:text-primary transition-colors">О нас</NuxtLink>
           <NuxtLink to="/admin" v-if="auth.isAuthenticated && (auth.user?.role === 'admin' || auth.user?.role === 'manager')" class="text-primary hover:text-opacity-80 transition-colors font-bold">Админ-панель</NuxtLink>
         </nav>

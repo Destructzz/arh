@@ -42,13 +42,20 @@ const links = [
         </NuxtLink>
       </nav>
 
-      <div class="p-4 border-t border-white/10">
+      <div class="p-4 border-t border-white/10 space-y-2">
+        <NuxtLink 
+          to="/"
+          class="flex items-center gap-3 px-4 py-3 w-full rounded-lg text-white/80 hover:bg-white/10 transition-colors"
+        >
+          <Icon name="heroicons:globe-alt" size="20" />
+          <span>На главную страницу</span>
+        </NuxtLink>
         <button 
           @click="handleLogout"
           class="flex items-center gap-3 px-4 py-3 w-full rounded-lg text-red-200 hover:bg-red-900/20 transition-colors"
         >
           <Icon name="heroicons:arrow-left-on-rectangle" size="20" />
-          <span>Выйти</span>
+          <span>Выйти из аккаунта</span>
         </button>
       </div>
     </aside>
