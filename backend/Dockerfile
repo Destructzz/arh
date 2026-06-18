@@ -1,5 +1,5 @@
 # Build stage
-FROM oven/bun:1-alpine AS build
+FROM docker.m.daocloud.io/oven/bun:1-alpine AS build
 
 WORKDIR /app
 
@@ -13,7 +13,7 @@ COPY . .
 RUN bun run build
 
 # Runtime stage
-FROM oven/bun:1-alpine AS runtime
+FROM docker.m.daocloud.io/oven/bun:1-alpine AS runtime
 
 WORKDIR /app
 

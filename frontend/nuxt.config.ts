@@ -13,9 +13,6 @@ export default defineNuxtConfig({
       apiBase: '/api'
     }
   },
-  routeRules: {
-    '/api/**': { proxy: process.env.NODE_ENV === 'production' ? 'http://backend:3001/**' : 'http://localhost:3001/**' }
-  },
   app: {
     head: {
       link: [
