@@ -7,6 +7,7 @@ import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/commo
 
 import { Roles } from '../../auth/decorators/roles.decorator';
 import { UserRole } from '../../users/entities/user.entity';
+import { Public } from '../../auth/decorators/public.decorator';
 import { CreateProductDto, ProductsService, UpdateProductDto } from '../services/products.service';
 
 @ApiTags('Catalog')
@@ -15,6 +16,7 @@ export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @ApiOperation({ summary: 'Топ-4 бестселлера по количеству продаж' })
+  @Public()
   @Get('best-sellers')
   getBestSellers() {
     return this.productsService.getBestSellers();

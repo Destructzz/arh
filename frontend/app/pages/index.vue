@@ -1,5 +1,19 @@
 <template>
   <div>
+    <!-- Toast message for unauthorized cart adds -->
+    <transition
+      enter-active-class="transition duration-300 ease-out"
+      enter-from-class="transform -translate-y-4 opacity-0"
+      enter-to-class="transform translate-y-0 opacity-100"
+      leave-active-class="transition duration-200 ease-in"
+      leave-from-class="transform translate-y-0 opacity-100"
+      leave-to-class="transform -translate-y-4 opacity-0"
+    >
+      <div v-if="authMessage" class="fixed top-24 right-4 bg-red-50 text-red-600 px-6 py-4 rounded-lg shadow-lg z-50 flex items-center gap-3 border border-red-100">
+        <Icon name="lucide:alert-circle" size="20" />
+        <span class="font-medium">{{ authMessage }}</span>
+      </div>
+    </transition>
     <!-- Hero Section -->
     <section class="relative bg-[#f4f7f6] h-[600px] flex items-center">
       <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8 items-center h-full">
@@ -21,7 +35,7 @@
         </div>
         <div class="order-1 md:order-2 h-full relative overflow-hidden">
            <img 
-            src="https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+            src="/5.jpg" 
             alt="Beautiful Plant" 
             class="absolute inset-0 w-full h-full object-cover"
           />
@@ -93,7 +107,7 @@
            >
              <div class="relative aspect-square bg-white mb-4 overflow-hidden rounded-lg">
                 <img
-                  :src="product.imageUrl || 'https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'"
+                  :src="product.imageUrl || '/6.jpg'"
                   :alt="product.name"
                   class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
@@ -114,8 +128,13 @@
 </template>
 
 <script setup lang="ts">
+import { useAuthStore } from '~/stores/auth'
+
 const config = useRuntimeConfig()
 const cartStore = useCartStore()
+const authStore = useAuthStore()
+
+const authMessage = ref<string | null>(null)
 
 // Featured categories — server picks 3 random ones, changes every hour
 const { data: featuredCategories, pending: categoriesPending } = await useFetch<Array<{ id: string; name: string }>>(
@@ -142,24 +161,26 @@ const { data: bestSellers, pending: bestSellersPending } = await useFetch<Array<
 function categoryImage(name: string): string {
   const lower = name.toLowerCase()
   if (lower.includes('succulent') || lower.includes('cactus'))
-    return 'https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
-  if (lower.includes('tropical') || lower.includes('palm'))
-    return 'https://images.unsplash.com/photo-1502672023488-70e25813eb80?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
-  if (lower.includes('fern') || lower.includes('moss'))
-    return 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    return '/суккуленты.jpg'
   if (lower.includes('flower') || lower.includes('bloom'))
-    return 'https://images.unsplash.com/photo-1487530811015-780d6e0c4b77?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    return '/розы.jpg'
   // Default rotation based on name for variety
   const imgs = [
-    'https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    'https://images.unsplash.com/photo-1502672023488-70e25813eb80?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    '/5.jpg',
+    '/6.jpg',
+    '/суккуленты.jpg',
+    '/розы.jpg',
   ]
   const index = name.length > 0 ? name.charCodeAt(0) % imgs.length : 0
-  return imgs[index] ?? 'https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+  return imgs[index] ?? '/5.jpg'
 }
 
 async function addToCart(productId: string) {
+  if (!authStore.isAuthenticated) {
+    authMessage.value = 'Чтобы добавить товар, нужно авторизоваться'
+    setTimeout(() => { authMessage.value = null }, 3000)
+    return
+  }
   await cartStore.addToCart(productId, 1)
 }
 </script>

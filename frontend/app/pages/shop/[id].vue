@@ -33,7 +33,7 @@
       <!-- Image Gallery -->
       <div class="bg-[#f4f7f6] aspect-[4/5] overflow-hidden relative rounded-lg">
          <img 
-            :src="product.imageUrl || 'https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'" 
+            :src="product.imageUrl || '/6.jpg'" 
             :alt="product.name" 
             class="w-full h-full object-cover"
          />

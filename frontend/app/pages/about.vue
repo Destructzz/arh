@@ -4,7 +4,7 @@
     <section class="relative h-[500px] flex items-center justify-center text-center text-white">
       <div class="absolute inset-0 bg-black/40 z-10"></div>
       <img 
-        src="https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" 
+        src="/5.jpg" 
         alt="Greenhouse" 
         class="absolute inset-0 w-full h-full object-cover"
       />

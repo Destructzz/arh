@@ -17,7 +17,7 @@
       <div v-else class="space-y-6">
         <div v-for="item in cartItems" :key="item.id" class="flex items-center gap-6 p-4 bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-md transition-shadow">
           <div class="w-20 h-24 bg-[#f4f7f6] rounded-md overflow-hidden flex-shrink-0">
-            <img :src="item.product.imageUrl || 'https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80'" class="w-full h-full object-cover" />
+            <img :src="item.product.imageUrl || '/5.jpg'" class="w-full h-full object-cover" />
           </div>
           <div class="flex-grow">
             <h3 class="font-serif text-lg">{{ item.product.name }}</h3>
