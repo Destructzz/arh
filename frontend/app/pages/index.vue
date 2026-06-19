@@ -59,14 +59,14 @@
 
         <div v-else class="grid grid-cols-1 md:grid-cols-3 gap-8">
           <NuxtLink
-            v-for="cat in featuredCategories"
+            v-for="(cat, index) in featuredCategories"
             :key="cat.id"
             :to="`/shop?category=${cat.id}`"
             class="group cursor-pointer"
           >
             <div class="relative overflow-hidden aspect-[3/4] mb-4 rounded-lg bg-[#f4f7f6]">
               <img
-                :src="categoryImage(cat.name)"
+                :src="categoryImage(index)"
                 :alt="cat.name"
                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
@@ -157,22 +157,14 @@ const { data: bestSellers, pending: bestSellersPending } = await useFetch<Array<
   { default: () => [] }
 )
 
-// Fallback images per category name keyword
-function categoryImage(name: string): string {
-  const lower = name.toLowerCase()
-  if (lower.includes('succulent') || lower.includes('cactus'))
-    return '/суккуленты.jpg'
-  if (lower.includes('flower') || lower.includes('bloom'))
-    return '/розы.jpg'
-  // Default rotation based on name for variety
+// Hardcoded images for featured categories based on their position (0 = left, 1 = middle, 2 = right)
+function categoryImage(index: number): string {
   const imgs = [
-    '/5.jpg',
-    '/6.jpg',
-    '/суккуленты.jpg',
-    '/розы.jpg',
+    '/розы.jpg',        // Left image
+    '/суккуленты.jpg',  // Middle image
+    '/5.jpg',           // Right image (same as background)
   ]
-  const index = name.length > 0 ? name.charCodeAt(0) % imgs.length : 0
-  return imgs[index] ?? '/5.jpg'
+  return imgs[index] || '/6.jpg'
 }
 
 async function addToCart(productId: string) {
